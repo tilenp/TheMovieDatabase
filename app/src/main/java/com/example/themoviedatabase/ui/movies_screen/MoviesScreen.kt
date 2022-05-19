@@ -11,10 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layout
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -104,6 +107,13 @@ fun MovieItem(modifier: Modifier, movie: MovieSummary, onMovieClicked: (Int) -> 
                     .padding(top = 8.dp, end = 8.dp),
                 movie = movie
             )
+            MovieInfo(
+                movie,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .fillMaxWidth()
+                    .background(Color(0x97000000))
+            )
         }
     }
 }
@@ -119,7 +129,7 @@ private fun MovieImage(modifier: Modifier, movie: MovieSummary) {
     Image(
         modifier = modifier,
         painter = painter,
-        contentDescription = "Unsplash Image",
+        contentDescription = "Movie Image",
         contentScale = ContentScale.Crop
     )
 }
@@ -159,3 +169,22 @@ private fun MovieRating(modifier: Modifier, movie: MovieSummary) {
         )
     }
 }
+
+@Composable
+private fun MovieInfo(movie: MovieSummary, modifier: Modifier) {
+    val context = LocalContext.current
+    Column(
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+        modifier = modifier.padding(8.dp)
+    ) {
+        MovieName(name = movie.title.asString(context))
+    }
+}
+
+@Composable
+private fun MovieName(name: String) = Text(
+    text = name,
+    style = MaterialTheme.typography.caption.copy(color = Color.White),
+    maxLines = 1,
+    overflow = TextOverflow.Ellipsis
+)
