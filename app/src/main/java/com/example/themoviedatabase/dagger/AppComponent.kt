@@ -11,6 +11,7 @@ import javax.inject.Singleton
 @Component(
     modules = [
         ApiModule::class,
+        AppModule::class,
         DatabaseModule::class,
         MapperModule::class,
         RepositoryModule::class,

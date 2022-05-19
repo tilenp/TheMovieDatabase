@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">TheMovieDatabase</string>
+
+    <!-- general -->
+    <string name="Nothing_to_show">Nothing to show</string>
+    <string name="Click_to_retry">Click to retry</string>
+    <string name="Network_not_available">Network not available</string>
+    <string name="Server_error">Service unavailable, please try again later</string>
+    <string name="Authorization_error">Authorization error. Please check your API keys</string>
+    <string name="Unknown_error">Unknown error</string>
+    <string name="Ok">Ok</string>
+    <string name="Cancel">Cancel</string>
+    <string name="Title_not_available">Title not available</string>
+    <string name="Overview_not_available">Overview not available</string>
 </resources>
