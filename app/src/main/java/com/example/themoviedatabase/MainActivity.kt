@@ -3,41 +3,29 @@ package com.example.themoviedatabase
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.compose.rememberNavController
+import com.example.themoviedatabase.dagger.ComponentProvider
+import com.example.themoviedatabase.ui.movies_screen.MoviesViewModel
+import com.example.themoviedatabase.ui.navigation.MainNavGraph
 import com.example.themoviedatabase.ui.theme.TheMovieDatabaseTheme
+import javax.inject.Inject
 
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        (applicationContext as ComponentProvider).provideAppComponent().inject(this)
         super.onCreate(savedInstanceState)
         setContent {
             TheMovieDatabaseTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Greeting("Android")
-                }
+                MainNavGraph(
+                    navController = rememberNavController(),
+                    moviesViewModel = ViewModelProvider(this, viewModelFactory)[MoviesViewModel::class.java],
+                )
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    TheMovieDatabaseTheme {
-        Greeting("Android")
     }
 }
