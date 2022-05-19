@@ -18,4 +18,7 @@ interface MovieDao {
         ORDER BY MovieTable.popularity DESC
     """)
     fun getPopularMovies(): PagingSource<Int, MovieSummaryQuery>
+
+    @Query("DELETE FROM MovieTable")
+    suspend fun deleteMovies()
 }
