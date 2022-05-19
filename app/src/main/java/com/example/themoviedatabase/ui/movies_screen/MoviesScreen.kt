@@ -71,11 +71,12 @@ fun MovieListContent(
         },
         errorContent = { modifier, throwable, retry ->
             ErrorView(
-                modifier = modifier.height(300.dp),
+                modifier = modifier.padding(12.dp),
                 message = stringResource(getErrorMessageId(throwable)),
                 buttonsContent = {
                     MyButton(
                         title = stringResource(R.string.Click_to_retry),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary),
                         onClick = { retry() }
                     )
                 }

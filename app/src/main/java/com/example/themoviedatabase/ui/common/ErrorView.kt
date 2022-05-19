@@ -22,7 +22,7 @@ fun ErrorView(
     buttonsContent: @Composable () -> Unit
 ) {
     ConstraintLayout(
-        modifier = modifier.padding(16.dp)
+        modifier = modifier
     ) {
         val (text, box) = createRefs()
         Text(

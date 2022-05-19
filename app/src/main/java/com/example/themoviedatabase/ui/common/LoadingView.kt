@@ -3,6 +3,7 @@ package com.example.themoviedatabase.ui.common
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,7 +21,8 @@ fun LoadingView(
         modifier = modifier
             .wrapContentSize(Alignment.Center)
             .padding(16.dp)
-            .testTag("LoadingIndicator")
+            .testTag("LoadingIndicator"),
+        color = MaterialTheme.colors.secondary
     )
 }
 
