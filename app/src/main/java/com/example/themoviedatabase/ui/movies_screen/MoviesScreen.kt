@@ -44,8 +44,9 @@ fun MoviesScreen(viewModel: MoviesViewModel) {
 
     Scaffold(
         topBar = { MyTopBar() },
-        content = {
+        content = { padding ->
             MovieListContent(
+                modifier = Modifier.padding(start = 4.dp, end = 4.dp),
                 pagesMovies = pagedMovies,
                 getErrorMessageId = { viewModel.getErrorMessage(it) }
             )
@@ -55,10 +56,12 @@ fun MoviesScreen(viewModel: MoviesViewModel) {
 
 @Composable
 fun MovieListContent(
+    modifier: Modifier,
     pagesMovies: LazyPagingItems<MovieSummary>,
     getErrorMessageId: (Throwable) -> Int
 ) {
     ComposablePagedList(
+        modifier = modifier,
         pagedItems = pagesMovies,
         itemContent = { movie ->
             MovieItem(
