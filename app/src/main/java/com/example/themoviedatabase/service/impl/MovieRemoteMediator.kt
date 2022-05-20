@@ -78,7 +78,7 @@ class MovieRemoteMediator constructor(
 
         try {
             val query = queryBuilder.build()
-            val response = movieApi.getMovies(sortBy = query.sortBy.value, page = page)
+            val response = movieApi.getMovies(sortBy = query.sortBy, page = page)
             val endReached = response.page == response.totalPages
 
             database.withTransaction {
