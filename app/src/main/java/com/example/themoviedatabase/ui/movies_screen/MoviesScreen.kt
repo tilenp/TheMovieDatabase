@@ -46,7 +46,7 @@ fun MoviesScreen(viewModel: MoviesViewModel) {
     }
 
     Scaffold(
-        topBar = { MyTopBar() },
+        topBar = { MyTopBar(stringResource(R.string.app_name)) },
         content = { padding ->
             MovieListContent(
                 modifier = Modifier.padding(start = 4.dp, end = 4.dp),

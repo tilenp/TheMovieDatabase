@@ -6,17 +6,16 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.themoviedatabase.R
 
 @Composable
 fun MyTopBar(
+    title: String
 ) {
     TopAppBar(
         title = {
             Text(
-                text = stringResource(R.string.app_name),
+                text = title,
                 color = MaterialTheme.colors.onSurface,
                 modifier = Modifier.fillMaxWidth(),
                 style = MaterialTheme.typography.h5

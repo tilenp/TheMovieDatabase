@@ -8,7 +8,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import com.example.themoviedatabase.ui.theme.TheMovieDatabaseTheme
-import org.junit.Assert
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
@@ -64,6 +64,6 @@ class MyButtonTest {
         composeTestRule.onNodeWithText(buttonText).performClick()
 
         // assert
-        Assert.assertTrue(clicked)
+        assertTrue(clicked)
     }
 }
