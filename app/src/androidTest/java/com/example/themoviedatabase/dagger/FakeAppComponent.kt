@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.paging.ExperimentalPagingApi
 import com.example.themoviedatabase.dagger.module.*
 import com.example.themoviedatabase.service.impl.MovieRemoteMediatorTest
+import com.example.themoviedatabase.ui.movies_screen.MoviesScreenTest
 import dagger.BindsInstance
 import dagger.Component
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -31,4 +32,7 @@ interface FakeAppComponent : AppComponent {
     // service
     @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
     fun inject(movieRemoteMediatorTest: MovieRemoteMediatorTest)
+
+    // screen
+    fun inject(moviesScreenTest: MoviesScreenTest)
 }

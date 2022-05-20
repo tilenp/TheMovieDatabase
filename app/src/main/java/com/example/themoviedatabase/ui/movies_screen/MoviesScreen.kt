@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -30,7 +31,10 @@ import com.example.themoviedatabase.ui.common.MyTopBar
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
-fun MoviesScreen(viewModel: MoviesViewModel) {
+fun MoviesScreen(
+    modifier: Modifier = Modifier,
+    viewModel: MoviesViewModel
+) {
 
     val systemUiController = rememberSystemUiController()
     val systemBarColor = MaterialTheme.colors.surface
@@ -46,7 +50,11 @@ fun MoviesScreen(viewModel: MoviesViewModel) {
     }
 
     Scaffold(
-        topBar = { MyTopBar(stringResource(R.string.app_name)) },
+        topBar = {
+            MyTopBar(
+                title = stringResource(R.string.app_name)
+            )
+        },
         content = { padding ->
             MovieListContent(
                 modifier = Modifier.padding(start = 4.dp, end = 4.dp),
@@ -74,7 +82,9 @@ fun MovieListContent(
         },
         errorContent = { modifier, throwable, retry ->
             ErrorView(
-                modifier = modifier.padding(12.dp),
+                modifier = modifier
+                    .padding(12.dp)
+                    .testTag("MoviesScreenErrorView"),
                 message = stringResource(getErrorMessageId(throwable)),
                 buttonsContent = {
                     MyButton(
@@ -89,7 +99,11 @@ fun MovieListContent(
 }
 
 @Composable
-fun MovieItem(modifier: Modifier, movie: MovieSummary, onMovieClicked: (Int) -> Unit = {}) {
+fun MovieItem(
+    modifier: Modifier,
+    movie: MovieSummary,
+    onMovieClicked: (Int) -> Unit = {}
+) {
     Surface(
         shape = RoundedCornerShape(8.dp),
         elevation = 4.dp
@@ -98,28 +112,34 @@ fun MovieItem(modifier: Modifier, movie: MovieSummary, onMovieClicked: (Int) -> 
             modifier = modifier,
         ) {
             MovieImage(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .testTag("MovieImage${movie.movieId}"),
                 movie = movie
             )
             MovieRating(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .padding(top = 8.dp, end = 8.dp),
+                    .padding(top = 8.dp, end = 8.dp)
+                    .testTag("MovieRating${movie.movieId}"),
                 movie = movie
             )
             MovieInfo(
-                movie,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth()
-                    .background(Color(0x97000000))
+                    .background(Color(0x97000000)),
+                movie = movie
             )
         }
     }
 }
 
 @Composable
-private fun MovieImage(modifier: Modifier, movie: MovieSummary) {
+private fun MovieImage(
+    modifier: Modifier,
+    movie: MovieSummary
+) {
     val painter =
         rememberImagePainter(data = movie.posterPath.medium) {
             crossfade(durationMillis = 200)
@@ -135,7 +155,10 @@ private fun MovieImage(modifier: Modifier, movie: MovieSummary) {
 }
 
 @Composable
-private fun MovieRating(modifier: Modifier, movie: MovieSummary) {
+private fun MovieRating(
+    modifier: Modifier,
+    movie: MovieSummary
+) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
@@ -171,19 +194,30 @@ private fun MovieRating(modifier: Modifier, movie: MovieSummary) {
 }
 
 @Composable
-private fun MovieInfo(movie: MovieSummary, modifier: Modifier) {
+private fun MovieInfo(
+    modifier: Modifier,
+    movie: MovieSummary
+) {
     val context = LocalContext.current
     Column(
         verticalArrangement = Arrangement.spacedBy(4.dp),
         modifier = modifier.padding(8.dp)
     ) {
-        MovieName(name = movie.title.asString(context))
+        MovieTitle(
+            modifier = Modifier
+                .testTag("MovieTitle${movie.movieId}"),
+            title = movie.title.asString(context)
+        )
     }
 }
 
 @Composable
-private fun MovieName(name: String) = Text(
-    text = name,
+private fun MovieTitle(
+    modifier: Modifier,
+    title: String
+) = Text(
+    modifier = modifier,
+    text = title,
     style = MaterialTheme.typography.caption.copy(color = Color.White),
     maxLines = 1,
     overflow = TextOverflow.Ellipsis

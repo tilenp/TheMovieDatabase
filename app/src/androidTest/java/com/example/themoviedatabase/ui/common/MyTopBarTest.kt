@@ -23,7 +23,7 @@ class MyTopBarTest {
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
                 Scaffold(
-                    topBar = { MyTopBar(title) }
+                    topBar = { MyTopBar(title = title) }
                 ) { padding -> Surface(modifier = Modifier.padding(padding)) {} }
             }
         }

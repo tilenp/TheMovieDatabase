@@ -6,13 +6,16 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun MyTopBar(
+    modifier: Modifier = Modifier,
     title: String
 ) {
     TopAppBar(
+        modifier = modifier.testTag("MyTopBar"),
         title = {
             Text(
                 text = title,

@@ -31,6 +31,7 @@ class FakeMovieApi @Inject constructor(): MovieApi {
                 PagingDTO()
             }
             response.code == 200 && response.body != null -> response.body
+            response.ioException != null -> throw response.ioException
             else -> throw IOException("network not available")
         }
     }
