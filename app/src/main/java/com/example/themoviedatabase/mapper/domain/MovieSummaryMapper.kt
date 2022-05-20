@@ -17,7 +17,7 @@ class MovieSummaryMapper @Inject constructor(
     override fun map(objectToMap: MovieSummaryQuery): MovieSummary {
         val url = objectToMap.imagePaths?.firstOrNull() ?: ImagePathTable()
         return MovieSummary(
-            id = objectToMap.movieTable.id,
+            movieId = objectToMap.movieTable.movieId,
             title = UIText(string = objectToMap.movieTable.title),
             popularity = objectToMap.movieTable.popularity,
             overview = UIText(string = objectToMap.movieTable.overview),

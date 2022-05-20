@@ -17,27 +17,27 @@ class MovieTableMapperTest {
         val result = mapper.map(movieDto)
 
         // assert
-        assertEquals(id, result.id)
+        assertEquals(id, result.movieId)
     }
 
     @Test
-    fun map_name_test() {
+    fun map_title_test() {
         // arrange
-        val name = "name"
-        val movieDto = MovieDTO(name = name)
+        val title = "title"
+        val movieDto = MovieDTO(title = title)
         val mapper = MovieTableMapper()
 
         // act
         val result = mapper.map(movieDto)
 
         // assert
-        assertEquals(name, result.title)
+        assertEquals(title, result.title)
     }
 
     @Test
-    fun map_null_name_test() {
+    fun map_null_title_test() {
         // arrange
-        val movieDto = MovieDTO(name = null)
+        val movieDto = MovieDTO(title = null)
         val mapper = MovieTableMapper()
 
         // act

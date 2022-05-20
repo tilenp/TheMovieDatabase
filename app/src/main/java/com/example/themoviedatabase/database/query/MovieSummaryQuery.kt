@@ -10,7 +10,7 @@ data class MovieSummaryQuery(
     val movieTable: MovieTable = MovieTable(),
 
     @Relation(
-        parentColumn = "id",
+        parentColumn = "movieId",
         entityColumn = "itemId"
     )
     val imagePaths: List<ImagePathTable>? = null

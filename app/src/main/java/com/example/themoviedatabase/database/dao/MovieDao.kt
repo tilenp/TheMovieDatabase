@@ -15,7 +15,7 @@ interface MovieDao {
     @Query("""
         SELECT * 
         FROM MovieTable 
-        ORDER BY MovieTable.popularity DESC
+        ORDER BY MovieTable.id ASC
     """)
     fun getPopularMovies(): PagingSource<Int, MovieSummaryQuery>
 

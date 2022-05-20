@@ -11,8 +11,8 @@ class MovieTableMapper @Inject constructor() : Mapper<MovieDTO, MovieTable> {
 
     override fun map(objectToMap: MovieDTO): MovieTable {
         return MovieTable(
-            id = objectToMap.id,
-            title = objectToMap.name.orEmpty(),
+            movieId = objectToMap.id,
+            title = objectToMap.title.orEmpty(),
             popularity = objectToMap.popularity ?: 0f,
             overview = objectToMap.overview.orEmpty(),
             rating = objectToMap.voteAverage ?: 0f

@@ -12,10 +12,10 @@ import org.junit.Test
 class MovieSummaryMapperTest {
 
     @Test
-    fun map_id_test() {
+    fun map_movie_id_test() {
         // arrange
-        val id = 1L
-        val movieTable = MovieTable(id = id)
+        val movieId = 1L
+        val movieTable = MovieTable(movieId = movieId)
         val query = MovieSummaryQuery(movieTable = movieTable)
         val mapper = MovieSummaryMapper(ImagePathMovieMapper())
 
@@ -23,7 +23,7 @@ class MovieSummaryMapperTest {
         val result = mapper.map(query)
 
         // assert
-        assertEquals(id, result.id)
+        assertEquals(movieId, result.movieId)
     }
 
     @Test

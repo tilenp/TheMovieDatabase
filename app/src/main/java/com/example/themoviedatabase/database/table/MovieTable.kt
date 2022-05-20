@@ -1,12 +1,18 @@
 package com.example.themoviedatabase.database.table
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(
+    indices = [
+        Index(value = ["movieId"], unique = true)
+    ]
+)
 data class MovieTable(
-    @PrimaryKey
-    val id: Long = 0L,
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0,
+    val movieId: Long = 0L,
     val title: String = "",
     val popularity: Float = 0f,
     val overview: String = "",
