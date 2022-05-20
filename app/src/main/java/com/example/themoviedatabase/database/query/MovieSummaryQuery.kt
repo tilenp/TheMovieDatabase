@@ -5,13 +5,13 @@ import androidx.room.Relation
 import com.example.themoviedatabase.database.table.ImagePathTable
 import com.example.themoviedatabase.database.table.MovieTable
 
-data class MovieSummaryQuery (
+data class MovieSummaryQuery(
     @Embedded
-    val movieTable: MovieTable,
+    val movieTable: MovieTable = MovieTable(),
 
     @Relation(
         parentColumn = "id",
         entityColumn = "itemId"
     )
-    val imagePaths: List<ImagePathTable>?
+    val imagePaths: List<ImagePathTable>? = null
 )
