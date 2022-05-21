@@ -10,13 +10,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layout
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.Dp
 
 @Composable
 fun RatingView(
     modifier: Modifier,
-    rating: String
+    rating: String,
+    style: TextStyle,
+    padding: Dp
 ) {
     Box(
         contentAlignment = Alignment.Center,
@@ -46,8 +49,8 @@ fun RatingView(
             text = rating,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colors.background,
-            style = MaterialTheme.typography.caption,
-            modifier = Modifier.padding(4.dp)
+            style = style,
+            modifier = Modifier.padding(padding)
         )
     }
 }

@@ -23,10 +23,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.rememberImagePainter
 import com.example.themoviedatabase.R
 import com.example.themoviedatabase.model.domain.MovieSummary
-import com.example.themoviedatabase.ui.common.ErrorView
-import com.example.themoviedatabase.ui.common.MyButton
-import com.example.themoviedatabase.ui.common.MyTopBar
-import com.example.themoviedatabase.ui.common.RatingView
+import com.example.themoviedatabase.ui.common.*
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
@@ -125,7 +122,9 @@ fun MovieItem(
                     .align(Alignment.TopEnd)
                     .padding(top = 8.dp, end = 8.dp)
                     .testTag("RatingView${movie.movieId}"),
-                rating = movie.rating.toString()
+                rating = movie.rating.toString(),
+                style = MaterialTheme.typography.caption,
+                padding = 4.dp
             )
             MovieInfo(
                 modifier = Modifier

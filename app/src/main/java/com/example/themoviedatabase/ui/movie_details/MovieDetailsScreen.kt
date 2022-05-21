@@ -32,7 +32,8 @@ fun MovieDetailsScreen(
         modifier = modifier
     ) { padding ->
         Column(
-            modifier = Modifier.padding(padding)
+            modifier = Modifier
+                .padding(padding)
                 .verticalScroll(rememberScrollState())
         ) {
             BackdropImage(
@@ -45,10 +46,10 @@ fun MovieDetailsScreen(
                     .testTag("MovieTitle${uiState.movieDetails.movieId}"),
                 title = uiState.movieDetails.title.asString(context)
             )
-            MovieInfo(
+            MovieOverview(
                 modifier = Modifier
                     .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 8.dp),
-                movieDetails = uiState.movieDetails
+                overview = uiState.movieDetails.overview.asString(context)
             )
         }
     }
@@ -80,7 +81,9 @@ private fun BackdropImage(
                 .align(Alignment.BottomEnd)
                 .padding(bottom = 8.dp, end = 8.dp)
                 .testTag("RatingView${movie.movieId}"),
-            rating = movie.rating.toString()
+            rating = movie.rating.toString(),
+            style = MaterialTheme.typography.body2,
+            padding = 5.dp
         )
     }
 }
@@ -117,12 +120,11 @@ private fun MovieInfo(
     ) {
         Image(
             modifier = Modifier
-                .weight(1f)
-                .height(300.dp)
+                .height(250.dp)
                 .testTag("MoviePoster${movieDetails.movieId}"),
             painter = painter,
             contentDescription = "poster Image",
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.FillHeight,
         )
         MovieOverview(
             modifier = Modifier
@@ -137,11 +139,13 @@ private fun MovieInfo(
 private fun MovieOverview(
     modifier: Modifier,
     overview: String
-) = Text(
-    modifier = modifier,
-    text = overview,
-    color = MaterialTheme.colors.onBackground,
-    style = MaterialTheme.typography.body1,
-    maxLines = 15,
-    overflow = TextOverflow.Ellipsis
-)
+) {
+    Text(
+        modifier = modifier,
+        text = overview,
+        color = MaterialTheme.colors.onBackground,
+        style = MaterialTheme.typography.body1,
+        maxLines = 15,
+        overflow = TextOverflow.Ellipsis
+    )
+}
