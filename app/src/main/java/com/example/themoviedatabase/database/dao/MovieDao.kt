@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import androidx.room.*
 import com.example.themoviedatabase.database.query.MovieSummaryQuery
 import com.example.themoviedatabase.database.table.MovieTable
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MovieDao {
@@ -21,4 +22,12 @@ interface MovieDao {
 
     @Query("DELETE FROM MovieTable")
     suspend fun deleteMovies()
+
+    @Transaction
+    @Query("""
+        SELECT * 
+        FROM MovieTable 
+        WHERE MovieTable.movieId = :movieId
+    """)
+    fun getCharacterWithId(movieId: Long): Flow<MovieSummaryQuery>
 }

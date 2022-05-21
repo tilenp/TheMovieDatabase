@@ -3,6 +3,7 @@ package com.example.themoviedatabase.ui.movies_screen
 import ComposablePagedList
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -33,7 +34,8 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 @Composable
 fun MoviesScreen(
     modifier: Modifier = Modifier,
-    viewModel: MoviesViewModel
+    viewModel: MoviesViewModel,
+    onMovieClick: (Long) -> Unit = {}
 ) {
 
     val systemUiController = rememberSystemUiController()
@@ -59,6 +61,7 @@ fun MoviesScreen(
             MovieListContent(
                 modifier = Modifier.padding(start = 4.dp, end = 4.dp),
                 pagesMovies = pagedMovies,
+                onMovieClick = onMovieClick,
                 getErrorMessageId = { viewModel.getErrorMessage(it) }
             )
         }
@@ -69,6 +72,7 @@ fun MoviesScreen(
 fun MovieListContent(
     modifier: Modifier,
     pagesMovies: LazyPagingItems<MovieSummary>,
+    onMovieClick: (Long) -> Unit = {},
     getErrorMessageId: (Throwable) -> Int
 ) {
     ComposablePagedList(
@@ -77,7 +81,8 @@ fun MovieListContent(
         itemContent = { movie ->
             MovieItem(
                 modifier = Modifier.height(300.dp),
-                movie = movie
+                movie = movie,
+                onMovieClick = onMovieClick
             )
         },
         errorContent = { modifier, throwable, retry ->
@@ -102,14 +107,14 @@ fun MovieListContent(
 fun MovieItem(
     modifier: Modifier,
     movie: MovieSummary,
-    onMovieClicked: (Int) -> Unit = {}
+    onMovieClick: (Long) -> Unit = {}
 ) {
     Surface(
         shape = RoundedCornerShape(8.dp),
         elevation = 4.dp
     ) {
         Box(
-            modifier = modifier,
+            modifier = modifier.clickable { onMovieClick(movie.movieId) },
         ) {
             MovieImage(
                 modifier = Modifier
