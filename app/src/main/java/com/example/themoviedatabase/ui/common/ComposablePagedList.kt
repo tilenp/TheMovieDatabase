@@ -1,4 +1,5 @@
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -23,6 +24,7 @@ fun <T : Any> ComposablePagedList(
         columns = GridCells.Fixed(2),
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp),
+        contentPadding = PaddingValues(start = 4.dp, top = 8.dp, end = 4.dp, bottom = 8.dp)
     ) {
         items(pagedItems.itemCount) { index ->
             pagedItems[index]?.let { itemContent(it) }
