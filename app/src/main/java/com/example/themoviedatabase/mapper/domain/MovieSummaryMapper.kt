@@ -11,18 +11,16 @@ import javax.inject.Singleton
 
 @Singleton
 class MovieSummaryMapper @Inject constructor(
-    private val imagePathMapper: Mapper<ImagePathTable, ImagePath>
+    private val imagePathMapper: Mapper<String, ImagePath>
 ) : Mapper<MovieSummaryQuery, MovieSummary> {
 
     override fun map(objectToMap: MovieSummaryQuery): MovieSummary {
-        val url = objectToMap.imagePaths?.firstOrNull() ?: ImagePathTable()
+        val url = objectToMap.imagePaths?.firstOrNull().orEmpty()
         return MovieSummary(
-            movieId = objectToMap.movieTable.movieId,
-            title = UIText(string = objectToMap.movieTable.title),
-            popularity = objectToMap.movieTable.popularity,
-            overview = UIText(string = objectToMap.movieTable.overview),
+            movieId = objectToMap.movieId,
+            title = UIText(string = objectToMap.title),
             posterPath = imagePathMapper.map(url),
-            rating = objectToMap.movieTable.rating
+            rating = objectToMap.rating
         )
     }
 }

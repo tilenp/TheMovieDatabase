@@ -8,11 +8,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ImagePathMovieMapper @Inject constructor() : Mapper<ImagePathTable, ImagePath> {
+class ImagePathMovieMapper @Inject constructor() : Mapper<String, ImagePath> {
 
-    override fun map(objectToMap: ImagePathTable): ImagePath {
+    override fun map(objectToMap: String): ImagePath {
         return ImagePath(
-            url = objectToMap.path,
+            url = objectToMap,
             placeholder = R.drawable.ic_photo,
             backup = R.drawable.ic_broken_image
         )

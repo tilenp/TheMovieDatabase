@@ -115,7 +115,7 @@ class MovieRemoteMediator constructor(
         return state.pages.lastOrNull() { it.data.isNotEmpty() }?.data?.lastOrNull()
             ?.let { movieSummary ->
                 // Get the remote keys of the last item retrieved
-                pagingKeysDao.getPagingKeysForMovieId(movieSummary.movieTable.movieId)
+                pagingKeysDao.getPagingKeysForMovieId(movieSummary.movieId)
             }
     }
 
@@ -125,7 +125,7 @@ class MovieRemoteMediator constructor(
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
             ?.let { movieSummary ->
                 // Get the remote keys of the first items retrieved
-                pagingKeysDao.getPagingKeysForMovieId(movieSummary.movieTable.movieId)
+                pagingKeysDao.getPagingKeysForMovieId(movieSummary.movieId)
             }
     }
 
@@ -135,7 +135,7 @@ class MovieRemoteMediator constructor(
         // The paging library is trying to load data after the anchor position
         // Get the item closest to the anchor position
         return state.anchorPosition?.let { position ->
-            state.closestItemToPosition(position)?.movieTable?.movieId?.let { movieId ->
+            state.closestItemToPosition(position)?.movieId?.let { movieId ->
                 pagingKeysDao.getPagingKeysForMovieId(movieId)
             }
         }

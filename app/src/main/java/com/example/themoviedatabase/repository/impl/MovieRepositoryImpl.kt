@@ -4,8 +4,9 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.themoviedatabase.cache.MovieCache
 import com.example.themoviedatabase.database.dao.MovieDao
-import com.example.themoviedatabase.database.query.MovieSummaryQuery
+import com.example.themoviedatabase.database.query.MovieDetailsQuery
 import com.example.themoviedatabase.mapper.Mapper
+import com.example.themoviedatabase.model.domain.MovieDetails
 import com.example.themoviedatabase.model.domain.MovieSummary
 import com.example.themoviedatabase.network.MovieRequestQuery
 import com.example.themoviedatabase.repository.MovieRepository
@@ -20,8 +21,8 @@ class MovieRepositoryImpl @Inject constructor(
     private val movieService: MovieService,
     private val movieCache: MovieCache,
     private val movieDao: MovieDao,
-    private val movieSummaryMapper: Mapper<MovieSummaryQuery, MovieSummary>
-): MovieRepository {
+    private val movieDetailsMapper: Mapper<MovieDetailsQuery, MovieDetails>
+) : MovieRepository {
 
     override fun getMovieSummaries(
         pagingConfig: PagingConfig,
@@ -41,8 +42,8 @@ class MovieRepositoryImpl @Inject constructor(
         return movieCache.getSelectedMovieId()
     }
 
-    override fun getMovieById(movieId: Long): Flow<MovieSummary> {
-        return movieDao.getCharacterWithId(movieId)
-            .map { movieSummaryQuery -> movieSummaryMapper.map(movieSummaryQuery) }
+    override fun getMovieDetailsWithId(movieId: Long): Flow<MovieDetails> {
+        return movieDao.getMovieDetailsWithId(movieId)
+            .map { movieDetailsQuery -> movieDetailsMapper.map(movieDetailsQuery) }
     }
 }

@@ -2,6 +2,7 @@ package com.example.themoviedatabase.repository
 
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.example.themoviedatabase.model.domain.MovieDetails
 import com.example.themoviedatabase.model.domain.MovieSummary
 import com.example.themoviedatabase.network.MovieRequestQuery
 import kotlinx.coroutines.flow.Flow
@@ -17,5 +18,5 @@ interface MovieRepository {
 
     fun getSelectedMovieId(): Flow<Long>
 
-    fun getMovieById(movieId: Long): Flow<MovieSummary>
+    fun getMovieDetailsWithId(movieId: Long): Flow<MovieDetails>
 }

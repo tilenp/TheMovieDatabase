@@ -1,17 +1,17 @@
 package com.example.themoviedatabase.database.query
 
-import androidx.room.Embedded
 import androidx.room.Relation
 import com.example.themoviedatabase.database.table.ImagePathTable
-import com.example.themoviedatabase.database.table.MovieTable
 
 data class MovieSummaryQuery(
-    @Embedded
-    val movieTable: MovieTable = MovieTable(),
-
+    val movieId: Long = 0L,
+    val title: String = "",
+    val rating: Float = 0f,
     @Relation(
+        entity = ImagePathTable::class,
         parentColumn = "movieId",
-        entityColumn = "itemId"
+        entityColumn = "itemId",
+        projection = ["path"]
     )
-    val imagePaths: List<ImagePathTable>? = null
+    val imagePaths: List<String>? = null
 )

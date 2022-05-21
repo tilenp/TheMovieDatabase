@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
-import com.example.themoviedatabase.model.domain.MovieSummary
+import com.example.themoviedatabase.model.domain.MovieDetails
 
 @Composable
 fun MovieDetailsScreen(
@@ -19,20 +19,20 @@ fun MovieDetailsScreen(
     val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
     MovieImage(
         modifier = Modifier.height(300.dp),
-        movie = uiState.movieSummary
+        movie = uiState.movieDetails
     )
 }
 
 @Composable
 private fun MovieImage(
     modifier: Modifier,
-    movie: MovieSummary
+    movie: MovieDetails
 ) {
     val painter =
-        rememberImagePainter(data = movie.posterPath.medium) {
+        rememberImagePainter(data = movie.backdropPath.medium) {
             crossfade(durationMillis = 200)
-            placeholder(movie.posterPath.placeholder)
-            error(movie.posterPath.backup)
+            placeholder(movie.backdropPath.placeholder)
+            error(movie.backdropPath.backup)
         }
     Image(
         modifier = modifier,
