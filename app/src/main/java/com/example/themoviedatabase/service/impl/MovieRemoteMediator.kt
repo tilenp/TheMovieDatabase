@@ -7,6 +7,7 @@ import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.example.themoviedatabase.database.MovieDatabase
 import com.example.themoviedatabase.database.query.MovieSummaryQuery
+import com.example.themoviedatabase.database.table.BackdropImageTable
 import com.example.themoviedatabase.database.table.ImagePathTable
 import com.example.themoviedatabase.database.table.MoviePagingKeysTable
 import com.example.themoviedatabase.database.table.MovieTable
@@ -23,9 +24,11 @@ class MovieRemoteMediator constructor(
     private val database: MovieDatabase,
     private val queryBuilder: MovieRequestQuery.Builder,
     private val movieTableMapper: Mapper<MovieDTO, MovieTable>,
+    private val backdropImageTableMapper: Mapper<MovieDTO, BackdropImageTable>,
     private val imagePathTableMapper: Mapper<MovieDTO, ImagePathTable>
 ) : RemoteMediator<Int, MovieSummaryQuery>() {
 
+    private val backdropImageDao = database.getBackdropImageDao()
     private val imagePathDao = database.getImagePathDao()
     private val movieDao = database.getMovieDao()
     private val pagingKeysDao = database.getMoviePagingKeysDao()
@@ -84,6 +87,7 @@ class MovieRemoteMediator constructor(
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
                     movieDao.deleteMovies()
+                    backdropImageDao.deleteBackdropImages()
                     imagePathDao.deleteImagePaths()
                 }
 
@@ -93,6 +97,7 @@ class MovieRemoteMediator constructor(
                     MoviePagingKeysTable(movieId = movieDto.id, previousKey = prevKey, nextKey = nextKey)
                 }
                 movieDao.insertMovies(response.results.map { movieTableMapper.map(it) })
+                backdropImageDao.insertBackdropImages(response.results.map { backdropImageTableMapper.map(it) })
                 imagePathDao.insertImagePaths(response.results.map { imagePathTableMapper.map(it) })
                 pagingKeysDao.insertPagingKeys(keys)
             }

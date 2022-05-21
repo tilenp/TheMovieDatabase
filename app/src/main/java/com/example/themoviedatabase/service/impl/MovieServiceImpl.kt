@@ -3,6 +3,7 @@ package com.example.themoviedatabase.service.impl
 import androidx.paging.*
 import com.example.themoviedatabase.database.MovieDatabase
 import com.example.themoviedatabase.database.query.MovieSummaryQuery
+import com.example.themoviedatabase.database.table.BackdropImageTable
 import com.example.themoviedatabase.database.table.ImagePathTable
 import com.example.themoviedatabase.database.table.MovieTable
 import com.example.themoviedatabase.mapper.Mapper
@@ -22,6 +23,7 @@ class MovieServiceImpl @Inject constructor(
     private val movieApi: MovieApi,
     private val database: MovieDatabase,
     private val movieTableMapper: Mapper<MovieDTO, MovieTable>,
+    private val backdropImageTableMapper: Mapper<MovieDTO, BackdropImageTable>,
     private val imagePathTableMapper: Mapper<MovieDTO, ImagePathTable>,
     private val movieSummaryMapper: Mapper<MovieSummaryQuery, MovieSummary>
 ) : MovieService {
@@ -37,6 +39,7 @@ class MovieServiceImpl @Inject constructor(
                 database = database,
                 queryBuilder = requestQuery,
                 movieTableMapper = movieTableMapper,
+                backdropImageTableMapper = backdropImageTableMapper,
                 imagePathTableMapper = imagePathTableMapper,
             ),
             pagingSourceFactory = {

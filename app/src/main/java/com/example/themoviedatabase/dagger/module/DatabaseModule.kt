@@ -2,6 +2,7 @@ package com.example.themoviedatabase.dagger.module
 
 import android.content.Context
 import com.example.themoviedatabase.database.MovieDatabase
+import com.example.themoviedatabase.database.dao.BackdropImageDao
 import com.example.themoviedatabase.database.dao.ImagePathDao
 import com.example.themoviedatabase.database.dao.MovieDao
 import com.example.themoviedatabase.database.dao.MoviePagingKeysDao
@@ -16,6 +17,12 @@ class DatabaseModule {
     @Provides
     fun providesMovieDatabase(context: Context): MovieDatabase {
         return MovieDatabase.getInstance(context)
+    }
+
+    @Singleton
+    @Provides
+    fun providesBackdropImageDao(database: MovieDatabase): BackdropImageDao {
+        return database.getBackdropImageDao()
     }
 
     @Singleton
