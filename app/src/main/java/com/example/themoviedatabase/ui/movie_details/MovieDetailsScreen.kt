@@ -19,10 +19,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.themoviedatabase.R
 import com.example.themoviedatabase.model.domain.ImagePath
@@ -78,6 +78,7 @@ private fun ShowMovieDetails(
     movieDetails: MovieDetails,
     onBackButtonClicked: () -> Unit
 ) {
+    val imageSize = dimensionResource(R.dimen.image_size)
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
@@ -85,7 +86,7 @@ private fun ShowMovieDetails(
         Backdrop(
             showBackButton = widthSizeClass != WindowWidthSizeClass.Expanded,
             modifier = Modifier
-                .height(300.dp),
+                .height(imageSize),
             imagePath = movieDetails.backdropPath,
             onBackButtonClicked = onBackButtonClicked
         )
@@ -100,6 +101,9 @@ private fun Backdrop(
     onBackButtonClicked: () -> Unit,
     showBackButton: Boolean
 ) {
+    val spacingM = dimensionResource(R.dimen.spacing_m)
+    val spacingL = dimensionResource(R.dimen.spacing_l)
+    val iconSize = dimensionResource(R.dimen.icon_size)
     val painter = rememberImagePainter(data = imagePath.medium) {
         crossfade(durationMillis = 200)
         placeholder(imagePath.placeholder)
@@ -121,15 +125,15 @@ private fun Backdrop(
             IconButton(
                 onClick = onBackButtonClicked,
                 modifier = Modifier
-                    .padding(start = 8.dp, top = 8.dp)
+                    .padding(start = spacingM, top = spacingM)
                     .testTag("BackdropIconButton"),
             ) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
                     contentDescription = null,
                     modifier = Modifier
-                        .size(48.dp)
-                        .padding(12.dp),
+                        .size(iconSize)
+                        .padding(spacingL),
                     tint = Color.White
                 )
             }
@@ -143,10 +147,12 @@ private fun MovieInfo(
     movie: MovieDetails
 ) {
     val context = LocalContext.current
+    val spacingM = dimensionResource(R.dimen.spacing_m)
+    val spacingXL = dimensionResource(R.dimen.spacing_xl)
     Column(
         modifier = modifier
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+            .padding(spacingXL),
+        verticalArrangement = Arrangement.spacedBy(spacingM)
     ) {
         MovieTitle(title = movie.title.asString(context))
         MovieRatingView(
@@ -180,12 +186,15 @@ private fun MovieRatingView(
     rating: String,
     ratingCount: String
 ) {
+    val spacingS = dimensionResource(R.dimen.spacing_s)
+    val spacingM = dimensionResource(R.dimen.spacing_m)
+    val spacingL = dimensionResource(R.dimen.spacing_l)
     Row(
         modifier = modifier
-            .padding(top = 12.dp)
+            .padding(top = spacingL)
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(spacingM)
     ) {
         RatingView(
             modifier = Modifier
@@ -193,7 +202,7 @@ private fun MovieRatingView(
                 .testTag("RatingView${rating}"),
             rating = rating,
             style = MaterialTheme.typography.body2,
-            padding = 5.dp
+            padding = spacingS
         )
         Text(
             modifier = Modifier

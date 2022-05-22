@@ -7,9 +7,10 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.dimensionResource
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import com.example.themoviedatabase.R
 import com.example.themoviedatabase.ui.common.LoadingView
 
 @Composable
@@ -20,12 +21,14 @@ fun <T : Any> ComposablePagedGrid(
     itemContent: @Composable (T) -> Unit,
     errorContent: @Composable (Modifier, Throwable, () -> Unit) -> Unit
 ) {
+    val spacingS = dimensionResource(R.dimen.spacing_s)
+    val spacingM = dimensionResource(R.dimen.spacing_m)
     LazyVerticalGrid(
         modifier = modifier,
         columns = GridCells.Fixed(columns),
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
-        verticalArrangement = Arrangement.spacedBy(4.dp),
-        contentPadding = PaddingValues(start = 4.dp, top = 8.dp, end = 4.dp, bottom = 8.dp)
+        horizontalArrangement = Arrangement.spacedBy(spacingS),
+        verticalArrangement = Arrangement.spacedBy(spacingS),
+        contentPadding = PaddingValues(start = spacingS, top = spacingM, end = spacingS, bottom = spacingM)
     ) {
         items(pagedItems.itemCount) { index ->
             pagedItems[index]?.let { itemContent(it) }

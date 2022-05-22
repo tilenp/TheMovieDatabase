@@ -9,10 +9,11 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.example.themoviedatabase.R
 import com.example.themoviedatabase.ui.theme.TheMovieDatabaseTheme
 
 @Composable
@@ -21,6 +22,7 @@ fun ErrorView(
     message: String,
     buttonsContent: @Composable () -> Unit
 ) {
+    val spacingM = dimensionResource(R.dimen.spacing_m)
     ConstraintLayout(
         modifier = modifier
     ) {
@@ -45,7 +47,7 @@ fun ErrorView(
                     end.linkTo(parent.end)
                     bottom.linkTo(parent.bottom)
                 }
-                .padding(top = 8.dp)
+                .padding(top = spacingM)
         ) {
             buttonsContent()
         }

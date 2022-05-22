@@ -17,9 +17,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import coil.compose.rememberImagePainter
 import com.example.themoviedatabase.R
@@ -36,6 +36,8 @@ fun MovieListContent(
     onMovieClick: (Long) -> Unit = {},
     getErrorMessageId: (Throwable) -> Int
 ) {
+    val imageSize = dimensionResource(R.dimen.image_size)
+    val spacingL = dimensionResource(R.dimen.spacing_l)
     ComposablePagedGrid(
         columns = columns,
         modifier = modifier,
@@ -43,7 +45,7 @@ fun MovieListContent(
         itemContent = { movie ->
             MovieItem(
                 modifier = Modifier
-                    .height(300.dp)
+                    .height(imageSize)
                     .testTag("MovieItem"),
                 movie = movie,
                 onMovieClick = onMovieClick
@@ -52,7 +54,7 @@ fun MovieListContent(
         errorContent = { modifier, throwable, retry ->
             ErrorView(
                 modifier = modifier
-                    .padding(12.dp)
+                    .padding(spacingL)
                     .testTag("MoviesScreenErrorView"),
                 message = stringResource(getErrorMessageId(throwable)),
                 buttonsContent = {
@@ -73,9 +75,11 @@ private fun MovieItem(
     movie: MovieSummary,
     onMovieClick: (Long) -> Unit = {}
 ) {
+    val spacingS = dimensionResource(R.dimen.spacing_s)
+    val spacingM = dimensionResource(R.dimen.spacing_m)
     Surface(
-        shape = RoundedCornerShape(8.dp),
-        elevation = 4.dp
+        shape = RoundedCornerShape(spacingM),
+        elevation = spacingS
     ) {
         Box(
             modifier = modifier.clickable { onMovieClick(movie.movieId) },
@@ -89,11 +93,11 @@ private fun MovieItem(
             RatingView(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .padding(top = 8.dp, end = 8.dp)
+                    .padding(top = spacingM, end = spacingM)
                     .testTag("RatingView${movie.movieId}"),
                 rating = movie.rating.toString(),
                 style = MaterialTheme.typography.caption,
-                padding = 4.dp
+                padding = spacingS
             )
             MovieInfo(
                 modifier = Modifier
@@ -131,9 +135,11 @@ private fun MovieInfo(
     movie: MovieSummary
 ) {
     val context = LocalContext.current
+    val spacingS = dimensionResource(R.dimen.spacing_s)
+    val spacingM = dimensionResource(R.dimen.spacing_m)
     Column(
-        verticalArrangement = Arrangement.spacedBy(4.dp),
-        modifier = modifier.padding(8.dp)
+        verticalArrangement = Arrangement.spacedBy(spacingS),
+        modifier = modifier.padding(spacingM)
     ) {
         MovieTitle(
             modifier = Modifier

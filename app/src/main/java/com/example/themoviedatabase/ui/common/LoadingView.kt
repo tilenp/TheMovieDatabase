@@ -9,18 +9,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import com.example.themoviedatabase.R
 import com.example.themoviedatabase.ui.theme.TheMovieDatabaseTheme
 
 @Composable
 fun LoadingView(
     modifier: Modifier = Modifier
 ) {
+    val spacingXL = dimensionResource(R.dimen.spacing_xl)
     CircularProgressIndicator(
         modifier = modifier
             .wrapContentSize(Alignment.Center)
-            .padding(16.dp)
+            .padding(spacingXL)
             .testTag("LoadingIndicator"),
         color = MaterialTheme.colors.secondary
     )
