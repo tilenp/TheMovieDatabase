@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -88,14 +89,17 @@ private fun Backdrop(
     ) {
         Image(
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxSize()
+                .testTag("BackdropImage"),
             painter = painter,
             contentDescription = null,
             contentScale = ContentScale.Crop
         )
         IconButton(
             onClick = onBackButtonClicked,
-            modifier = Modifier.padding(start = 8.dp, top = 8.dp)
+            modifier = Modifier
+                .padding(start = 8.dp, top = 8.dp)
+                .testTag("BackdropIconButton"),
         ) {
             Icon(
                 imageVector = Icons.Filled.ArrowBack,
@@ -115,7 +119,8 @@ private fun MovieTitle(
     title: String
 ) {
     Text(
-        modifier = modifier,
+        modifier = modifier
+            .testTag("MovieTitle${title}"),
         text = title,
         color = MaterialTheme.colors.onBackground,
         style = MaterialTheme.typography.h5,
@@ -139,14 +144,16 @@ private fun MovieRatingView(
     ) {
         RatingView(
             modifier = Modifier
-                .align(alignment = Alignment.CenterVertically),
+                .align(alignment = Alignment.CenterVertically)
+                .testTag("RatingView${rating}"),
             rating = rating,
             style = MaterialTheme.typography.body2,
             padding = 5.dp
         )
         Text(
             modifier = Modifier
-                .align(alignment = Alignment.CenterVertically),
+                .align(alignment = Alignment.CenterVertically)
+                .testTag("RatingCount${ratingCount}"),
             text = ratingCount,
             color = MaterialTheme.colors.onBackground,
             style = MaterialTheme.typography.caption,
@@ -159,7 +166,8 @@ private fun MovieOverviewTitle(
     modifier: Modifier = Modifier,
 ) {
     Text(
-        modifier = modifier,
+        modifier = modifier
+            .testTag("MovieOverviewTitle"),
         text = stringResource(R.string.Overview),
         color = MaterialTheme.colors.onBackground,
         style = MaterialTheme.typography.h6,
@@ -174,7 +182,8 @@ private fun MovieOverviewBody(
     overview: String
 ) {
     Text(
-        modifier = modifier,
+        modifier = modifier
+            .testTag("MovieOverviewBody"),
         text = overview,
         color = MaterialTheme.colors.onBackground,
         style = MaterialTheme.typography.body2,
