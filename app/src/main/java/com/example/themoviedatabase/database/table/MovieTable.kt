@@ -16,5 +16,6 @@ data class MovieTable(
     val title: String = "",
     val popularity: Float = 0f,
     val overview: String = "",
+    val ratingCount: Long = 0L,
     val rating: Float = 0f
 )

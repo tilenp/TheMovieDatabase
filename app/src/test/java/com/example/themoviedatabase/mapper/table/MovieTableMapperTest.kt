@@ -102,6 +102,33 @@ class MovieTableMapperTest {
     }
 
     @Test
+    fun map_rating_count_test() {
+        // arrange
+        val voteCount = 1L
+        val movieDto = MovieDTO(voteCount = voteCount)
+        val mapper = MovieTableMapper()
+
+        // act
+        val result = mapper.map(movieDto)
+
+        // assert
+        assertEquals(voteCount, result.ratingCount)
+    }
+
+    @Test
+    fun map_null_rating_count_test() {
+        // arrange
+        val movieDto = MovieDTO(voteCount = null)
+        val mapper = MovieTableMapper()
+
+        // act
+        val result = mapper.map(movieDto)
+
+        // assert
+        assertEquals(0L, result.ratingCount)
+    }
+
+    @Test
     fun map_rating_test() {
         // arrange
         val voteAverage = 1f

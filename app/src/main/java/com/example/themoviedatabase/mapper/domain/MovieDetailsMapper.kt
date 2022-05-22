@@ -1,10 +1,13 @@
 package com.example.themoviedatabase.mapper.domain
 
+import com.example.themoviedatabase.R
 import com.example.themoviedatabase.database.query.MovieDetailsQuery
 import com.example.themoviedatabase.mapper.Mapper
 import com.example.themoviedatabase.model.domain.ImagePath
 import com.example.themoviedatabase.model.domain.MovieDetails
+import com.example.themoviedatabase.utils.UIPlural
 import com.example.themoviedatabase.utils.UIText
+import com.example.themoviedatabase.utils.thousandFormat
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,6 +23,11 @@ class MovieDetailsMapper @Inject constructor(
             title = UIText(string = objectToMap.movieTable.title),
             backdropPath = imagePathMapper.map(backdropPath),
             rating = objectToMap.movieTable.rating,
+            ratingCount = UIPlural(
+                pluralId = R.plurals.rating_count_format,
+                formatArgs = objectToMap.movieTable.ratingCount.thousandFormat(),
+                count = objectToMap.movieTable.ratingCount
+            ),
             overview = UIText(string = objectToMap.movieTable.overview)
         )
     }

@@ -63,7 +63,7 @@ private fun MovieInfo(
         MovieTitle(title = movie.title.asString(context))
         MovieRatingView(
             rating = movie.rating.toString(),
-            reviewCountFormatted = "(689 reviews)"
+            ratingCount = movie.ratingCount.asString(context)
         )
         MovieOverviewTitle()
         MovieOverviewBody(overview = movie.overview.asString(context))
@@ -127,7 +127,7 @@ private fun MovieTitle(
 private fun MovieRatingView(
     modifier: Modifier = Modifier,
     rating: String,
-    reviewCountFormatted: String
+    ratingCount: String
 ) {
     Row(
         modifier = modifier
@@ -146,7 +146,7 @@ private fun MovieRatingView(
         Text(
             modifier = Modifier
                 .align(alignment = Alignment.CenterVertically),
-            text = reviewCountFormatted,
+            text = ratingCount,
             color = MaterialTheme.colors.onBackground,
             style = MaterialTheme.typography.caption,
         )

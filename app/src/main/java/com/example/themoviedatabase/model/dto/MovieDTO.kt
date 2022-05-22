@@ -7,5 +7,6 @@ data class MovieDTO(
     val title: String? = null,
     val overview: String? = null,
     val popularity: Float? = null,
+    val voteCount: Long? = null,
     val voteAverage: Float? = null,
 )
