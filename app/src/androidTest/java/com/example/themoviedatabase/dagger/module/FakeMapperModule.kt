@@ -39,7 +39,7 @@ interface FakeMapperModule {
     fun bindsImagePathMovieMapper(imagePathMovieMapper: ImagePathMovieMapper): Mapper<String, ImagePath>
 
     @Binds
-    fun bindsMovieDetailsMapper(movieDetailsMapper: MovieDetailsMapper): Mapper<MovieDetailsQuery?, MovieDetails>
+    fun bindsMovieDetailsMapper(movieDetailsMapper: MovieDetailsMapper): Mapper<MovieDetailsQuery, MovieDetails>
 
     @Binds
     fun bindsMovieSummaryMapper(movieSummaryMapper: MovieSummaryMapper): Mapper<MovieSummaryQuery, MovieSummary>

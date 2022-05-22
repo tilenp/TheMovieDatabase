@@ -12,6 +12,7 @@ import com.example.themoviedatabase.network.MovieRequestQuery
 import com.example.themoviedatabase.repository.MovieRepository
 import com.example.themoviedatabase.service.MovieService
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -44,6 +45,7 @@ class MovieRepositoryImpl @Inject constructor(
 
     override fun getMovieDetailsWithId(movieId: Long): Flow<MovieDetails> {
         return movieDao.getMovieDetailsWithId(movieId)
+            .filterNotNull()
             .map { movieDetailsQuery -> movieDetailsMapper.map(movieDetailsQuery) }
     }
 }

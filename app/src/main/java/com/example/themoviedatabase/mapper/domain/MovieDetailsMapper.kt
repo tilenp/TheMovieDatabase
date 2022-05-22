@@ -14,23 +14,21 @@ import javax.inject.Singleton
 @Singleton
 class MovieDetailsMapper @Inject constructor(
     private val imagePathMapper: Mapper<String, ImagePath>
-) : Mapper<MovieDetailsQuery?, MovieDetails> {
+) : Mapper<MovieDetailsQuery, MovieDetails> {
 
-    override fun map(objectToMap: MovieDetailsQuery?): MovieDetails {
-        return objectToMap?.let {
-            val backdropPath = objectToMap.backdropPaths?.firstOrNull().orEmpty()
-            MovieDetails(
-                movieId = objectToMap.movieTable.movieId,
-                title = UIText(string = objectToMap.movieTable.title),
-                backdropPath = imagePathMapper.map(backdropPath),
-                rating = objectToMap.movieTable.rating,
-                ratingCount = UIPlural(
-                    pluralId = R.plurals.rating_count_format,
-                    formatArgs = objectToMap.movieTable.ratingCount.thousandFormat(),
-                    count = objectToMap.movieTable.ratingCount
-                ),
-                overview = UIText(string = objectToMap.movieTable.overview)
-            )
-        } ?: MovieDetails()
+    override fun map(objectToMap: MovieDetailsQuery): MovieDetails {
+        val backdropPath = objectToMap.backdropPaths?.firstOrNull().orEmpty()
+        return MovieDetails(
+            movieId = objectToMap.movieTable.movieId,
+            title = UIText(string = objectToMap.movieTable.title),
+            backdropPath = imagePathMapper.map(backdropPath),
+            rating = objectToMap.movieTable.rating,
+            ratingCount = UIPlural(
+                pluralId = R.plurals.rating_count_format,
+                formatArgs = objectToMap.movieTable.ratingCount.thousandFormat(),
+                count = objectToMap.movieTable.ratingCount
+            ),
+            overview = UIText(string = objectToMap.movieTable.overview)
+        )
     }
 }
