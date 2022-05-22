@@ -4,12 +4,14 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,26 +29,66 @@ import com.example.themoviedatabase.ui.common.RatingView
 
 @Composable
 fun MovieDetailsScreen(
+    widthSizeClass: WindowWidthSizeClass,
     modifier: Modifier = Modifier,
-    viewModel: MovieDetailsViewModel,
+    uiState: MovieDetailsState,
     onBackButtonClicked: () -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
-    Scaffold(
+    Column(
         modifier = modifier
-    ) { padding ->
-        Column(
-            modifier = modifier
-                .padding(padding)
-                .verticalScroll(rememberScrollState())
-        ) {
-            Backdrop(
+            .verticalScroll(rememberScrollState())
+    ) {
+        Backdrop(
+            showBackButton = widthSizeClass != WindowWidthSizeClass.Expanded,
+            modifier = Modifier
+                .height(300.dp),
+            imagePath = uiState.movieDetails.backdropPath,
+            onBackButtonClicked = onBackButtonClicked
+        )
+        MovieInfo(movie = uiState.movieDetails)
+    }
+}
+
+@Composable
+private fun Backdrop(
+    modifier: Modifier = Modifier,
+    imagePath: ImagePath,
+    onBackButtonClicked: () -> Unit,
+    showBackButton: Boolean
+) {
+    val painter = rememberImagePainter(data = imagePath.medium) {
+        crossfade(durationMillis = 200)
+        placeholder(imagePath.placeholder)
+        error(imagePath.backup)
+    }
+    Box(
+        modifier
+            .fillMaxWidth()
+    ) {
+        Image(
+            modifier = Modifier
+                .fillMaxSize()
+                .testTag("BackdropImage"),
+            painter = painter,
+            contentDescription = null,
+            contentScale = ContentScale.Crop
+        )
+        if (showBackButton) {
+            IconButton(
+                onClick = onBackButtonClicked,
                 modifier = Modifier
-                    .height(300.dp),
-                imagePath = uiState.movieDetails.backdropPath,
-                onBackButtonClicked = onBackButtonClicked
-            )
-            MovieInfo(movie = uiState.movieDetails)
+                    .padding(start = 8.dp, top = 8.dp)
+                    .testTag("BackdropIconButton"),
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(48.dp)
+                        .padding(12.dp),
+                    tint = Color.White
+                )
+            }
         }
     }
 }
@@ -69,47 +111,6 @@ private fun MovieInfo(
         )
         MovieOverviewTitle()
         MovieOverviewBody(overview = movie.overview.asString(context))
-    }
-}
-
-@Composable
-private fun Backdrop(
-    modifier: Modifier = Modifier,
-    imagePath: ImagePath,
-    onBackButtonClicked: () -> Unit = {}
-) {
-    val painter = rememberImagePainter(data = imagePath.medium) {
-        crossfade(durationMillis = 200)
-        placeholder(imagePath.placeholder)
-        error(imagePath.backup)
-    }
-    Box(
-        modifier
-            .fillMaxWidth()
-    ) {
-        Image(
-            modifier = Modifier
-                .fillMaxSize()
-                .testTag("BackdropImage"),
-            painter = painter,
-            contentDescription = null,
-            contentScale = ContentScale.Crop
-        )
-        IconButton(
-            onClick = onBackButtonClicked,
-            modifier = Modifier
-                .padding(start = 8.dp, top = 8.dp)
-                .testTag("BackdropIconButton"),
-        ) {
-            Icon(
-                imageVector = Icons.Filled.ArrowBack,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(48.dp)
-                    .padding(12.dp),
-                tint = Color.White
-            )
-        }
     }
 }
 

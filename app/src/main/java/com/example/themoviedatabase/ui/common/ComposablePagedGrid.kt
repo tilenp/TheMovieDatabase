@@ -13,7 +13,8 @@ import androidx.paging.compose.LazyPagingItems
 import com.example.themoviedatabase.ui.common.LoadingView
 
 @Composable
-fun <T : Any> ComposablePagedList(
+fun <T : Any> ComposablePagedGrid(
+    columns: Int,
     modifier: Modifier = Modifier,
     pagedItems: LazyPagingItems<T>,
     itemContent: @Composable (T) -> Unit,
@@ -21,7 +22,7 @@ fun <T : Any> ComposablePagedList(
 ) {
     LazyVerticalGrid(
         modifier = modifier,
-        columns = GridCells.Fixed(2),
+        columns = GridCells.Fixed(columns),
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp),
         contentPadding = PaddingValues(start = 4.dp, top = 8.dp, end = 4.dp, bottom = 8.dp)

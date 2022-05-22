@@ -1,14 +1,14 @@
 package com.example.themoviedatabase.ui.movies_screen
 
-import ComposablePagedList
+import ComposablePagedGrid
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,29 +23,23 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.rememberImagePainter
 import com.example.themoviedatabase.R
 import com.example.themoviedatabase.model.domain.MovieSummary
-import com.example.themoviedatabase.ui.common.*
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.example.themoviedatabase.ui.common.ErrorView
+import com.example.themoviedatabase.ui.common.MyButton
+import com.example.themoviedatabase.ui.common.MyTopBar
+import com.example.themoviedatabase.ui.common.RatingView
 
 @Composable
 fun MoviesScreen(
+    widthSizeClass: WindowWidthSizeClass,
     modifier: Modifier = Modifier,
     viewModel: MoviesViewModel,
     onMovieClick: (Long) -> Unit = {}
 ) {
-
-    val systemUiController = rememberSystemUiController()
-    val systemBarColor = MaterialTheme.colors.surface
-    val pagedMovies = viewModel.movies.collectAsLazyPagingItems()
-
-    SideEffect {
-        systemUiController.setStatusBarColor(
-            color = systemBarColor
-        )
-        systemUiController.setNavigationBarColor(
-            color = systemBarColor
-        )
+    val columns = when (widthSizeClass) {
+        WindowWidthSizeClass.Compact -> 2
+        else -> 3
     }
-
+    val pagedMovies = viewModel.movies.collectAsLazyPagingItems()
     Scaffold(
         topBar = {
             MyTopBar(
@@ -54,6 +48,7 @@ fun MoviesScreen(
         },
         content = { padding ->
             MovieListContent(
+                columns = columns,
                 modifier = modifier.padding(padding),
                 pagesMovies = pagedMovies,
                 onMovieClick = onMovieClick,
@@ -64,13 +59,15 @@ fun MoviesScreen(
 }
 
 @Composable
-private fun MovieListContent(
+fun MovieListContent(
+    columns: Int,
     modifier: Modifier = Modifier,
     pagesMovies: LazyPagingItems<MovieSummary>,
     onMovieClick: (Long) -> Unit = {},
     getErrorMessageId: (Throwable) -> Int
 ) {
-    ComposablePagedList(
+    ComposablePagedGrid(
+        columns = columns,
         modifier = modifier,
         pagedItems = pagesMovies,
         itemContent = { movie ->
