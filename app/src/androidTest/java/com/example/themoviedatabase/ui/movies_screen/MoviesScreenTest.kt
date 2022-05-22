@@ -23,10 +23,8 @@ import com.example.themoviedatabase.utils.FileReader
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.junit.After
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.*
+import org.junit.Assert.assertTrue
 import java.io.IOException
 import java.lang.reflect.Type
 import javax.inject.Inject
@@ -238,5 +236,34 @@ class MoviesScreenTest {
                     ),
                 useUnmergedTree = true
             ).assertExists()
+    }
+
+    @Test
+    fun movie_click_test() {
+        enqueueResponse(code = 200, fileName = "movies_popular_desc_page_1_200", false)
+        enqueueResponse(code = 200, fileName = "movies_popular_desc_end_reached_200", false)
+
+        var clicked = false
+        composeTestRule.setContent {
+            TheMovieDatabaseTheme {
+                Scaffold { padding ->
+                    MoviesScreen(
+                        modifier = Modifier.padding(padding),
+                        viewModel = viewModel,
+                        onMovieClick = { clicked = true }
+                    )
+                }
+            }
+        }
+
+        composeTestRule
+            .onNode(
+                hasTestTag("MovieTitle752623") and
+                    hasParent(
+                        hasTestTag("MovieItem")
+                    ),
+                useUnmergedTree = true
+            ).performClick()
+        assertTrue(clicked)
     }
 }
