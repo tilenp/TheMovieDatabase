@@ -12,7 +12,6 @@ import com.example.themoviedatabase.database.table.BackdropImageTable
 import com.example.themoviedatabase.database.table.ImagePathTable
 import com.example.themoviedatabase.database.table.MoviePagingKeysTable
 import com.example.themoviedatabase.database.table.MovieTable
-import com.example.themoviedatabase.utils.DATABASE_NAME
 
 @Database(
     entities = [
@@ -40,7 +39,7 @@ abstract class MovieDatabase : RoomDatabase() {
             }
 
         private fun buildDatabase(context: Context) =
-            Room.databaseBuilder(context, MovieDatabase::class.java, DATABASE_NAME)
+            Room.databaseBuilder(context, MovieDatabase::class.java, "MOVIE_DATABASE")
                 .build()
     }
 }

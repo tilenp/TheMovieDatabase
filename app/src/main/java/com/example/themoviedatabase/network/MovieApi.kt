@@ -1,5 +1,6 @@
 package com.example.themoviedatabase.network
 
+import com.example.themoviedatabase.BuildConfig.TMDB_BASE_URL
 import com.example.themoviedatabase.model.dto.MovieDTO
 import com.example.themoviedatabase.model.dto.PagingDTO
 import okhttp3.OkHttpClient
@@ -31,7 +32,7 @@ interface MovieApi {
                 .build()
 
             return Retrofit.Builder()
-                .baseUrl("https://api.themoviedb.org/")
+                .baseUrl(TMDB_BASE_URL)
                 .client(client)
                 .addConverterFactory(converterFactory)
                 .build()
