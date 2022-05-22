@@ -3,6 +3,7 @@ package com.example.themoviedatabase.dagger
 import android.content.Context
 import androidx.paging.ExperimentalPagingApi
 import com.example.themoviedatabase.dagger.module.*
+import com.example.themoviedatabase.end_to_end.SelectMovieTest
 import com.example.themoviedatabase.service.impl.MovieRemoteMediatorTest
 import com.example.themoviedatabase.ui.movie_details.MovieDetailsScreenTest
 import com.example.themoviedatabase.ui.movies_screen.MoviesScreenTest
@@ -38,4 +39,7 @@ interface FakeAppComponent : AppComponent {
     // screen
     fun inject(moviesScreenTest: MoviesScreenTest)
     fun inject(movieDetailsScreenTest: MovieDetailsScreenTest)
+
+    // end to end
+    fun inject(selectMovieTest: SelectMovieTest)
 }
