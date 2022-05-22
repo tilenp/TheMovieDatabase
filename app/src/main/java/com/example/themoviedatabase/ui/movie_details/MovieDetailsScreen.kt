@@ -27,7 +27,8 @@ import com.example.themoviedatabase.ui.common.RatingView
 @Composable
 fun MovieDetailsScreen(
     modifier: Modifier = Modifier,
-    viewModel: MovieDetailsViewModel
+    viewModel: MovieDetailsViewModel,
+    onBackButtonClicked: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
     Scaffold(
@@ -42,7 +43,7 @@ fun MovieDetailsScreen(
                 modifier = Modifier
                     .height(300.dp),
                 imagePath = uiState.movieDetails.backdropPath,
-                onBackButtonClicked = {}
+                onBackButtonClicked = onBackButtonClicked
             )
             MovieInfo(movie = uiState.movieDetails)
         }

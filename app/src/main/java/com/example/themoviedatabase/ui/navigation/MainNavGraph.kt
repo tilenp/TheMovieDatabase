@@ -30,7 +30,8 @@ fun MainNavGraph(
         }
         composable(route = Screen.MovieDetails.route) {
             MovieDetailsScreen(
-                viewModel = movieDetailsViewModel
+                viewModel = movieDetailsViewModel,
+                onBackButtonClicked = { navController.popBackStack() }
             )
         }
     }
