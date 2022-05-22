@@ -6,6 +6,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.test.core.app.ApplicationProvider
 import com.example.themoviedatabase.R
 import com.example.themoviedatabase.dagger.FakeApplication
@@ -81,35 +82,20 @@ class MoviesScreenTest {
     }
 
     @Test
-    fun top_app_bar_test() {
-        val testResponse = FakeResponse<PagingDTO<MovieDTO>>(code = 200)
-        fakeMovieApi.enqueue(testResponse)
-
-        composeTestRule.setContent {
-            TheMovieDatabaseTheme {
-                Scaffold { padding ->
-                    MoviesScreen(
-                        modifier = Modifier.padding(padding),
-                        viewModel = viewModel,
-                    )
-                }
-            }
-        }
-
-        composeTestRule.onNodeWithTag("MyTopBar").assertIsDisplayed()
-    }
-
-    @Test
     fun refresh_loading_test() {
         val testResponse = FakeResponse<PagingDTO<MovieDTO>>(code = 200, testLoading = true)
         fakeMovieApi.enqueue(testResponse)
 
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
+                val pagedMovies = viewModel.movies.collectAsLazyPagingItems()
                 Scaffold { padding ->
-                    MoviesScreen(
+                    MovieListContent(
+                        columns = 2,
                         modifier = Modifier.padding(padding),
-                        viewModel = viewModel,
+                        pagesMovies = pagedMovies,
+                        onMovieClick = {},
+                        getErrorMessageId = { R.string.Network_not_available }
                     )
                 }
             }
@@ -127,10 +113,14 @@ class MoviesScreenTest {
 
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
+                val pagedMovies = viewModel.movies.collectAsLazyPagingItems()
                 Scaffold { padding ->
-                    MoviesScreen(
+                    MovieListContent(
+                        columns = 2,
                         modifier = Modifier.padding(padding),
-                        viewModel = viewModel,
+                        pagesMovies = pagedMovies,
+                        onMovieClick = {},
+                        getErrorMessageId = { R.string.Network_not_available }
                     )
                 }
             }
@@ -147,10 +137,14 @@ class MoviesScreenTest {
 
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
+                val pagedMovies = viewModel.movies.collectAsLazyPagingItems()
                 Scaffold { padding ->
-                    MoviesScreen(
+                    MovieListContent(
+                        columns = 2,
                         modifier = Modifier.padding(padding),
-                        viewModel = viewModel,
+                        pagesMovies = pagedMovies,
+                        onMovieClick = {},
+                        getErrorMessageId = { R.string.Network_not_available }
                     )
                 }
             }
@@ -167,10 +161,14 @@ class MoviesScreenTest {
 
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
+                val pagedMovies = viewModel.movies.collectAsLazyPagingItems()
                 Scaffold { padding ->
-                    MoviesScreen(
+                    MovieListContent(
+                        columns = 2,
                         modifier = Modifier.padding(padding),
-                        viewModel = viewModel,
+                        pagesMovies = pagedMovies,
+                        onMovieClick = {},
+                        getErrorMessageId = { R.string.Network_not_available }
                     )
                 }
             }
@@ -193,10 +191,14 @@ class MoviesScreenTest {
 
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
+                val pagedMovies = viewModel.movies.collectAsLazyPagingItems()
                 Scaffold { padding ->
-                    MoviesScreen(
+                    MovieListContent(
+                        columns = 2,
                         modifier = Modifier.padding(padding),
-                        viewModel = viewModel,
+                        pagesMovies = pagedMovies,
+                        onMovieClick = {},
+                        getErrorMessageId = { R.string.Network_not_available }
                     )
                 }
             }
@@ -219,10 +221,14 @@ class MoviesScreenTest {
 
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
+                val pagedMovies = viewModel.movies.collectAsLazyPagingItems()
                 Scaffold { padding ->
-                    MoviesScreen(
+                    MovieListContent(
+                        columns = 2,
                         modifier = Modifier.padding(padding),
-                        viewModel = viewModel,
+                        pagesMovies = pagedMovies,
+                        onMovieClick = {},
+                        getErrorMessageId = { R.string.Network_not_available }
                     )
                 }
             }
@@ -246,11 +252,14 @@ class MoviesScreenTest {
         var clicked = false
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
+                val pagedMovies = viewModel.movies.collectAsLazyPagingItems()
                 Scaffold { padding ->
-                    MoviesScreen(
+                    MovieListContent(
+                        columns = 2,
                         modifier = Modifier.padding(padding),
-                        viewModel = viewModel,
-                        onMovieClick = { clicked = true }
+                        pagesMovies = pagedMovies,
+                        onMovieClick = { clicked = true },
+                        getErrorMessageId = { R.string.Network_not_available }
                     )
                 }
             }

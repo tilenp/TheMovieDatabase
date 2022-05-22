@@ -6,8 +6,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,44 +21,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.rememberImagePainter
 import com.example.themoviedatabase.R
 import com.example.themoviedatabase.model.domain.MovieSummary
 import com.example.themoviedatabase.ui.common.ErrorView
 import com.example.themoviedatabase.ui.common.MyButton
-import com.example.themoviedatabase.ui.common.MyTopBar
 import com.example.themoviedatabase.ui.common.RatingView
-
-@Composable
-fun MoviesScreen(
-    widthSizeClass: WindowWidthSizeClass,
-    modifier: Modifier = Modifier,
-    viewModel: MoviesViewModel,
-    onMovieClick: (Long) -> Unit = {}
-) {
-    val columns = when (widthSizeClass) {
-        WindowWidthSizeClass.Compact -> 2
-        else -> 3
-    }
-    val pagedMovies = viewModel.movies.collectAsLazyPagingItems()
-    Scaffold(
-        topBar = {
-            MyTopBar(
-                title = stringResource(R.string.app_name)
-            )
-        },
-        content = { padding ->
-            MovieListContent(
-                columns = columns,
-                modifier = modifier.padding(padding),
-                pagesMovies = pagedMovies,
-                onMovieClick = onMovieClick,
-                getErrorMessageId = { viewModel.getErrorMessage(it) }
-            )
-        }
-    )
-}
 
 @Composable
 fun MovieListContent(

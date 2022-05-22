@@ -3,6 +3,9 @@ package com.example.themoviedatabase.ui.movie_details
 import android.content.Context
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -23,12 +26,14 @@ import com.example.themoviedatabase.utils.FakeDispatcherProvider
 import com.example.themoviedatabase.utils.FileReader
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.*
 import org.junit.Assert.assertTrue
 import java.lang.reflect.Type
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class MovieDetailsScreenTest {
 
     @get:Rule
@@ -95,10 +100,12 @@ class MovieDetailsScreenTest {
     fun backdrop_image_test() {
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
+                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
                 Scaffold { padding ->
                     MovieDetailsScreen(
+                        widthSizeClass = WindowWidthSizeClass.Compact,
                         modifier = Modifier.padding(padding),
-                        viewModel = viewModel,
+                        uiState = uiState,
                         onBackButtonClicked = {}
                     )
                 }
@@ -112,10 +119,12 @@ class MovieDetailsScreenTest {
     fun back_button_test() {
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
+                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
                 Scaffold { padding ->
                     MovieDetailsScreen(
+                        widthSizeClass = WindowWidthSizeClass.Compact,
                         modifier = Modifier.padding(padding),
-                        viewModel = viewModel,
+                        uiState = uiState,
                         onBackButtonClicked = {}
                     )
                 }
@@ -130,10 +139,12 @@ class MovieDetailsScreenTest {
         var clicked = false
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
+                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
                 Scaffold { padding ->
                     MovieDetailsScreen(
+                        widthSizeClass = WindowWidthSizeClass.Compact,
                         modifier = Modifier.padding(padding),
-                        viewModel = viewModel,
+                        uiState = uiState,
                         onBackButtonClicked = { clicked = true }
                     )
                 }
@@ -148,10 +159,12 @@ class MovieDetailsScreenTest {
     fun movie_title_test() {
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
+                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
                 Scaffold { padding ->
                     MovieDetailsScreen(
+                        widthSizeClass = WindowWidthSizeClass.Compact,
                         modifier = Modifier.padding(padding),
-                        viewModel = viewModel,
+                        uiState = uiState,
                         onBackButtonClicked = {}
                     )
                 }
@@ -165,10 +178,12 @@ class MovieDetailsScreenTest {
     fun rating_test() {
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
+                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
                 Scaffold { padding ->
                     MovieDetailsScreen(
+                        widthSizeClass = WindowWidthSizeClass.Compact,
                         modifier = Modifier.padding(padding),
-                        viewModel = viewModel,
+                        uiState = uiState,
                         onBackButtonClicked = {}
                     )
                 }
@@ -182,10 +197,12 @@ class MovieDetailsScreenTest {
     fun rating_count_test() {
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
+                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
                 Scaffold { padding ->
                     MovieDetailsScreen(
+                        widthSizeClass = WindowWidthSizeClass.Compact,
                         modifier = Modifier.padding(padding),
-                        viewModel = viewModel,
+                        uiState = uiState,
                         onBackButtonClicked = {}
                     )
                 }
@@ -199,10 +216,12 @@ class MovieDetailsScreenTest {
     fun overview_title_test() {
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
+                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
                 Scaffold { padding ->
                     MovieDetailsScreen(
+                        widthSizeClass = WindowWidthSizeClass.Compact,
                         modifier = Modifier.padding(padding),
-                        viewModel = viewModel,
+                        uiState = uiState,
                         onBackButtonClicked = {}
                     )
                 }
@@ -216,10 +235,12 @@ class MovieDetailsScreenTest {
     fun overview_body_test() {
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
+                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
                 Scaffold { padding ->
                     MovieDetailsScreen(
+                        widthSizeClass = WindowWidthSizeClass.Compact,
                         modifier = Modifier.padding(padding),
-                        viewModel = viewModel,
+                        uiState = uiState,
                         onBackButtonClicked = {}
                     )
                 }
