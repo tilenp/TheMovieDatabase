@@ -1,4 +1,4 @@
-package com.example.themoviedatabase.ui.movie_screen
+package com.example.themoviedatabase.ui.movies_screen
 
 import androidx.paging.AsyncPagingDataDiffer
 import androidx.paging.PagingData
@@ -6,7 +6,6 @@ import app.cash.turbine.test
 import com.example.themoviedatabase.R
 import com.example.themoviedatabase.model.domain.MovieSummary
 import com.example.themoviedatabase.repository.MovieRepository
-import com.example.themoviedatabase.ui.movies_screen.MoviesViewModel
 import com.example.themoviedatabase.utils.*
 import io.mockk.coEvery
 import io.mockk.coVerify
