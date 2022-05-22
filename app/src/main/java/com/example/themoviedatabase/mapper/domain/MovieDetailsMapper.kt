@@ -14,12 +14,10 @@ class MovieDetailsMapper @Inject constructor(
 ) : Mapper<MovieDetailsQuery, MovieDetails> {
 
     override fun map(objectToMap: MovieDetailsQuery): MovieDetails {
-        val posterPath = objectToMap.posterPaths?.firstOrNull().orEmpty()
         val backdropPath = objectToMap.backdropPaths?.firstOrNull().orEmpty()
         return MovieDetails(
             movieId = objectToMap.movieTable.movieId,
             title = UIText(string = objectToMap.movieTable.title),
-            posterPath = imagePathMapper.map(posterPath),
             backdropPath = imagePathMapper.map(backdropPath),
             rating = objectToMap.movieTable.rating,
             overview = UIText(string = objectToMap.movieTable.overview)

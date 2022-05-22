@@ -4,20 +4,23 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
+import com.example.themoviedatabase.R
+import com.example.themoviedatabase.model.domain.ImagePath
 import com.example.themoviedatabase.model.domain.MovieDetails
 import com.example.themoviedatabase.ui.common.RatingView
 
@@ -26,65 +29,82 @@ fun MovieDetailsScreen(
     modifier: Modifier = Modifier,
     viewModel: MovieDetailsViewModel
 ) {
-    val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
     Scaffold(
         modifier = modifier
     ) { padding ->
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .padding(padding)
                 .verticalScroll(rememberScrollState())
         ) {
-            BackdropImage(
-                modifier = Modifier.height(300.dp),
-                movie = uiState.movieDetails
-            )
-            MovieTitle(
+            Backdrop(
                 modifier = Modifier
-                    .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 8.dp)
-                    .testTag("MovieTitle${uiState.movieDetails.movieId}"),
-                title = uiState.movieDetails.title.asString(context)
+                    .height(300.dp),
+                imagePath = uiState.movieDetails.backdropPath,
+                onBackButtonClicked = {}
             )
-            MovieOverview(
-                modifier = Modifier
-                    .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 8.dp),
-                overview = uiState.movieDetails.overview.asString(context)
-            )
+            MovieInfo(movie = uiState.movieDetails)
         }
     }
 }
 
 @Composable
-private fun BackdropImage(
+private fun MovieInfo(
     modifier: Modifier = Modifier,
     movie: MovieDetails
 ) {
-    val painter = rememberImagePainter(data = movie.backdropPath.medium) {
+    val context = LocalContext.current
+    Column(
+        modifier = modifier
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        MovieTitle(title = movie.title.asString(context))
+        MovieRatingView(
+            rating = movie.rating.toString(),
+            reviewCountFormatted = "(689 reviews)"
+        )
+        MovieOverviewTitle()
+        MovieOverviewBody(overview = movie.overview.asString(context))
+    }
+}
+
+@Composable
+private fun Backdrop(
+    modifier: Modifier = Modifier,
+    imagePath: ImagePath,
+    onBackButtonClicked: () -> Unit = {}
+) {
+    val painter = rememberImagePainter(data = imagePath.medium) {
         crossfade(durationMillis = 200)
-        placeholder(movie.backdropPath.placeholder)
-        error(movie.backdropPath.backup)
+        placeholder(imagePath.placeholder)
+        error(imagePath.backup)
     }
     Box(
-        modifier = modifier
+        modifier
+            .fillMaxWidth()
     ) {
         Image(
             modifier = Modifier
-                .fillMaxSize()
-                .testTag("BackdropImage${movie.movieId}"),
+                .fillMaxSize(),
             painter = painter,
-            contentDescription = "backdrop Image",
+            contentDescription = null,
             contentScale = ContentScale.Crop
         )
-        RatingView(
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(bottom = 8.dp, end = 8.dp)
-                .testTag("RatingView${movie.movieId}"),
-            rating = movie.rating.toString(),
-            style = MaterialTheme.typography.body2,
-            padding = 5.dp
-        )
+        IconButton(
+            onClick = onBackButtonClicked,
+            modifier = Modifier.padding(start = 8.dp, top = 8.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Filled.ArrowBack,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(48.dp)
+                    .padding(12.dp),
+                tint = Color.White
+            )
+        }
     }
 }
 
@@ -97,6 +117,50 @@ private fun MovieTitle(
         modifier = modifier,
         text = title,
         color = MaterialTheme.colors.onBackground,
+        style = MaterialTheme.typography.h5,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis
+    )
+}
+
+@Composable
+private fun MovieRatingView(
+    modifier: Modifier = Modifier,
+    rating: String,
+    reviewCountFormatted: String
+) {
+    Row(
+        modifier = modifier
+            .padding(top = 12.dp)
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        RatingView(
+            modifier = Modifier
+                .align(alignment = Alignment.CenterVertically),
+            rating = rating,
+            style = MaterialTheme.typography.body2,
+            padding = 5.dp
+        )
+        Text(
+            modifier = Modifier
+                .align(alignment = Alignment.CenterVertically),
+            text = reviewCountFormatted,
+            color = MaterialTheme.colors.onBackground,
+            style = MaterialTheme.typography.caption,
+        )
+    }
+}
+
+@Composable
+private fun MovieOverviewTitle(
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        modifier = modifier,
+        text = stringResource(R.string.Overview),
+        color = MaterialTheme.colors.onBackground,
         style = MaterialTheme.typography.h6,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis
@@ -104,47 +168,15 @@ private fun MovieTitle(
 }
 
 @Composable
-private fun MovieInfo(
+private fun MovieOverviewBody(
     modifier: Modifier = Modifier,
-    movieDetails: MovieDetails
-) {
-    val context = LocalContext.current
-    val painter = rememberImagePainter(data = movieDetails.posterPath.medium) {
-        crossfade(durationMillis = 200)
-        placeholder(movieDetails.posterPath.placeholder)
-        error(movieDetails.posterPath.backup)
-    }
-    Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        Image(
-            modifier = Modifier
-                .height(250.dp)
-                .testTag("MoviePoster${movieDetails.movieId}"),
-            painter = painter,
-            contentDescription = "poster Image",
-            contentScale = ContentScale.FillHeight,
-        )
-        MovieOverview(
-            modifier = Modifier
-                .weight(1f)
-                .testTag("MovieOverview${movieDetails.movieId}"),
-            overview = movieDetails.overview.asString(context)
-        )
-    }
-}
-
-@Composable
-private fun MovieOverview(
-    modifier: Modifier,
     overview: String
 ) {
     Text(
         modifier = modifier,
         text = overview,
         color = MaterialTheme.colors.onBackground,
-        style = MaterialTheme.typography.body1,
+        style = MaterialTheme.typography.body2,
         maxLines = 15,
         overflow = TextOverflow.Ellipsis
     )

@@ -12,4 +12,7 @@
     <string name="Cancel">Cancel</string>
     <string name="Title_not_available">Title not available</string>
     <string name="Overview_not_available">Overview not available</string>
+
+    <!-- MovieDetailsScreen -->
+    <string name="Overview">Overview</string>
 </resources>

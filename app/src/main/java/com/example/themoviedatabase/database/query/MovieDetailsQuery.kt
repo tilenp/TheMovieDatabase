@@ -10,13 +10,6 @@ data class MovieDetailsQuery (
     @Embedded
     val movieTable: MovieTable = MovieTable(),
     @Relation(
-        entity = ImagePathTable::class,
-        parentColumn = "movieId",
-        entityColumn = "itemId",
-        projection = ["path"]
-    )
-    val posterPaths: List<String>? = null,
-    @Relation(
         entity = BackdropImageTable::class,
         parentColumn = "movieId",
         entityColumn = "itemId",
