@@ -28,6 +28,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.*
 import org.junit.Assert.assertTrue
 import java.lang.reflect.Type
@@ -81,7 +82,6 @@ class MovieDetailsScreenTest {
 
         database.getMovieDao().insertMovies(listOf(movieTable))
         database.getBackdropImageDao().insertBackdropImages(listOf(backdropImageTable))
-        movieCache.setSelectedMovieId(752623)
     }
 
     private fun setUpViewModel() {
@@ -97,7 +97,28 @@ class MovieDetailsScreenTest {
     }
 
     @Test
-    fun backdrop_image_test() {
+    fun show_instructions_test() = runTest {
+        movieCache.setSelectedMovieId(-1)
+        composeTestRule.setContent {
+            TheMovieDatabaseTheme {
+                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
+                Scaffold { padding ->
+                    MovieDetailsScreen(
+                        widthSizeClass = WindowWidthSizeClass.Compact,
+                        modifier = Modifier.padding(padding),
+                        uiState = uiState,
+                        onBackButtonClicked = {}
+                    )
+                }
+            }
+        }
+
+        composeTestRule.onNodeWithTag("ShowInstructions").assertIsDisplayed()
+    }
+
+    @Test
+    fun backdrop_image_test() = runTest {
+        movieCache.setSelectedMovieId(752623)
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
                 val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
@@ -116,7 +137,8 @@ class MovieDetailsScreenTest {
     }
 
     @Test
-    fun back_button_test() {
+    fun back_button_test() = runTest {
+        movieCache.setSelectedMovieId(752623)
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
                 val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
@@ -135,7 +157,8 @@ class MovieDetailsScreenTest {
     }
 
     @Test
-    fun back_button_click_test() {
+    fun back_button_click_test() = runTest {
+        movieCache.setSelectedMovieId(752623)
         var clicked = false
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
@@ -156,7 +179,8 @@ class MovieDetailsScreenTest {
     }
 
     @Test
-    fun movie_title_test() {
+    fun movie_title_test() = runTest {
+        movieCache.setSelectedMovieId(752623)
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
                 val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
@@ -175,7 +199,8 @@ class MovieDetailsScreenTest {
     }
 
     @Test
-    fun rating_test() {
+    fun rating_test() = runTest {
+        movieCache.setSelectedMovieId(752623)
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
                 val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
@@ -194,7 +219,8 @@ class MovieDetailsScreenTest {
     }
 
     @Test
-    fun rating_count_test() {
+    fun rating_count_test() = runTest {
+        movieCache.setSelectedMovieId(752623)
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
                 val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
@@ -213,7 +239,8 @@ class MovieDetailsScreenTest {
     }
 
     @Test
-    fun overview_title_test() {
+    fun overview_title_test() = runTest {
+        movieCache.setSelectedMovieId(752623)
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
                 val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
@@ -232,7 +259,8 @@ class MovieDetailsScreenTest {
     }
 
     @Test
-    fun overview_body_test() {
+    fun overview_body_test() = runTest {
+        movieCache.setSelectedMovieId(752623)
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
                 val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)

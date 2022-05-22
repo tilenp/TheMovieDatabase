@@ -14,6 +14,7 @@
     <string name="Overview_not_available">Overview not available</string>
 
     <!-- MovieDetailsScreen -->
+    <string name="Select_a_movie">Select a movie</string>
     <plurals name="rating_count_format">
         <item quantity="one">(%s review)</item>
         <item quantity="other">(%s reviews)</item>

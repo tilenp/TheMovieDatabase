@@ -1,5 +1,6 @@
 package com.example.themoviedatabase.ui.movie_details
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -19,6 +20,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
@@ -34,6 +36,48 @@ fun MovieDetailsScreen(
     uiState: MovieDetailsState,
     onBackButtonClicked: () -> Unit
 ) {
+    if (uiState.movieDetails != null) {
+        ShowMovieDetails(
+            widthSizeClass = widthSizeClass,
+            modifier = modifier,
+            movieDetails = uiState.movieDetails,
+            onBackButtonClicked = onBackButtonClicked
+        )
+    } else {
+        ShowInstructions(
+            modifier = modifier,
+            messageId = uiState.instructionMessage
+        )
+    }
+}
+
+@Composable
+private fun ShowInstructions(
+    modifier: Modifier = Modifier,
+    @StringRes messageId: Int
+) {
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            modifier = modifier
+                .testTag("ShowInstructions"),
+            text = stringResource(id = messageId),
+            color = MaterialTheme.colors.onBackground,
+            style = MaterialTheme.typography.body2,
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
+@Composable
+private fun ShowMovieDetails(
+    widthSizeClass: WindowWidthSizeClass,
+    modifier: Modifier = Modifier,
+    movieDetails: MovieDetails,
+    onBackButtonClicked: () -> Unit
+) {
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
@@ -42,10 +86,10 @@ fun MovieDetailsScreen(
             showBackButton = widthSizeClass != WindowWidthSizeClass.Expanded,
             modifier = Modifier
                 .height(300.dp),
-            imagePath = uiState.movieDetails.backdropPath,
+            imagePath = movieDetails.backdropPath,
             onBackButtonClicked = onBackButtonClicked
         )
-        MovieInfo(movie = uiState.movieDetails)
+        MovieInfo(movie = movieDetails)
     }
 }
 
