@@ -34,7 +34,7 @@ android {
             buildConfigField 'String', 'TMDB_BASE_URL', '"https://api.themoviedb.org/"'
             buildConfigField 'String', 'TMDB_IMAGE_URL', '"https://image.tmdb.org/t/p"'
             buildConfigField 'String', 'TMDB_IMAGE_SIZE_500', '"/w500/"'
-            buildConfigField 'String', 'TMDB_API_KEY', '"21440930b1350cd8b4d28accce3a4799"'
+            buildConfigField 'String', 'TMDB_API_KEY', '"YOUR_API_KEY"'
         }
     }
     compileOptions {
@@ -106,14 +106,8 @@ dependencies {
     testImplementation "io.mockk:mockk-agent-jvm:1.12.3"
     androidTestImplementation "io.mockk:mockk-android:1.12.0"
 
-    /** Mock web server **/
-    testImplementation "com.squareup.okhttp3:mockwebserver:4.9.1"
-
     /** OkHttp **/
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.3"
-
-    /** onebone **/
-    implementation "me.onebone:toolbar-compose:2.3.3"
 
     /** Retrofit **/
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
