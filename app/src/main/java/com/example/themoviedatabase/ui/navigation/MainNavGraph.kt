@@ -69,34 +69,18 @@ private fun ConfigureMoviesScreen(
             Row(
                 modifier = Modifier.padding(padding)
             ) {
-                val columns = when (widthSizeClass) {
-                    WindowWidthSizeClass.Compact -> 2
-                    WindowWidthSizeClass.Medium -> 3
-                    else -> 2
-                }
-                val pagedMovies = moviesViewModel.movies.collectAsLazyPagingItems()
-                Box(
-                    modifier = Modifier.weight(1f)
-                ) {
-                    MovieListContent(
-                        columns = columns,
-                        pagesMovies = pagedMovies,
-                        onMovieClick = { movieId ->
-                            moviesViewModel.newAction(MoviesViewModel.Action.SelectMovie(movieId))
-                            if (widthSizeClass != WindowWidthSizeClass.Expanded) {
-                                navController.navigate(Screen.MovieDetails.route)
-                            }
-                        },
-                        getErrorMessageId = { moviesViewModel.getErrorMessage(it) }
-                    )
-                }
+                ShowMoviesScreen(
+                    widthSizeClass = widthSizeClass,
+                    modifier = Modifier.weight(1f),
+                    navController = navController,
+                    moviesViewModel = moviesViewModel
+                )
                 if (widthSizeClass == WindowWidthSizeClass.Expanded) {
-                    val uiState by movieDetailsViewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
-                    MovieDetailsScreen(
+                    ShowMovieDetailsScreen(
                         widthSizeClass = widthSizeClass,
                         modifier = Modifier.weight(1f),
-                        uiState = uiState,
-                        onBackButtonClicked = { navController.popBackStack() }
+                        navController = navController,
+                        movieDetailsViewModel = movieDetailsViewModel
                     )
                 }
             }
@@ -124,33 +108,66 @@ private fun ConfigureMovieDetailScreen(
                 modifier = Modifier.padding(padding)
             ) {
                 if (widthSizeClass == WindowWidthSizeClass.Expanded) {
-                    val columns = when (widthSizeClass) {
-                        WindowWidthSizeClass.Compact -> 2
-                        WindowWidthSizeClass.Medium -> 3
-                        else -> 2
-                    }
-                    val pagedMovies = moviesViewModel.movies.collectAsLazyPagingItems()
-                    Box(
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        MovieListContent(
-                            columns = columns,
-                            pagesMovies = pagedMovies,
-                            onMovieClick = { movieId ->
-                                moviesViewModel.newAction(MoviesViewModel.Action.SelectMovie(movieId))
-                            },
-                            getErrorMessageId = { moviesViewModel.getErrorMessage(it) }
-                        )
-                    }
+                    ShowMoviesScreen(
+                        widthSizeClass = widthSizeClass,
+                        modifier = Modifier.weight(1f),
+                        navController = navController,
+                        moviesViewModel = moviesViewModel
+                    )
                 }
-                val uiState by movieDetailsViewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
-                MovieDetailsScreen(
+                ShowMovieDetailsScreen(
                     widthSizeClass = widthSizeClass,
                     modifier = Modifier.weight(1f),
-                    uiState = uiState,
-                    onBackButtonClicked = { navController.popBackStack() }
+                    navController = navController,
+                    movieDetailsViewModel = movieDetailsViewModel
                 )
             }
         }
+    )
+}
+
+@Composable
+private fun ShowMoviesScreen(
+    widthSizeClass: WindowWidthSizeClass,
+    modifier: Modifier,
+    navController: NavHostController,
+    moviesViewModel: MoviesViewModel,
+) {
+    val columns = when (widthSizeClass) {
+        WindowWidthSizeClass.Compact -> 2
+        WindowWidthSizeClass.Medium -> 3
+        else -> 2
+    }
+    val pagedMovies = moviesViewModel.movies.collectAsLazyPagingItems()
+    Box(
+        modifier = modifier
+    ) {
+        MovieListContent(
+            columns = columns,
+            pagesMovies = pagedMovies,
+            onMovieClick = { movieId ->
+                moviesViewModel.newAction(MoviesViewModel.Action.SelectMovie(movieId))
+                if (widthSizeClass != WindowWidthSizeClass.Expanded) {
+                    navController.navigate(Screen.MovieDetails.route)
+                }
+            },
+            getErrorMessageId = { moviesViewModel.getErrorMessage(it) }
+        )
+    }
+}
+
+@Composable
+private fun ShowMovieDetailsScreen(
+    widthSizeClass: WindowWidthSizeClass,
+    modifier: Modifier,
+    navController: NavHostController,
+    movieDetailsViewModel: MovieDetailsViewModel
+) {
+    val uiState by movieDetailsViewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
+    MovieDetailsScreen(
+        widthSizeClass = widthSizeClass,
+        modifier = modifier,
+        uiState = uiState,
+        onBackButtonClicked = { navController.popBackStack() }
     )
 }
