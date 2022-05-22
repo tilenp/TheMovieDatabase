@@ -2,8 +2,10 @@ package com.example.themoviedatabase.database.dao
 
 import androidx.paging.PagingSource
 import androidx.test.espresso.idling.net.UriIdlingResource
+import com.example.themoviedatabase.database.query.MovieDetailsQuery
 import com.example.themoviedatabase.database.query.MovieSummaryQuery
 import com.example.themoviedatabase.database.table.MovieTable
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -37,6 +39,15 @@ class FakeMovieDao @Inject constructor(
             movieDao.deleteMovies()
         } finally {
             uriIdlingResource.endLoad("deleteMovies")
+        }
+    }
+
+    override fun getMovieDetailsWithId(movieId: Long): Flow<MovieDetailsQuery> {
+        return try {
+            uriIdlingResource.beginLoad("getMovieDetailsWithId")
+            movieDao.getMovieDetailsWithId(movieId)
+        } finally {
+            uriIdlingResource.endLoad("getMovieDetailsWithId")
         }
     }
 }

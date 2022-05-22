@@ -54,7 +54,7 @@ fun MoviesScreen(
         },
         content = { padding ->
             MovieListContent(
-                modifier = Modifier.padding(padding),
+                modifier = modifier.padding(padding),
                 pagesMovies = pagedMovies,
                 onMovieClick = onMovieClick,
                 getErrorMessageId = { viewModel.getErrorMessage(it) }
@@ -64,7 +64,7 @@ fun MoviesScreen(
 }
 
 @Composable
-fun MovieListContent(
+private fun MovieListContent(
     modifier: Modifier = Modifier,
     pagesMovies: LazyPagingItems<MovieSummary>,
     onMovieClick: (Long) -> Unit = {},
@@ -75,7 +75,9 @@ fun MovieListContent(
         pagedItems = pagesMovies,
         itemContent = { movie ->
             MovieItem(
-                modifier = Modifier.height(300.dp),
+                modifier = Modifier
+                    .height(300.dp)
+                    .testTag("MovieItem"),
                 movie = movie,
                 onMovieClick = onMovieClick
             )
@@ -99,7 +101,7 @@ fun MovieListContent(
 }
 
 @Composable
-fun MovieItem(
+private fun MovieItem(
     modifier: Modifier,
     movie: MovieSummary,
     onMovieClick: (Long) -> Unit = {}

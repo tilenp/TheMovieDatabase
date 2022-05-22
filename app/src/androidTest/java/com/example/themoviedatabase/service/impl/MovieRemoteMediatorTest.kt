@@ -7,6 +7,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.themoviedatabase.dagger.FakeApplication
 import com.example.themoviedatabase.database.MovieDatabase
 import com.example.themoviedatabase.database.query.MovieSummaryQuery
+import com.example.themoviedatabase.mapper.table.BackdropImageTableMapper
 import com.example.themoviedatabase.mapper.table.ImagePathTableMapper
 import com.example.themoviedatabase.mapper.table.MovieTableMapper
 import com.example.themoviedatabase.model.dto.MovieDTO
@@ -54,6 +55,7 @@ class MovieRemoteMediatorTest {
             database = database,
             queryBuilder = MovieRequestQuery.Builder(),
             movieTableMapper = MovieTableMapper(),
+            backdropImageTableMapper = BackdropImageTableMapper(),
             imagePathTableMapper = ImagePathTableMapper()
         )
         pagingState = PagingState(

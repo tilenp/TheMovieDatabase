@@ -25,6 +25,15 @@ class FakeDatabaseModule {
 
     @Singleton
     @Provides
+    fun providesBackdropImageDao(
+        database: MovieDatabase,
+        uriIdlingResource: UriIdlingResource
+    ): BackdropImageDao {
+        return FakeBackdropImageDao(database.getBackdropImageDao(), uriIdlingResource)
+    }
+
+    @Singleton
+    @Provides
     fun providesImagePathDao(
         database: MovieDatabase,
         uriIdlingResource: UriIdlingResource

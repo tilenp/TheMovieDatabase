@@ -4,10 +4,8 @@ import android.content.Context
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.onNodeWithText
 import androidx.test.core.app.ApplicationProvider
 import com.example.themoviedatabase.R
 import com.example.themoviedatabase.dagger.FakeApplication
@@ -126,7 +124,7 @@ class MoviesScreenTest {
     fun refresh_error_message_test() {
         val errorMessage = "network not available"
         val ioException = IOException(errorMessage)
-        val testResponse = FakeResponse<PagingDTO<MovieDTO>>(code = 401, ioException = ioException)
+        val testResponse = FakeResponse<PagingDTO<MovieDTO>>(code = 400, ioException = ioException)
         fakeMovieApi.enqueue(testResponse)
 
         composeTestRule.setContent {
@@ -140,12 +138,13 @@ class MoviesScreenTest {
             }
         }
 
-        composeTestRule.onNodeWithText(context.getString(R.string.Click_to_retry)).assertIsDisplayed()
+        composeTestRule.onNodeWithText(context.getString(R.string.Click_to_retry))
+            .assertIsDisplayed()
     }
 
     @Test
     fun refresh_error_retry_button_test() {
-        val testResponse = FakeResponse<PagingDTO<MovieDTO>>(code = 401)
+        val testResponse = FakeResponse<PagingDTO<MovieDTO>>(code = 400)
         fakeMovieApi.enqueue(testResponse)
 
         composeTestRule.setContent {
@@ -159,7 +158,8 @@ class MoviesScreenTest {
             }
         }
 
-        composeTestRule.onNodeWithText(context.getString(R.string.Click_to_retry)).assertIsDisplayed()
+        composeTestRule.onNodeWithText(context.getString(R.string.Click_to_retry))
+            .assertIsDisplayed()
     }
 
     @Test
@@ -178,7 +178,14 @@ class MoviesScreenTest {
             }
         }
 
-        composeTestRule.onNodeWithTag("MovieImage752623").assertIsDisplayed()
+        composeTestRule
+            .onNode(
+                hasTestTag("MovieImage752623") and
+                    hasParent(
+                        hasTestTag("MovieItem")
+                    ),
+                useUnmergedTree = true
+            ).assertExists()
     }
 
     @Test
@@ -197,7 +204,14 @@ class MoviesScreenTest {
             }
         }
 
-        composeTestRule.onNodeWithTag("MovieRating752623").assertIsDisplayed()
+        composeTestRule
+            .onNode(
+                hasTestTag("RatingView752623") and
+                    hasParent(
+                        hasTestTag("MovieItem")
+                    ),
+                useUnmergedTree = true
+            ).assertExists()
     }
 
     @Test
@@ -216,6 +230,13 @@ class MoviesScreenTest {
             }
         }
 
-        composeTestRule.onNodeWithTag("MovieTitle752623").assertIsDisplayed()
+        composeTestRule
+            .onNode(
+                hasTestTag("MovieTitle752623") and
+                    hasParent(
+                        hasTestTag("MovieItem")
+                    ),
+                useUnmergedTree = true
+            ).assertExists()
     }
 }

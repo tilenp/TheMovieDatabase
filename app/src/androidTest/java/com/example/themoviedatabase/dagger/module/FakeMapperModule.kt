@@ -1,14 +1,19 @@
 package com.example.themoviedatabase.dagger.module
 
+import com.example.themoviedatabase.database.query.MovieDetailsQuery
 import com.example.themoviedatabase.database.query.MovieSummaryQuery
+import com.example.themoviedatabase.database.table.BackdropImageTable
 import com.example.themoviedatabase.database.table.ImagePathTable
 import com.example.themoviedatabase.database.table.MovieTable
 import com.example.themoviedatabase.mapper.Mapper
 import com.example.themoviedatabase.mapper.domain.ImagePathMovieMapper
+import com.example.themoviedatabase.mapper.domain.MovieDetailsMapper
 import com.example.themoviedatabase.mapper.domain.MovieSummaryMapper
+import com.example.themoviedatabase.mapper.table.BackdropImageTableMapper
 import com.example.themoviedatabase.mapper.table.ImagePathTableMapper
 import com.example.themoviedatabase.mapper.table.MovieTableMapper
 import com.example.themoviedatabase.model.domain.ImagePath
+import com.example.themoviedatabase.model.domain.MovieDetails
 import com.example.themoviedatabase.model.domain.MovieSummary
 import com.example.themoviedatabase.model.dto.MovieDTO
 import dagger.Binds
@@ -20,6 +25,9 @@ interface FakeMapperModule {
     /** database table mappers **/
 
     @Binds
+    fun bindsBackdropImageTableMapper(backdropImageTableMapper: BackdropImageTableMapper): Mapper<MovieDTO, BackdropImageTable>
+
+    @Binds
     fun bindsImagePathTableMapper(imagePathTableMapper: ImagePathTableMapper): Mapper<MovieDTO, ImagePathTable>
 
     @Binds
@@ -28,7 +36,10 @@ interface FakeMapperModule {
     /** domain model mappers **/
 
     @Binds
-    fun bindsImagePathMovieMapper(imagePathMovieMapper: ImagePathMovieMapper): Mapper<ImagePathTable, ImagePath>
+    fun bindsImagePathMovieMapper(imagePathMovieMapper: ImagePathMovieMapper): Mapper<String, ImagePath>
+
+    @Binds
+    fun bindsMovieDetailsMapper(movieDetailsMapper: MovieDetailsMapper): Mapper<MovieDetailsQuery, MovieDetails>
 
     @Binds
     fun bindsMovieSummaryMapper(movieSummaryMapper: MovieSummaryMapper): Mapper<MovieSummaryQuery, MovieSummary>

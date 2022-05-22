@@ -13,11 +13,10 @@ class ImagePathMovieMapperTest {
     fun map_path_test() {
         // arrange
         val path = "path"
-        val movieDto = ImagePathTable(path = path)
         val mapper = ImagePathMovieMapper()
 
         // act
-        val result = mapper.map(movieDto)
+        val result = mapper.map(path)
 
         // assert
         val mediumImageSize = "$IMAGE_URL$MEDIUM$path"
@@ -27,11 +26,10 @@ class ImagePathMovieMapperTest {
     @Test
     fun map_placeholder_test() {
         // arrange
-        val movieDto = ImagePathTable()
         val mapper = ImagePathMovieMapper()
 
         // act
-        val result = mapper.map(movieDto)
+        val result = mapper.map("")
 
         // assert
         assertEquals(R.drawable.ic_photo, result.placeholder)
@@ -40,11 +38,10 @@ class ImagePathMovieMapperTest {
     @Test
     fun map_backup_test() {
         // arrange
-        val movieDto = ImagePathTable()
         val mapper = ImagePathMovieMapper()
 
         // act
-        val result = mapper.map(movieDto)
+        val result = mapper.map("")
 
         // assert
         assertEquals(R.drawable.ic_broken_image, result.backup)
