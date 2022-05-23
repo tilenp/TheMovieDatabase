@@ -2,6 +2,18 @@
 
 A simple app written using Kotlin and MVVM design pattern. The app shows infinite list of popular movies and their details retrieved from TMDb API.
 
+## API Key
+Add your api key in the [gradle][1] file:
+```kotlin
+buildTypes {
+    ...
+    debug {
+        ...
+        buildConfigField 'String', 'TMDB_API_KEY', '"YOUR_API_KEY"'
+    }
+}
+```
+
 ## Libraries
 
 - Coroutines and Flows
@@ -16,7 +28,7 @@ A simple app written using Kotlin and MVVM design pattern. The app shows infinit
 
 ## Testing
 
-The project contains  [Local unit tests][1] and [Instrumented tests][2].
+The project contains  [Local unit tests][2] and [Instrumented tests][3].
 
 Just run `./gradlew test` or `./gradlew connectedAndroidTest`
 
@@ -31,5 +43,6 @@ Just run `./gradlew test` or `./gradlew connectedAndroidTest`
 
 <img width="90%" src="screenshots/tablet_landscape.png" />
 
-[1]: app/src/test/java/com/example/themoviedatabase/
-[2]: app/src/androidTest/java/com/example/themoviedatabase/
+[1]: app/build.gradle
+[2]: app/src/test/java/com/example/themoviedatabase/
+[3]: app/src/androidTest/java/com/example/themoviedatabase/
