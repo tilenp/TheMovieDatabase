@@ -26,7 +26,7 @@ class UIDataTest {
     @Test
     fun string_id_test() {
         // arrange
-        val stringId = R.string.Nothing_to_show
+        val stringId = R.string.app_name
         val uiText = UIText(stringId = stringId)
 
         // act
