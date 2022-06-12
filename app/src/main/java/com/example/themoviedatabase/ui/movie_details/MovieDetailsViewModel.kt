@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.themoviedatabase.model.domain.MovieDetails
 import com.example.themoviedatabase.repository.MovieRepository
+import com.example.themoviedatabase.use_case.UpdateMovieDetailsUseCase
 import com.example.themoviedatabase.utils.DispatcherProvider
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.plus
@@ -11,6 +12,7 @@ import javax.inject.Inject
 
 class MovieDetailsViewModel @Inject constructor(
     private val movieRepository: MovieRepository,
+    private val updateMovieDetailsUseCase: UpdateMovieDetailsUseCase,
     private val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
 
@@ -24,9 +26,7 @@ class MovieDetailsViewModel @Inject constructor(
     private fun setUpContent() {
         movieRepository
             .getSelectedMovieId()
-            .flatMapLatest { movieId -> flow { emit(movieRepository.updateMovieDetailsWithId(movieId)) }
-                .flatMapConcat { movieRepository.getMovieDetailsWithId(movieId) }
-                .onStart { emit(MovieDetails(isLoading = true)) }
+            .flatMapLatest { movieId -> updateMovieDetailsUseCase.invoke(movieId)
                 .map { movieDetails -> buildContent(movieDetails) }
             }
             .onEach { _uiState.emit(it) }

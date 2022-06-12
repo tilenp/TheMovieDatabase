@@ -17,6 +17,7 @@ import javax.inject.Singleton
         MapperModule::class,
         RepositoryModule::class,
         ServiceModule::class,
+        UseCaseModule::class,
         ViewModelModule::class
     ]
 )

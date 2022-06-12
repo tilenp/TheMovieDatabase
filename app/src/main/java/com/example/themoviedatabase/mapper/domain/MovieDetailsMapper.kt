@@ -29,7 +29,8 @@ class MovieDetailsMapper @Inject constructor(
                 count = objectToMap.movieTable.ratingCount
             ),
             genres = objectToMap.genres?.joinToString(separator = ", ") { it.name },
-            overview = UIText(string = objectToMap.movieTable.overview)
+            overview = UIText(string = objectToMap.movieTable.overview),
+            isLoading = false
         )
     }
 }
