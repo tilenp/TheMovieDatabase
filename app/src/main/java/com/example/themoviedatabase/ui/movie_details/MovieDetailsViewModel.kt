@@ -24,8 +24,11 @@ class MovieDetailsViewModel @Inject constructor(
     private fun setUpContent() {
         movieRepository
             .getSelectedMovieId()
-            .flatMapLatest { movieId -> movieRepository.getMovieDetailsWithId(movieId) }
-            .map { movieSummary -> buildContent(movieSummary) }
+            .flatMapLatest { movieId -> flow { emit(movieRepository.updateMovieDetailsWithId(movieId)) }
+                .flatMapConcat { movieRepository.getMovieDetailsWithId(movieId) }
+                .onStart { emit(MovieDetails(isLoading = true)) }
+                .map { movieDetails -> buildContent(movieDetails) }
+            }
             .onEach { _uiState.emit(it) }
             .launchIn(viewModelScope.plus(dispatcherProvider.main))
     }

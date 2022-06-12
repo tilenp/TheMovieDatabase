@@ -8,6 +8,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MovieApi {
@@ -17,6 +18,11 @@ interface MovieApi {
         @Query("sort_by") sortBy: String?,
         @Query("page") page: Int?,
     ): PagingDTO<MovieDTO>
+
+    @GET("3/movie/{movie_id}")
+    suspend fun getMovieDetails(
+        @Path("movie_id") movieId: Long
+    ): MovieDTO
 
     companion object {
         fun create(

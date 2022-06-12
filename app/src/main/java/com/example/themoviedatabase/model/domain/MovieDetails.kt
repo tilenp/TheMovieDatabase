@@ -9,5 +9,7 @@ data class MovieDetails(
     val backdropPath: ImagePath = ImagePath(),
     val rating: Float = 0f,
     val ratingCount: UIPlural = UIPlural(),
-    val overview: UIText = UIText()
+    val genres: String? = null,
+    val overview: UIText = UIText(),
+    val isLoading: Boolean = false
 )

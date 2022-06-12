@@ -27,6 +27,7 @@ import coil.compose.rememberImagePainter
 import com.example.themoviedatabase.R
 import com.example.themoviedatabase.model.domain.ImagePath
 import com.example.themoviedatabase.model.domain.MovieDetails
+import com.example.themoviedatabase.ui.common.LoadingView
 import com.example.themoviedatabase.ui.common.RatingView
 
 @Composable
@@ -79,18 +80,24 @@ private fun ShowMovieDetails(
     onBackButtonClicked: () -> Unit
 ) {
     val imageSize = dimensionResource(R.dimen.image_size)
-    Column(
-        modifier = modifier
-            .verticalScroll(rememberScrollState())
-    ) {
-        Backdrop(
-            showBackButton = widthSizeClass != WindowWidthSizeClass.Expanded,
-            modifier = Modifier
-                .height(imageSize),
-            imagePath = movieDetails.backdropPath,
-            onBackButtonClicked = onBackButtonClicked
+    if (movieDetails.isLoading) {
+        LoadingView(
+            modifier = Modifier.fillMaxSize()
         )
-        MovieInfo(movie = movieDetails)
+    } else {
+        Column(
+            modifier = modifier
+                .verticalScroll(rememberScrollState())
+        ) {
+            Backdrop(
+                showBackButton = widthSizeClass != WindowWidthSizeClass.Expanded,
+                modifier = Modifier
+                    .height(imageSize),
+                imagePath = movieDetails.backdropPath,
+                onBackButtonClicked = onBackButtonClicked
+            )
+            MovieInfo(movie = movieDetails)
+        }
     }
 }
 
@@ -154,13 +161,20 @@ private fun MovieInfo(
             .padding(spacingXL),
         verticalArrangement = Arrangement.spacedBy(spacingM)
     ) {
-        MovieTitle(title = movie.title.asString(context))
+        MovieTitle(
+            title = movie.title.asString(context)
+        )
         MovieRatingView(
             rating = movie.rating.toString(),
             ratingCount = movie.ratingCount.asString(context)
         )
+        MovieGenres(
+            genres = movie.genres
+        )
         MovieOverviewTitle()
-        MovieOverviewBody(overview = movie.overview.asString(context))
+        MovieOverviewBody(
+            overview = movie.overview.asString(context)
+        )
     }
 }
 
@@ -211,6 +225,22 @@ private fun MovieRatingView(
             text = ratingCount,
             color = MaterialTheme.colors.onBackground,
             style = MaterialTheme.typography.caption,
+        )
+    }
+}
+
+@Composable
+private fun MovieGenres(
+    modifier: Modifier = Modifier,
+    genres: String?
+) {
+    if (genres != null) {
+        Text(
+            modifier = modifier
+                .testTag("MovieGenres"),
+            text = genres,
+            color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
+            style = MaterialTheme.typography.caption
         )
     }
 }

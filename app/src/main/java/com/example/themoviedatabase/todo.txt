@@ -1,0 +1,4 @@
+UpdateMovieDetailsUseCase, catch exceptions
+handle error while loading movie details
+reduce the number of constructor parameters in MovieRepository
+remove idle in tests

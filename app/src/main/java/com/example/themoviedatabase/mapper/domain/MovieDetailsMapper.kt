@@ -28,6 +28,7 @@ class MovieDetailsMapper @Inject constructor(
                 formatArgs = objectToMap.movieTable.ratingCount.thousandFormat(),
                 count = objectToMap.movieTable.ratingCount
             ),
+            genres = objectToMap.genres?.joinToString(separator = ", ") { it.name },
             overview = UIText(string = objectToMap.movieTable.overview)
         )
     }

@@ -25,6 +25,9 @@ interface MovieDao {
     @Query("DELETE FROM MovieTable")
     suspend fun deleteMovies()
 
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateMovie(movie: MovieTable)
+
     @Transaction
     @Query("""
         SELECT * 

@@ -18,5 +18,7 @@ interface MovieRepository {
 
     fun getSelectedMovieId(): Flow<Long>
 
+    suspend fun updateMovieDetailsWithId(movieId: Long)
+
     fun getMovieDetailsWithId(movieId: Long): Flow<MovieDetails>
 }

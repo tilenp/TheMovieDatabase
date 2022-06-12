@@ -2,10 +2,7 @@ package com.example.themoviedatabase.dagger.module
 
 import android.content.Context
 import com.example.themoviedatabase.database.MovieDatabase
-import com.example.themoviedatabase.database.dao.BackdropImageDao
-import com.example.themoviedatabase.database.dao.ImagePathDao
-import com.example.themoviedatabase.database.dao.MovieDao
-import com.example.themoviedatabase.database.dao.MoviePagingKeysDao
+import com.example.themoviedatabase.database.dao.*
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -27,6 +24,12 @@ class DatabaseModule {
 
     @Singleton
     @Provides
+    fun providesGenreDao(database: MovieDatabase): GenreDao {
+        return database.getGenreDao()
+    }
+
+    @Singleton
+    @Provides
     fun providesImagePathDao(database: MovieDatabase): ImagePathDao {
         return database.getImagePathDao()
     }
@@ -35,6 +38,12 @@ class DatabaseModule {
     @Provides
     fun providesMovieDao(database: MovieDatabase): MovieDao {
         return database.getMovieDao()
+    }
+
+    @Singleton
+    @Provides
+    fun providesMovieGenreDao(database: MovieDatabase): MovieGenreDao {
+        return database.getMovieGenreDao()
     }
 
     @Singleton
