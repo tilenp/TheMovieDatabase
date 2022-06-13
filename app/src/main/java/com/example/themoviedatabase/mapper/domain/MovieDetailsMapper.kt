@@ -30,7 +30,6 @@ class MovieDetailsMapper @Inject constructor(
             ),
             genres = objectToMap.genres?.joinToString(separator = ", ") { it.name },
             overview = UIText(string = objectToMap.movieTable.overview),
-            isLoading = false
         )
     }
 }

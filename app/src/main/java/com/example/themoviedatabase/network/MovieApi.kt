@@ -3,6 +3,8 @@ package com.example.themoviedatabase.network
 import com.example.themoviedatabase.BuildConfig.TMDB_BASE_URL
 import com.example.themoviedatabase.model.dto.MovieDTO
 import com.example.themoviedatabase.model.dto.PagingDTO
+import com.example.themoviedatabase.model.dto.ResponseDTO
+import com.example.themoviedatabase.model.dto.VideoDTO
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -23,6 +25,11 @@ interface MovieApi {
     suspend fun getMovieDetails(
         @Path("movie_id") movieId: Long
     ): MovieDTO
+
+    @GET("3/movie/{movie_id}/videos")
+    suspend fun getMovieVideos(
+        @Path("movie_id") movieId: Long
+    ): ResponseDTO<VideoDTO>
 
     companion object {
         fun create(

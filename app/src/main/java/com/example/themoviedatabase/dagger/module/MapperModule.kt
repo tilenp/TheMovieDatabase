@@ -7,11 +7,15 @@ import com.example.themoviedatabase.mapper.Mapper
 import com.example.themoviedatabase.mapper.domain.ImagePathMovieMapper
 import com.example.themoviedatabase.mapper.domain.MovieDetailsMapper
 import com.example.themoviedatabase.mapper.domain.MovieSummaryMapper
+import com.example.themoviedatabase.mapper.domain.VideoMapper
 import com.example.themoviedatabase.mapper.table.*
 import com.example.themoviedatabase.model.domain.ImagePath
 import com.example.themoviedatabase.model.domain.MovieDetails
 import com.example.themoviedatabase.model.domain.MovieSummary
+import com.example.themoviedatabase.model.domain.Video
 import com.example.themoviedatabase.model.dto.MovieDTO
+import com.example.themoviedatabase.model.dto.ResponseDTO
+import com.example.themoviedatabase.model.dto.VideoDTO
 import dagger.Binds
 import dagger.Module
 
@@ -35,6 +39,9 @@ interface MapperModule {
     @Binds
     fun bindsMovieTableMapper(movieTableMapper: MovieTableMapper): Mapper<MovieDTO, MovieTable>
 
+    @Binds
+    fun bindsVideoTableMapper(videoTableMapper: VideoTableMapper): Mapper<ResponseDTO<VideoDTO>, List<@JvmSuppressWildcards VideoTable>>
+
     /** domain model mappers **/
 
     @Binds
@@ -45,4 +52,7 @@ interface MapperModule {
 
     @Binds
     fun bindsMovieSummaryMapper(movieSummaryMapper: MovieSummaryMapper): Mapper<MovieSummaryQuery, MovieSummary>
+
+    @Binds
+    fun bindsVideoMapper(videoMapper: VideoMapper): Mapper<VideoTable, Video>
 }

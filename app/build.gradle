@@ -32,14 +32,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField 'String', 'TMDB_BASE_URL', '"https://api.themoviedb.org/"'
             buildConfigField 'String', 'TMDB_IMAGE_URL', '"https://image.tmdb.org/t/p"'
-            buildConfigField 'String', 'TMDB_IMAGE_SIZE_500', '"/w500/"'
+            buildConfigField 'String', 'YOUTUBE_THUMBNAIL_URL', '"https://img.youtube.com/vi/"'
+            buildConfigField 'String', 'YOUTUBE_VIDEO_URL', '"https://www.youtube.com/watch?v="'
             buildConfigField 'String', 'TMDB_API_KEY', '"YOUR_API_KEY"'
         }
         debug {
             debuggable true
             buildConfigField 'String', 'TMDB_BASE_URL', '"https://api.themoviedb.org/"'
             buildConfigField 'String', 'TMDB_IMAGE_URL', '"https://image.tmdb.org/t/p"'
-            buildConfigField 'String', 'TMDB_IMAGE_SIZE_500', '"/w500/"'
+            buildConfigField 'String', 'YOUTUBE_THUMBNAIL_URL', '"https://img.youtube.com/vi/"'
+            buildConfigField 'String', 'YOUTUBE_VIDEO_URL', '"https://www.youtube.com/watch?v="'
             buildConfigField 'String', 'TMDB_API_KEY', '"YOUR_API_KEY"'
         }
     }

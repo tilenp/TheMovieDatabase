@@ -27,27 +27,29 @@ import coil.compose.rememberImagePainter
 import com.example.themoviedatabase.R
 import com.example.themoviedatabase.model.domain.ImagePath
 import com.example.themoviedatabase.model.domain.MovieDetails
-import com.example.themoviedatabase.ui.common.LoadingView
-import com.example.themoviedatabase.ui.common.RatingView
+import com.example.themoviedatabase.model.domain.Video
+import com.example.themoviedatabase.ui.common.*
 
 @Composable
 fun MovieDetailsScreen(
     widthSizeClass: WindowWidthSizeClass,
     modifier: Modifier = Modifier,
     uiState: MovieDetailsState,
-    onBackButtonClicked: () -> Unit
+    onBackButtonClicked: () -> Unit,
+    onVideoClick: (String) -> Unit
 ) {
-    if (uiState.movieDetails != null) {
-        ShowMovieDetails(
-            widthSizeClass = widthSizeClass,
-            modifier = modifier,
-            movieDetails = uiState.movieDetails,
-            onBackButtonClicked = onBackButtonClicked
-        )
-    } else {
+    if (uiState.instructionMessage != null) {
         ShowInstructions(
             modifier = modifier,
             messageId = uiState.instructionMessage
+        )
+    } else {
+        ShowContent(
+            widthSizeClass = widthSizeClass,
+            modifier = modifier,
+            uiState = uiState,
+            onBackButtonClicked = onBackButtonClicked,
+            onVideoClick = onVideoClick
         )
     }
 }
@@ -58,11 +60,11 @@ private fun ShowInstructions(
     @StringRes messageId: Int
 ) {
     Box(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
         Text(
-            modifier = modifier
+            modifier = Modifier.fillMaxSize()
                 .testTag("ShowInstructions"),
             text = stringResource(id = messageId),
             color = MaterialTheme.colors.onBackground,
@@ -73,31 +75,56 @@ private fun ShowInstructions(
 }
 
 @Composable
+private fun ShowContent(
+    widthSizeClass: WindowWidthSizeClass,
+    modifier: Modifier = Modifier,
+    uiState: MovieDetailsState,
+    onBackButtonClicked: () -> Unit,
+    onVideoClick: (String) -> Unit
+) {
+    Column(
+        modifier = modifier
+            .verticalScroll(rememberScrollState())
+    ) {
+        ShowMovieDetails(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(4f),
+            widthSizeClass = widthSizeClass,
+            movieDetails = uiState.movieDetails,
+            onBackButtonClicked = onBackButtonClicked
+        )
+        ShowTrailers(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
+            videos = uiState.videos,
+            onVideoClick = onVideoClick
+        )
+    }
+}
+
+@Composable
 private fun ShowMovieDetails(
     widthSizeClass: WindowWidthSizeClass,
     modifier: Modifier = Modifier,
-    movieDetails: MovieDetails,
+    movieDetails: MovieDetails?,
     onBackButtonClicked: () -> Unit
 ) {
-    val imageSize = dimensionResource(R.dimen.image_size)
-    if (movieDetails.isLoading) {
+    if (movieDetails == null) {
         LoadingView(
-            modifier = Modifier.fillMaxSize()
+            modifier = modifier
         )
     } else {
-        Column(
-            modifier = modifier
-                .verticalScroll(rememberScrollState())
-        ) {
-            Backdrop(
-                showBackButton = widthSizeClass != WindowWidthSizeClass.Expanded,
-                modifier = Modifier
-                    .height(imageSize),
-                imagePath = movieDetails.backdropPath,
-                onBackButtonClicked = onBackButtonClicked
-            )
-            MovieInfo(movie = movieDetails)
-        }
+        val imageSize = dimensionResource(R.dimen.image_size)
+        Backdrop(
+            showBackButton = widthSizeClass != WindowWidthSizeClass.Expanded,
+            modifier = Modifier
+                .height(imageSize),
+            imagePath = movieDetails.backdropPath,
+            onBackButtonClicked = onBackButtonClicked
+        )
+        MovieInfo(movie = movieDetails)
     }
 }
 
@@ -274,4 +301,35 @@ private fun MovieOverviewBody(
         maxLines = 15,
         overflow = TextOverflow.Ellipsis
     )
+}
+
+@Composable
+private fun ShowTrailers(
+    modifier: Modifier = Modifier,
+    videos: List<Video>?,
+    onVideoClick: (String) -> Unit
+) {
+    val spacingS = dimensionResource(R.dimen.spacing_s)
+    val trailerSize = dimensionResource(R.dimen.carousel_image_size)
+    if (videos == null) {
+        LoadingView(
+            modifier = modifier
+        )
+    } else {
+        ComposableCarousel(
+            title = stringResource(R.string.Trailers),
+            paddingValues = PaddingValues(start = spacingS, end = spacingS),
+            horizontalArrangement = Arrangement.spacedBy(spacingS),
+            list = videos,
+            itemContent = { video ->
+                VideoItemView(
+                    modifier = Modifier
+                        .width(trailerSize)
+                        .aspectRatio(ratio = 16f.div(9)),
+                    video = video,
+                    onVideoClick = onVideoClick
+                )
+            }
+        )
+    }
 }

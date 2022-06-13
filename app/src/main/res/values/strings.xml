@@ -16,4 +16,5 @@
         <item quantity="other">(%s reviews)</item>
     </plurals>
     <string name="Overview">Overview</string>
+    <string name="Trailers">Trailers</string>
 </resources>

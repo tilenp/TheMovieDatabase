@@ -51,4 +51,10 @@ class DatabaseModule {
     fun providesMoviePagingKeysDao(database: MovieDatabase): MoviePagingKeysDao {
         return database.getMoviePagingKeysDao()
     }
+
+    @Singleton
+    @Provides
+    fun providesVideoDao(database: MovieDatabase): VideoDao {
+        return database.getVideoDao()
+    }
 }

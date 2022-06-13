@@ -10,6 +10,5 @@ data class MovieDetails(
     val rating: Float = 0f,
     val ratingCount: UIPlural = UIPlural(),
     val genres: String? = null,
-    val overview: UIText = UIText(),
-    val isLoading: Boolean = false
+    val overview: UIText = UIText()
 )

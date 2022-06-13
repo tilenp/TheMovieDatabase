@@ -15,6 +15,5 @@ class UpdateMovieDetailsUseCaseImpl @Inject constructor(
     override suspend fun invoke(movieId: Long): Flow<MovieDetails> {
         return flow { emit(movieRepository.updateMovieDetailsWithId(movieId)) }
             .flatMapConcat { movieRepository.getMovieDetailsWithId(movieId) }
-            .onStart { emit(MovieDetails(isLoading = true)) }
     }
 }

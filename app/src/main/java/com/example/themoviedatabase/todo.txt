@@ -1,4 +1,8 @@
-UpdateMovieDetailsUseCase, catch exceptions
 handle error while loading movie details
-reduce the number of constructor parameters in MovieRepository
+split screens into "protected" chunks
+split MovieRepository
 remove idle in tests
+modularize, starting times are getting slow
+move open youtube into MovieDetailsScreen
+Use the MovieItemImage in MoviesScreen as well
+maybe remove cache and use SavedStateHandel (convert livedata into flow)

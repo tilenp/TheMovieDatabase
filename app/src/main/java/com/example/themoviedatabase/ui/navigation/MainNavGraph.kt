@@ -2,6 +2,7 @@ package com.example.themoviedatabase.ui.navigation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -166,8 +167,10 @@ private fun ShowMovieDetailsScreen(
     val uiState by movieDetailsViewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
     MovieDetailsScreen(
         widthSizeClass = widthSizeClass,
-        modifier = modifier,
+        modifier = modifier
+            .fillMaxSize(),
         uiState = uiState,
-        onBackButtonClicked = { navController.popBackStack() }
+        onBackButtonClicked = { navController.popBackStack() },
+        onVideoClick = { movieDetailsViewModel.newAction(MovieDetailsViewModel.Action.SelectVideo(it)) }
     )
 }

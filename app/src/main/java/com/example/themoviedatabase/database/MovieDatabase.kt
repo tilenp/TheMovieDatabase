@@ -14,7 +14,8 @@ import com.example.themoviedatabase.database.table.*
         ImagePathTable::class,
         MovieGenreTable::class,
         MovieTable::class,
-        MoviePagingKeysTable::class
+        MoviePagingKeysTable::class,
+        VideoTable::class,
     ], version = 1
 )
 abstract class MovieDatabase : RoomDatabase() {
@@ -24,6 +25,7 @@ abstract class MovieDatabase : RoomDatabase() {
     abstract fun getMovieGenreDao(): MovieGenreDao
     abstract fun getMovieDao(): MovieDao
     abstract fun getMoviePagingKeysDao(): MoviePagingKeysDao
+    abstract fun getVideoDao(): VideoDao
 
     companion object {
 
