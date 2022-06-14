@@ -9,7 +9,7 @@ import javax.inject.Singleton
 
 @Singleton
 class UpdateMovieDetailsUseCaseImpl @Inject constructor(
-    val movieRepository: MovieRepository
+    private val movieRepository: MovieRepository
 ) : UpdateMovieDetailsUseCase {
 
     override suspend fun invoke(movieId: Long): Flow<MovieDetails> {

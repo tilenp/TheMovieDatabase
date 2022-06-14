@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.example.themoviedatabase.cache.MovieCache
 import com.example.themoviedatabase.model.domain.MovieSummary
 import com.example.themoviedatabase.network.MovieRequestQuery
 import com.example.themoviedatabase.network.SortBy
@@ -19,6 +20,7 @@ import kotlinx.coroutines.plus
 import javax.inject.Inject
 
 class MoviesViewModel @Inject constructor(
+    private val movieCache: MovieCache,
     private val movieRepository: MovieRepository,
     private val errorMessageHandler: ErrorMessageHandler,
     private val dispatcherProvider: DispatcherProvider
@@ -40,7 +42,7 @@ class MoviesViewModel @Inject constructor(
             .throttleFirst(viewModelScope.plus(dispatcherProvider.main), THROTTLE_INTERVAL)
             .flatMapLatest { action ->
                 when (action) {
-                    is Action.SelectMovie -> flow<Unit> { movieRepository.setSelectedMovieId(action.movieId) }
+                    is Action.SelectMovie -> flow<Unit> { movieCache.setSelectedMovieId(action.movieId) }
                 }
             }.launchIn(viewModelScope.plus(dispatcherProvider.main))
     }

@@ -1,9 +1,9 @@
 package com.example.themoviedatabase.dagger.module
 
 import com.example.themoviedatabase.use_case.UpdateMovieDetailsUseCase
-import com.example.themoviedatabase.use_case.UpdateMovieVideosUseCase
+import com.example.themoviedatabase.use_case.UpdateVideosUseCase
 import com.example.themoviedatabase.use_case.impl.UpdateMovieDetailsUseCaseImpl
-import com.example.themoviedatabase.use_case.impl.UpdateMovieVideosUseCaseImpl
+import com.example.themoviedatabase.use_case.impl.UpdateVideosUseCaseImpl
 import dagger.Binds
 import dagger.Module
 
@@ -14,5 +14,5 @@ interface UseCaseModule {
     fun bindsUpdateMovieDetailsUseCase(updateMovieDetailsUseCaseImpl: UpdateMovieDetailsUseCaseImpl): UpdateMovieDetailsUseCase
 
     @Binds
-    fun bindsUpdateMovieVideosUseCase(updateMovieVideosUseCaseImpl: UpdateMovieVideosUseCaseImpl): UpdateMovieVideosUseCase
+    fun bindsUpdateVideosUseCase(updateVideosUseCaseImpl: UpdateVideosUseCaseImpl): UpdateVideosUseCase
 }
