@@ -1,6 +1,5 @@
 handle error while loading movie details
 split screens into "protected" chunks
-split MovieRepository
 remove idle in tests
 modularize, starting times are getting slow
 move open youtube into MovieDetailsScreen
