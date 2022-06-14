@@ -20,13 +20,37 @@ import com.example.themoviedatabase.ui.theme.TheMovieDatabaseTheme
 import com.example.themoviedatabase.utils.UIText
 
 @Composable
-fun <T : Any> ComposableCarousel(
+fun <T : Any> CarouselView(
+    modifier: Modifier = Modifier,
+    title: String,
+    paddingValues: PaddingValues,
+    horizontalArrangement: Arrangement.Horizontal,
+    list: List<T>?,
+    itemView: @Composable (T) -> Unit
+) {
+    if (list == null) {
+        LoadingView(
+            modifier = modifier
+        )
+    } else {
+        ComposableCarousel(
+            title = title,
+            paddingValues = paddingValues,
+            horizontalArrangement = horizontalArrangement,
+            list = list,
+            itemView = itemView
+        )
+    }
+}
+
+@Composable
+private fun <T : Any> ComposableCarousel(
     modifier: Modifier = Modifier,
     title: String,
     paddingValues: PaddingValues,
     horizontalArrangement: Arrangement.Horizontal,
     list: List<T>,
-    itemContent: @Composable (T) -> Unit
+    itemView: @Composable (T) -> Unit
 ) {
     val spacingXL = dimensionResource(R.dimen.spacing_xl)
     Column(
@@ -48,8 +72,45 @@ fun <T : Any> ComposableCarousel(
             horizontalArrangement = horizontalArrangement,
         ) {
             items(list) { carouselItem ->
-                itemContent(carouselItem)
+                itemView(carouselItem)
             }
+        }
+    }
+}
+
+@Preview(
+    name = "Loading Light Mode",
+    showBackground = true,
+)
+@Preview(
+    name = "Loading Dark Mode",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true,
+)
+@Composable
+fun PreviewCarouselViewLoading() {
+    val spacingS = dimensionResource(R.dimen.spacing_s)
+    val paddingValues = PaddingValues(start = spacingS, end = spacingS)
+    val horizontalArrangement = Arrangement.spacedBy(spacingS)
+    val imageSize = dimensionResource(R.dimen.carousel_image_size)
+    TheMovieDatabaseTheme {
+        Surface {
+            CarouselView<MovieSummary>(
+                title = "Popular",
+                paddingValues = paddingValues,
+                horizontalArrangement = horizontalArrangement,
+                list = null,
+                itemView = { movie ->
+                    MovieItemView(
+                        modifier = Modifier.height(imageSize),
+                        movieId = movie.movieId,
+                        title = movie.title,
+                        posterPath = movie.posterPath,
+                        rating = movie.rating,
+                        onMovieClick = {}
+                    )
+                }
+            )
         }
     }
 }
@@ -71,12 +132,12 @@ fun PreviewComposableCarousel() {
     val imageSize = dimensionResource(R.dimen.carousel_image_size)
     TheMovieDatabaseTheme {
         Surface {
-            ComposableCarousel(
+            CarouselView(
                 title = "Popular",
                 paddingValues = paddingValues,
                 horizontalArrangement = horizontalArrangement,
                 list = previewMovieSummaries(),
-                itemContent = { movie ->
+                itemView = { movie ->
                     MovieItemView(
                         modifier = Modifier.height(imageSize),
                         movieId = movie.movieId,

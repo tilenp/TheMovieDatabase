@@ -10,8 +10,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import com.example.themoviedatabase.R
 import com.example.themoviedatabase.model.domain.Video
-import com.example.themoviedatabase.ui.common.ComposableCarousel
-import com.example.themoviedatabase.ui.common.LoadingView
+import com.example.themoviedatabase.ui.common.CarouselView
 import com.example.themoviedatabase.ui.common.VideoItemView
 
 @Composable
@@ -22,25 +21,20 @@ fun MovieTrailersView(
 ) {
     val spacingS = dimensionResource(R.dimen.spacing_s)
     val trailerSize = dimensionResource(R.dimen.carousel_image_size)
-    if (videos == null) {
-        LoadingView(
-            modifier = modifier
-        )
-    } else {
-        ComposableCarousel(
-            title = stringResource(R.string.Trailers),
-            paddingValues = PaddingValues(start = spacingS, end = spacingS),
-            horizontalArrangement = Arrangement.spacedBy(spacingS),
-            list = videos,
-            itemContent = { video ->
-                VideoItemView(
-                    modifier = Modifier
-                        .width(trailerSize)
-                        .aspectRatio(ratio = 16f.div(9)),
-                    video = video,
-                    onVideoClick = onVideoClick
-                )
-            }
-        )
-    }
+    CarouselView(
+        modifier = modifier,
+        title = stringResource(R.string.Trailers),
+        paddingValues = PaddingValues(start = spacingS, end = spacingS),
+        horizontalArrangement = Arrangement.spacedBy(spacingS),
+        list = videos,
+        itemView = { video ->
+            VideoItemView(
+                modifier = Modifier
+                    .width(trailerSize)
+                    .aspectRatio(ratio = 16f.div(9)),
+                video = video,
+                onVideoClick = onVideoClick
+            )
+        }
+    )
 }
