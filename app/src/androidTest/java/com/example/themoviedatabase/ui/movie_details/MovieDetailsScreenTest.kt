@@ -101,7 +101,7 @@ class MovieDetailsScreenTest {
         movieCache.setSelectedMovieId(-1)
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
-                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
+                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Instructions)
                 Scaffold { padding ->
                     MovieDetailsScreen(
                         widthSizeClass = WindowWidthSizeClass.Compact,
@@ -121,7 +121,7 @@ class MovieDetailsScreenTest {
         movieCache.setSelectedMovieId(752623)
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
-                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
+                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Instructions)
                 Scaffold { padding ->
                     MovieDetailsScreen(
                         widthSizeClass = WindowWidthSizeClass.Compact,
@@ -141,7 +141,7 @@ class MovieDetailsScreenTest {
         movieCache.setSelectedMovieId(752623)
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
-                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
+                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Instructions)
                 Scaffold { padding ->
                     MovieDetailsScreen(
                         widthSizeClass = WindowWidthSizeClass.Compact,
@@ -162,7 +162,7 @@ class MovieDetailsScreenTest {
         var clicked = false
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
-                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
+                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Instructions)
                 Scaffold { padding ->
                     MovieDetailsScreen(
                         widthSizeClass = WindowWidthSizeClass.Compact,
@@ -183,7 +183,7 @@ class MovieDetailsScreenTest {
         movieCache.setSelectedMovieId(752623)
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
-                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
+                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Instructions)
                 Scaffold { padding ->
                     MovieDetailsScreen(
                         widthSizeClass = WindowWidthSizeClass.Compact,
@@ -203,7 +203,7 @@ class MovieDetailsScreenTest {
         movieCache.setSelectedMovieId(752623)
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
-                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
+                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Instructions)
                 Scaffold { padding ->
                     MovieDetailsScreen(
                         widthSizeClass = WindowWidthSizeClass.Compact,
@@ -223,7 +223,7 @@ class MovieDetailsScreenTest {
         movieCache.setSelectedMovieId(752623)
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
-                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
+                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Instructions)
                 Scaffold { padding ->
                     MovieDetailsScreen(
                         widthSizeClass = WindowWidthSizeClass.Compact,
@@ -243,7 +243,7 @@ class MovieDetailsScreenTest {
         movieCache.setSelectedMovieId(752623)
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
-                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
+                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Instructions)
                 Scaffold { padding ->
                     MovieDetailsScreen(
                         widthSizeClass = WindowWidthSizeClass.Compact,
@@ -263,7 +263,7 @@ class MovieDetailsScreenTest {
         movieCache.setSelectedMovieId(752623)
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
-                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
+                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Instructions)
                 Scaffold { padding ->
                     MovieDetailsScreen(
                         widthSizeClass = WindowWidthSizeClass.Compact,

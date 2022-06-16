@@ -164,7 +164,7 @@ private fun ShowMovieDetailsScreen(
     navController: NavHostController,
     movieDetailsViewModel: MovieDetailsViewModel
 ) {
-    val uiState by movieDetailsViewModel.uiState.collectAsState(initial = MovieDetailsState.Empty)
+    val uiState by movieDetailsViewModel.uiState.collectAsState(initial = MovieDetailsState.Instructions)
     MovieDetailsScreen(
         widthSizeClass = widthSizeClass,
         modifier = modifier

@@ -3,6 +3,7 @@ package com.example.themoviedatabase.ui.movie_details
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.themoviedatabase.cache.MovieCache
+import com.example.themoviedatabase.model.Resource
 import com.example.themoviedatabase.model.domain.MovieDetails
 import com.example.themoviedatabase.model.domain.Video
 import com.example.themoviedatabase.use_case.UpdateMovieDetailsUseCase
@@ -22,7 +23,7 @@ class MovieDetailsViewModel @Inject constructor(
     private val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(MovieDetailsState.Empty)
+    private val _uiState = MutableStateFlow(MovieDetailsState.Instructions)
     private val _actionDispatcher = MutableSharedFlow<Action>()
     val uiState: SharedFlow<MovieDetailsState> = _uiState
     val actions: SharedFlow<Action> = _actionDispatcher
@@ -43,23 +44,18 @@ class MovieDetailsViewModel @Inject constructor(
                     updateMovieDetailsUseCase.invoke(movieId).map { updateMovieDetails(it) },
                     updateVideosUseCase.invoke(movieId).map { updateVideos(it) }
                 )
-                    .onStart { emit(MovieDetailsState.Empty) }
-                    .map { syncState(it) }
+                    .onStart { emit(MovieDetailsState()) }
             }
             .onEach { _uiState.emit(it) }
             .launchIn(viewModelScope.plus(dispatcherProvider.main))
     }
 
-    private suspend fun updateMovieDetails(movieDetails: MovieDetails): MovieDetailsState {
-        return _uiState.first().copy(movieDetails = movieDetails)
+    private suspend fun updateMovieDetails(resource: Resource<MovieDetails>): MovieDetailsState {
+        return _uiState.first().copy(movieDetails = resource.data)
     }
 
-    private suspend fun updateVideos(videos: List<Video>): MovieDetailsState {
-        return _uiState.first().copy(videos = videos)
-    }
-
-    private fun syncState(state: MovieDetailsState): MovieDetailsState {
-        return state.copy(instructionMessage = null)
+    private suspend fun updateVideos(resource: Resource<List<Video>>): MovieDetailsState {
+        return _uiState.first().copy(videos = resource.data)
     }
 
     fun newAction(action: Action) {

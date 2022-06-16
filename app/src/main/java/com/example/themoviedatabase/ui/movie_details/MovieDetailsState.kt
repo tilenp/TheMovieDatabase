@@ -10,9 +10,9 @@ import com.example.themoviedatabase.model.domain.Video
 data class MovieDetailsState (
     val movieDetails: MovieDetails? = null,
     val videos: List<Video>? = null,
-    @StringRes val instructionMessage: Int?
+    @StringRes val instructionMessage: Int? = null
 ) {
     companion object {
-        val Empty = MovieDetailsState(instructionMessage = R.string.Select_a_movie)
+        val Instructions = MovieDetailsState(instructionMessage = R.string.Select_a_movie)
     }
 }
