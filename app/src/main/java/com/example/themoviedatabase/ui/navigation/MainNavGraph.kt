@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -165,12 +166,13 @@ private fun ShowMovieDetailsScreen(
     movieDetailsViewModel: MovieDetailsViewModel
 ) {
     val uiState by movieDetailsViewModel.uiState.collectAsState(initial = MovieDetailsState.Instructions)
+    val uriHandler = LocalUriHandler.current
     MovieDetailsScreen(
         widthSizeClass = widthSizeClass,
         modifier = modifier
             .fillMaxSize(),
         uiState = uiState,
         onBackButtonClicked = { navController.popBackStack() },
-        onVideoClick = {  }
+        onVideoClick = { uriHandler.openUri(it) }
     )
 }
