@@ -77,5 +77,5 @@ class UIPlural(
 class UISnackbar<T>(
     @StringRes val message: Int,
     @StringRes val actionLabel: Int,
-    val action: T?
+    val action: T
 )

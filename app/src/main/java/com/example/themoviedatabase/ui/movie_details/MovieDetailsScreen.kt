@@ -7,23 +7,26 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import com.example.themoviedatabase.utils.UISnackbar
 
 @Composable
 fun MovieDetailsScreen(
     widthSizeClass: WindowWidthSizeClass,
+    scaffoldState: ScaffoldState,
     modifier: Modifier = Modifier,
     uiState: MovieDetailsState,
     onBackButtonClicked: () -> Unit,
-    onVideoClick: (String) -> Unit
+    onVideoClick: (String) -> Unit,
+    onSnackbarActionPerformed: (Action.Load) -> Unit
 ) {
     if (uiState.instructionMessage == null) {
         ShowContent(
@@ -37,6 +40,13 @@ fun MovieDetailsScreen(
         ShowInstructions(
             modifier = modifier,
             messageId = uiState.instructionMessage
+        )
+    }
+    if (uiState.error != null) {
+        ShowSnackBar(
+            scaffoldState = scaffoldState,
+            error = uiState.error,
+            onSnackbarActionPerformed = onSnackbarActionPerformed
         )
     }
 }
@@ -81,12 +91,33 @@ private fun ShowInstructions(
         contentAlignment = Alignment.Center
     ) {
         Text(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
                 .testTag("ShowInstructions"),
             text = stringResource(id = messageId),
             color = MaterialTheme.colors.onBackground,
             style = MaterialTheme.typography.body2,
             textAlign = TextAlign.Center
         )
+    }
+}
+
+@Composable
+private fun ShowSnackBar(
+    scaffoldState: ScaffoldState,
+    error: UISnackbar<Action.Load>,
+    onSnackbarActionPerformed: (Action.Load) -> Unit
+) {
+    val message = stringResource(error.message)
+    val actionLabel = stringResource(error.actionLabel)
+    LaunchedEffect(key1 = error.message) {
+        val snackbarResult = scaffoldState.snackbarHostState.showSnackbar(
+            message = message,
+            actionLabel = actionLabel,
+            duration = SnackbarDuration.Indefinite
+        )
+        if (snackbarResult == SnackbarResult.ActionPerformed) {
+            onSnackbarActionPerformed(error.action)
+        }
     }
 }

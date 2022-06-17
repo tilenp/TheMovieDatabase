@@ -1,6 +1,4 @@
-show snackbar for errors
-handle open video in side effect and remove it from MainActivity
+abstract MySnackbar
 remove idle in tests
 modularize, starting times are getting slow
-move open youtube into MovieDetailsScreen
 maybe remove cache and use SavedStateHandel (convert livedata into flow)

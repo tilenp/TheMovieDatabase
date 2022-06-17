@@ -41,21 +41,30 @@ class MovieDetailsViewModel @Inject constructor(
                             when (type) {
                                 ActionType.LOAD_MOVIE_DETAILS -> updateMovieDetailsUseCase.invoke(movieId)
                                     .map { updateMovieDetails(it) }
+                                    .onStart { emit(setLoadMovieDetailsState()) }
                                 ActionType.LOAD_VIDEOS -> updateVideosUseCase.invoke(movieId)
                                     .map { updateVideos(it) }
+                                    .onStart { emit(setLoadVideosState()) }
                             }
                         }
                     }
-                    .flatMapLatest { flows -> merge(flows.merge()).onStart { emit(setLoadingState()) } }
+                    .flatMapLatest { flows -> merge(flows.merge()) }
                     .onStart { emit(MovieDetailsState.Builder().build()) }
             }
             .onEach { _uiState.emit(it) }
             .launchIn(viewModelScope.plus(dispatcherProvider.main))
     }
 
-    private suspend fun setLoadingState(): MovieDetailsState {
+    private suspend fun setLoadMovieDetailsState(): MovieDetailsState {
         return MovieDetailsState.Builder(_uiState.first())
-            .instructionMessage(null)
+            .movieDetails(null)
+            .resetError()
+            .build()
+    }
+
+    private suspend fun setLoadVideosState(): MovieDetailsState {
+        return MovieDetailsState.Builder(_uiState.first())
+            .videos(null)
             .resetError()
             .build()
     }

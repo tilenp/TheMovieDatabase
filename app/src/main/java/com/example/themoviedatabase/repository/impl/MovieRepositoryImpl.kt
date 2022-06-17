@@ -50,8 +50,8 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun updateMovieDetailsWithId(movieId: Long) {
         delay(1000)
-//        throw Throwable("IO exception")
         val movieDetailsDto = movieDetailsService.getMovieDetails(movieId)
+        throw Throwable("IO exception")
         database.withTransaction {
             movieDao.updateMovie(movieTableMapper.map(movieDetailsDto))
             genreDao.upsert(genreTableMapper.map(movieDetailsDto))

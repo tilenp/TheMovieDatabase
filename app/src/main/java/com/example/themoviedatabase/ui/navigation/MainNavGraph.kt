@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -61,7 +63,9 @@ private fun ConfigureMoviesScreen(
     moviesViewModel: MoviesViewModel,
     movieDetailsViewModel: MovieDetailsViewModel
 ) {
+    val scaffoldState = rememberScaffoldState()
     Scaffold(
+        scaffoldState = scaffoldState,
         topBar = {
             MyTopBar(
                 title = stringResource(R.string.app_name)
@@ -80,6 +84,7 @@ private fun ConfigureMoviesScreen(
                 if (widthSizeClass == WindowWidthSizeClass.Expanded) {
                     ShowMovieDetailsScreen(
                         widthSizeClass = widthSizeClass,
+                        scaffoldState = scaffoldState,
                         modifier = Modifier.weight(1f),
                         navController = navController,
                         movieDetailsViewModel = movieDetailsViewModel
@@ -97,7 +102,9 @@ private fun ConfigureMovieDetailScreen(
     moviesViewModel: MoviesViewModel,
     movieDetailsViewModel: MovieDetailsViewModel
 ) {
+    val scaffoldState = rememberScaffoldState()
     Scaffold(
+        scaffoldState = scaffoldState,
         topBar = {
             if (widthSizeClass == WindowWidthSizeClass.Expanded) {
                 MyTopBar(
@@ -119,6 +126,7 @@ private fun ConfigureMovieDetailScreen(
                 }
                 ShowMovieDetailsScreen(
                     widthSizeClass = widthSizeClass,
+                    scaffoldState = scaffoldState,
                     modifier = Modifier.weight(1f),
                     navController = navController,
                     movieDetailsViewModel = movieDetailsViewModel
@@ -161,6 +169,7 @@ private fun ShowMoviesScreen(
 @Composable
 private fun ShowMovieDetailsScreen(
     widthSizeClass: WindowWidthSizeClass,
+    scaffoldState: ScaffoldState,
     modifier: Modifier,
     navController: NavHostController,
     movieDetailsViewModel: MovieDetailsViewModel
@@ -169,10 +178,12 @@ private fun ShowMovieDetailsScreen(
     val uriHandler = LocalUriHandler.current
     MovieDetailsScreen(
         widthSizeClass = widthSizeClass,
+        scaffoldState = scaffoldState,
         modifier = modifier
             .fillMaxSize(),
         uiState = uiState,
         onBackButtonClicked = { navController.popBackStack() },
-        onVideoClick = { uriHandler.openUri(it) }
+        onVideoClick = { uriHandler.openUri(it) },
+        onSnackbarActionPerformed = { movieDetailsViewModel.newAction(it) }
     )
 }
