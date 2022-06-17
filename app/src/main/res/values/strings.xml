@@ -17,4 +17,7 @@
     </plurals>
     <string name="Overview">Overview</string>
     <string name="Trailers">Trailers</string>
+    <string name="An_error_occurred_while_loading_movie_details">An error occurred while loading movie details</string>
+    <string name="An_error_occurred_while_loading_videos">An error occurred while loading videos</string>
+    <string name="Retry">Retry</string>
 </resources>

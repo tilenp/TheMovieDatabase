@@ -16,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.compose.rememberNavController
 import com.example.themoviedatabase.dagger.ComponentProvider
+import com.example.themoviedatabase.ui.movie_details.Action
 import com.example.themoviedatabase.ui.movie_details.MovieDetailsViewModel
 import com.example.themoviedatabase.ui.movies_screen.MoviesViewModel
 import com.example.themoviedatabase.ui.navigation.MainNavGraph
@@ -64,14 +65,14 @@ class MainActivity : ComponentActivity() {
     private fun setUpActions() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                movieDetailsViewModel.actions.collect { handleAction(it) }
+//                movieDetailsViewModel.actions.collect { handleAction(it) }
             }
         }
     }
 
-    private fun handleAction(action: MovieDetailsViewModel.Action) {
+    private fun handleAction(action: Action) {
         when (action) {
-            is MovieDetailsViewModel.Action.SelectVideo -> onVideoClick(action.url)
+            is Action.SelectVideo -> onVideoClick(action.url)
         }
     }
 

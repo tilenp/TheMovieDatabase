@@ -24,14 +24,8 @@ class MovieDetailsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(MovieDetailsState.Instructions)
-    private val _actionDispatcher = MutableSharedFlow<Action>()
+    private val _actionDispatcher = MutableStateFlow<Action>(initialAction)
     val uiState: SharedFlow<MovieDetailsState> = _uiState
-    val actions: SharedFlow<Action> = _actionDispatcher
-        .throttleFirst(viewModelScope.plus(dispatcherProvider.main), THROTTLE_INTERVAL)
-        .shareIn(
-            scope =  viewModelScope.plus(dispatcherProvider.main),
-            started = SharingStarted.WhileSubscribed(5000)
-        )
 
     init {
         setUpContent()
@@ -40,29 +34,54 @@ class MovieDetailsViewModel @Inject constructor(
     private fun setUpContent() {
         movieCache.getSelectedMovieId()
             .flatMapLatest { movieId ->
-                merge(
-                    updateMovieDetailsUseCase.invoke(movieId).map { updateMovieDetails(it) },
-                    updateVideosUseCase.invoke(movieId).map { updateVideos(it) }
-                )
-                    .onStart { emit(MovieDetailsState()) }
+                _actionDispatcher.filterIsInstance<Action.Load>()
+                    .throttleFirst(viewModelScope.plus(dispatcherProvider.main), THROTTLE_INTERVAL)
+                    .map { action ->
+                        action.actions.map { type ->
+                            when (type) {
+                                ActionType.LOAD_MOVIE_DETAILS -> updateMovieDetailsUseCase.invoke(movieId)
+                                    .map { updateMovieDetails(it) }
+                                ActionType.LOAD_VIDEOS -> updateVideosUseCase.invoke(movieId)
+                                    .map { updateVideos(it) }
+                            }
+                        }
+                    }
+                    .flatMapLatest { flows -> merge(flows.merge()).onStart { emit(setLoadingState()) } }
+                    .onStart { emit(MovieDetailsState.Builder().build()) }
             }
             .onEach { _uiState.emit(it) }
             .launchIn(viewModelScope.plus(dispatcherProvider.main))
     }
 
+    private suspend fun setLoadingState(): MovieDetailsState {
+        return MovieDetailsState.Builder(_uiState.first())
+            .instructionMessage(null)
+            .resetError()
+            .build()
+    }
+
     private suspend fun updateMovieDetails(resource: Resource<MovieDetails>): MovieDetailsState {
-        return _uiState.first().copy(movieDetails = resource.data)
+        return MovieDetailsState.Builder(_uiState.first())
+            .movieDetails(resource.data)
+            .movieDetailsError(resource.error)
+            .build()
     }
 
     private suspend fun updateVideos(resource: Resource<List<Video>>): MovieDetailsState {
-        return _uiState.first().copy(videos = resource.data)
+        return MovieDetailsState.Builder(_uiState.first())
+            .videos(resource.data)
+            .videosError(resource.error)
+            .build()
     }
 
     fun newAction(action: Action) {
         viewModelScope.launch(dispatcherProvider.main) { _actionDispatcher.emit(action) }
     }
 
-    sealed class Action {
-        data class SelectVideo(val url: String): Action()
+    companion object {
+        val initialAction = Action.Load.Builder()
+            .add(ActionType.LOAD_MOVIE_DETAILS)
+            .add(ActionType.LOAD_VIDEOS)
+            .build()
     }
 }

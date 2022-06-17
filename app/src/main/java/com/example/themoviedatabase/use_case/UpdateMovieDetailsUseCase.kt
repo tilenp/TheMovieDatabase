@@ -5,5 +5,5 @@ import com.example.themoviedatabase.model.domain.MovieDetails
 import kotlinx.coroutines.flow.Flow
 
 interface UpdateMovieDetailsUseCase {
-    suspend fun invoke(movieId: Long): Flow<Resource<MovieDetails>>
+    fun invoke(movieId: Long): Flow<Resource<MovieDetails>>
 }

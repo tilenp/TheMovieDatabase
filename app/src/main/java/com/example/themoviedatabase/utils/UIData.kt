@@ -73,3 +73,9 @@ class UIPlural(
         return result
     }
 }
+
+class UISnackbar<T>(
+    @StringRes val message: Int,
+    @StringRes val actionLabel: Int,
+    val action: T?
+)

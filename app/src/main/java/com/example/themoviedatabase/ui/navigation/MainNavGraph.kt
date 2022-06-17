@@ -171,6 +171,6 @@ private fun ShowMovieDetailsScreen(
             .fillMaxSize(),
         uiState = uiState,
         onBackButtonClicked = { navController.popBackStack() },
-        onVideoClick = { movieDetailsViewModel.newAction(MovieDetailsViewModel.Action.SelectVideo(it)) }
+        onVideoClick = {  }
     )
 }

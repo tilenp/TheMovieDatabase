@@ -13,7 +13,7 @@ class UpdateVideosUseCaseImpl @Inject constructor(
     private val videoRepository: VideoRepository
 ) : UpdateVideosUseCase {
 
-    override suspend fun invoke(movieId: Long): Flow<Resource<List<Video>>> {
+    override fun invoke(movieId: Long): Flow<Resource<List<Video>>> {
         return videoRepository.getVideosWithMovieId(movieId)
             .map { Resource(data = it) }
             .onStart {

@@ -1,4 +1,5 @@
-handle error while loading movie details
+show snackbar for errors
+handle open video in side effect and remove it from MainActivity
 remove idle in tests
 modularize, starting times are getting slow
 move open youtube into MovieDetailsScreen
