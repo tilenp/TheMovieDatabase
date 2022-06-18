@@ -24,7 +24,7 @@ class MovieDetailsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(MovieDetailsState.Instructions)
-    private val _actionDispatcher = MutableSharedFlow<Action>()
+    private val _eventDispatcher = MutableSharedFlow<Event>()
     val uiState: SharedFlow<MovieDetailsState> = _uiState
 
     init {
@@ -34,9 +34,9 @@ class MovieDetailsViewModel @Inject constructor(
     private fun setUpContent() {
         movieCache.getSelectedMovieId()
             .flatMapLatest { movieId ->
-                _actionDispatcher.filterIsInstance<Action.Load>()
+                _eventDispatcher.filterIsInstance<Event.Load>()
                     .throttleFirst(viewModelScope.plus(dispatcherProvider.main), THROTTLE_INTERVAL)
-                    .onStart { emit(initialAction) }
+                    .onStart { emit(initialEvent) }
                     .map { action ->
                         action.actions.map { type ->
                             when (type) {
@@ -84,12 +84,12 @@ class MovieDetailsViewModel @Inject constructor(
             .build()
     }
 
-    fun newAction(action: Action) {
-        viewModelScope.launch(dispatcherProvider.main) { _actionDispatcher.emit(action) }
+    fun newEvent(event: Event) {
+        viewModelScope.launch(dispatcherProvider.main) { _eventDispatcher.emit(event) }
     }
 
     companion object {
-        val initialAction = Action.Load.Builder()
+        val initialEvent = Event.Load.Builder()
             .add(ActionType.LOAD_MOVIE_DETAILS)
             .add(ActionType.LOAD_VIDEOS)
             .build()

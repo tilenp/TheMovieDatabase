@@ -14,7 +14,7 @@ class MovieDetailsState private constructor(builder: Builder) {
 
     @StringRes
     val instructionMessage: Int? = builder.instructionMessage
-    val error: UISnackbar<Action.Load>? = builder.error
+    val error: UISnackbar<Event.Load>? = builder.error
 
     class Builder(state: MovieDetailsState? = null) {
         var movieDetails: MovieDetails? = state?.movieDetails
@@ -22,7 +22,7 @@ class MovieDetailsState private constructor(builder: Builder) {
 
         @StringRes
         var instructionMessage: Int? = state?.instructionMessage
-        var error: UISnackbar<Action.Load>? = state?.error
+        var error: UISnackbar<Event.Load>? = state?.error
 
         fun movieDetails(movieDetails: MovieDetails?): Builder {
             this.movieDetails = movieDetails
@@ -43,10 +43,10 @@ class MovieDetailsState private constructor(builder: Builder) {
             throwable?.let {
                 val message = R.string.An_error_occurred_while_loading_movie_details
                 val actionLabel = R.string.Retry
-                val action = Action.Load.Builder(error?.action)
+                val event = Event.Load.Builder(error?.action)
                     .add(ActionType.LOAD_MOVIE_DETAILS)
                     .build()
-                this.error = UISnackbar(message, actionLabel, action)
+                this.error = UISnackbar(message, actionLabel, event)
             }
             return this
         }
@@ -58,10 +58,10 @@ class MovieDetailsState private constructor(builder: Builder) {
                     else -> R.string.An_error_occurred_while_loading_movie_details
                 }
                 val actionLabel = R.string.Retry
-                val action = Action.Load.Builder(error?.action)
+                val event = Event.Load.Builder(error?.action)
                     .add(ActionType.LOAD_VIDEOS)
                     .build()
-                this.error = UISnackbar(message, actionLabel, action)
+                this.error = UISnackbar(message, actionLabel, event)
             }
             return this
         }

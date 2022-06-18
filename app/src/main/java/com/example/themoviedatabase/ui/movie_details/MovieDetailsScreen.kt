@@ -27,7 +27,7 @@ fun MovieDetailsScreen(
     uiState: MovieDetailsState,
     onBackButtonClicked: () -> Unit,
     onVideoClick: (String) -> Unit,
-    onSnackbarActionPerformed: (Action.Load) -> Unit
+    onSnackbarActionPerformed: (Event.Load) -> Unit
 ) {
     if (uiState.instructionMessage == null) {
         ShowContent(

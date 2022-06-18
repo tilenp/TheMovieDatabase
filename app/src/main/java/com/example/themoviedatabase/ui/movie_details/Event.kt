@@ -1,7 +1,7 @@
 package com.example.themoviedatabase.ui.movie_details
 
-sealed class Action {
-    class Load private constructor(builder: Builder): Action() {
+sealed class Event {
+    class Load private constructor(builder: Builder): Event() {
         val actions: List<ActionType> = builder.actions
 
         class Builder(action: Load? = null) {

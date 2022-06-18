@@ -184,6 +184,6 @@ private fun ShowMovieDetailsScreen(
         uiState = uiState,
         onBackButtonClicked = { navController.popBackStack() },
         onVideoClick = { uriHandler.openUri(it) },
-        onSnackbarActionPerformed = { movieDetailsViewModel.newAction(it) }
+        onSnackbarActionPerformed = { movieDetailsViewModel.newEvent(it) }
     )
 }
