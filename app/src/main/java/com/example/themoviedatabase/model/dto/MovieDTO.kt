@@ -9,7 +9,8 @@ data class MovieDTO(
     val popularity: Float? = null,
     val voteCount: Long? = null,
     val voteAverage: Float? = null,
-    val releaseData: String? = null,
+    val releaseDate: String? = null,
+    val runtime: Int? = null,
     val genres: List<GenreDTO>? = null
 )
 

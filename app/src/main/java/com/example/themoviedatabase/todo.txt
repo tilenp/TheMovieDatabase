@@ -1,3 +1,5 @@
+load similar movies
 remove idle in tests
 try to emit MovieDetailsState.builder instead the stete itself
+set snackbar theme
 maybe remove cache and use SavedStateHandel (convert livedata into flow)

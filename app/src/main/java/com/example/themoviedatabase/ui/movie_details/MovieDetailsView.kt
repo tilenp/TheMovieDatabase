@@ -120,6 +120,13 @@ private fun MovieInfo(
         MovieGenres(
             genres = movie.genres
         )
+        MovieReleaseDate(
+            releaseDate = movie.releaseDate
+        )
+        MovieRuntime(
+            runtimeIcon = movie.runtimeIcon,
+            runtime = movie.runtime
+        )
         MovieOverviewTitle()
         MovieOverviewBody(
             overview = movie.overview.asString(context)
@@ -181,9 +188,9 @@ private fun MovieRatingView(
 @Composable
 private fun MovieGenres(
     modifier: Modifier = Modifier,
-    genres: String?
+    genres: String
 ) {
-    if (genres != null) {
+    if (genres.isNotBlank()) {
         Text(
             modifier = modifier
                 .testTag("MovieGenres"),
@@ -191,6 +198,58 @@ private fun MovieGenres(
             color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
             style = MaterialTheme.typography.caption
         )
+    }
+}
+
+@Composable
+private fun MovieReleaseDate(
+    modifier: Modifier = Modifier,
+    releaseDate: String
+) {
+    if (releaseDate.isNotBlank()) {
+        Text(
+            modifier = modifier
+                .testTag("ReleaseDate"),
+            text = releaseDate,
+            color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
+            style = MaterialTheme.typography.caption
+        )
+    }
+}
+
+@Composable
+private fun MovieRuntime(
+    modifier: Modifier = Modifier,
+    runtimeIcon: ImagePath,
+    runtime: String
+) {
+    if (runtime.isNotBlank()) {
+        val painter = rememberImagePainter(data = runtimeIcon.backup)
+        val spacingM = dimensionResource(R.dimen.spacing_m)
+        val spacingL = dimensionResource(R.dimen.spacing_l)
+        val spacingXL = dimensionResource(R.dimen.spacing_xl)
+        Row(
+            modifier = modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(spacingM)
+        ) {
+            Icon(
+                modifier = Modifier
+                    .size(spacingXL),
+                painter = painter,
+                contentDescription = null,
+                tint = MaterialTheme.colors.secondary
+            )
+            Text(
+                modifier = Modifier
+                    .align(alignment = Alignment.CenterVertically)
+                    .testTag("MovieRuntime${runtime}"),
+                text = runtime,
+                color = MaterialTheme.colors.secondary,
+                style = MaterialTheme.typography.caption,
+            )
+        }
     }
 }
 

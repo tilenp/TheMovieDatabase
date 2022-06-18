@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "e8b4bbb39d762d6690032ed76b68d478",
+    "identityHash": "25f2ed9f72dc6066104a29e7d1dc69fb",
     "entities": [
       {
         "tableName": "BackdropImageTable",
@@ -144,7 +144,7 @@
       },
       {
         "tableName": "MovieTable",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `movieId` INTEGER NOT NULL, `title` TEXT NOT NULL, `popularity` REAL NOT NULL, `overview` TEXT NOT NULL, `ratingCount` INTEGER NOT NULL, `rating` REAL NOT NULL, `releaseDate` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `movieId` INTEGER NOT NULL, `title` TEXT NOT NULL, `popularity` REAL NOT NULL, `overview` TEXT NOT NULL, `ratingCount` INTEGER NOT NULL, `rating` REAL NOT NULL, `releaseDate` TEXT NOT NULL, `runtime` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -192,6 +192,12 @@
             "fieldPath": "releaseDate",
             "columnName": "releaseDate",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "runtime",
+            "columnName": "runtime",
+            "affinity": "INTEGER",
             "notNull": true
           }
         ],
@@ -294,7 +300,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e8b4bbb39d762d6690032ed76b68d478')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '25f2ed9f72dc6066104a29e7d1dc69fb')"
     ]
   }
 }

@@ -17,7 +17,8 @@ class MovieTableMapper @Inject constructor() : Mapper<MovieDTO, MovieTable> {
             overview = objectToMap.overview.orEmpty(),
             ratingCount = objectToMap.voteCount ?: 0L,
             rating = objectToMap.voteAverage ?: 0f,
-            releaseDate = objectToMap.releaseData.orEmpty()
+            releaseDate = objectToMap.releaseDate.orEmpty(),
+            runtime = objectToMap.runtime ?: 0
         )
     }
 }
