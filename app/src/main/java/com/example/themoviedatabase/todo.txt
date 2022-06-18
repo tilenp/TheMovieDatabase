@@ -1,4 +1,4 @@
-abstract MySnackbar
 remove idle in tests
-modularize, starting times are getting slow
+rename action into event
+try to emit MovieDetailsState.builder instead the stete itself
 maybe remove cache and use SavedStateHandel (convert livedata into flow)

@@ -24,7 +24,7 @@ class MovieDetailsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(MovieDetailsState.Instructions)
-    private val _actionDispatcher = MutableStateFlow<Action>(initialAction)
+    private val _actionDispatcher = MutableSharedFlow<Action>()
     val uiState: SharedFlow<MovieDetailsState> = _uiState
 
     init {
@@ -36,6 +36,7 @@ class MovieDetailsViewModel @Inject constructor(
             .flatMapLatest { movieId ->
                 _actionDispatcher.filterIsInstance<Action.Load>()
                     .throttleFirst(viewModelScope.plus(dispatcherProvider.main), THROTTLE_INTERVAL)
+                    .onStart { emit(initialAction) }
                     .map { action ->
                         action.actions.map { type ->
                             when (type) {
