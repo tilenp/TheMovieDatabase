@@ -1,10 +1,7 @@
 package com.example.themoviedatabase.ui.movie_details
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
@@ -17,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import com.example.themoviedatabase.ui.common.LoadingView
 import com.example.themoviedatabase.ui.common.MySnackbar
 
 @Composable
@@ -29,7 +27,12 @@ fun MovieDetailsScreen(
     onVideoClick: (String) -> Unit,
     onSnackbarActionPerformed: (Event.Load) -> Unit
 ) {
-    if (uiState.instructionMessage == null) {
+    if (uiState.instructionMessage != null) {
+        ShowInstructions(
+            modifier = modifier,
+            messageId = uiState.instructionMessage
+        )
+    } else if (uiState.movieDetails != null || uiState.videos != null || uiState.similarMovies != null) {
         ShowContent(
             widthSizeClass = widthSizeClass,
             modifier = modifier,
@@ -38,9 +41,8 @@ fun MovieDetailsScreen(
             onVideoClick = onVideoClick
         )
     } else {
-        ShowInstructions(
-            modifier = modifier,
-            messageId = uiState.instructionMessage
+        LoadingView(
+            modifier = modifier.fillMaxSize()
         )
     }
     if (uiState.error != null) {
@@ -66,18 +68,22 @@ private fun ShowContent(
     ) {
         MovieDetailsView(
             modifier = Modifier
-                .fillMaxWidth()
-                .weight(4f),
+                .fillMaxWidth(),
             widthSizeClass = widthSizeClass,
             movieDetails = uiState.movieDetails,
             onBackButtonClicked = onBackButtonClicked
         )
         MovieTrailersView(
             modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
+                .fillMaxWidth(),
             videos = uiState.videos,
             onVideoClick = onVideoClick
+        )
+        SimilarMoviesView(
+            modifier = Modifier
+                .fillMaxWidth(),
+            movies = uiState.similarMovies,
+            onMovieClick = {}
         )
     }
 }

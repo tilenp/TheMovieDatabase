@@ -22,5 +22,6 @@ sealed class Event {
 
 enum class ActionType {
     LOAD_MOVIE_DETAILS,
-    LOAD_VIDEOS
+    LOAD_VIDEOS,
+    LOAD_SIMILAR_MOVIES
 }

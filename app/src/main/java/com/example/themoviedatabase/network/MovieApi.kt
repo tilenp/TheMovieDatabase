@@ -31,13 +31,19 @@ interface MovieApi {
         @Path("movie_id") movieId: Long
     ): ResponseDTO<VideoDTO>
 
+    @GET("3/movie/{movie_id}/similar")
+    suspend fun getSimilarMovies(
+        @Path("movie_id") movieId: Long,
+        @Query("page") page: Int?,
+    ): PagingDTO<MovieDTO>
+
     companion object {
         fun create(
             logger: HttpLoggingInterceptor,
             authorizationInterceptor: MovieAuthorizationInterceptor,
             converterFactory: GsonConverterFactory
         ): MovieApi {
-            logger.level = HttpLoggingInterceptor.Level.BASIC
+            logger.level = HttpLoggingInterceptor.Level.BODY
 
             val client = OkHttpClient.Builder()
                 .addInterceptor(logger)

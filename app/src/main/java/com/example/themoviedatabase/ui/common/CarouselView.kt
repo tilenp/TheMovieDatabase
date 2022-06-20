@@ -34,6 +34,7 @@ fun <T : Any> CarouselView(
         )
     } else {
         ComposableCarousel(
+            modifier = modifier,
             title = title,
             paddingValues = paddingValues,
             horizontalArrangement = horizontalArrangement,
@@ -57,7 +58,7 @@ private fun <T : Any> ComposableCarousel(
         modifier = modifier
     ) {
         Text(
-            modifier = modifier
+            modifier = Modifier
                 .padding(start = spacingXL)
                 .testTag("ComposableCarousel$title"),
             text = title,
@@ -102,7 +103,7 @@ fun PreviewCarouselViewLoading() {
                 list = null,
                 itemView = { movie ->
                     MovieItemView(
-                        modifier = Modifier.height(imageSize),
+                        modifier = Modifier.size(imageSize),
                         movieId = movie.movieId,
                         title = movie.title,
                         posterPath = movie.posterPath,

@@ -18,4 +18,8 @@ interface MovieRepository {
     suspend fun updateMovieDetailsWithId(movieId: Long)
 
     fun getMovieDetailsWithId(movieId: Long): Flow<MovieDetails>
+
+    suspend fun updateSimilarMoviesForId(movieId: Long, page: Int?)
+
+    fun getSimilarMoviesForId(movieId: Long): Flow<List<MovieSummary>>
 }

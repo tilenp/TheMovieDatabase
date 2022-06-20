@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "25f2ed9f72dc6066104a29e7d1dc69fb",
+    "identityHash": "9013c1d65c910de2189878125b963daf",
     "entities": [
       {
         "tableName": "BackdropImageTable",
@@ -265,6 +265,66 @@
         ]
       },
       {
+        "tableName": "SimilarMovieTable",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`movieId` INTEGER NOT NULL, `similarMovieId` INTEGER NOT NULL, PRIMARY KEY(`movieId`, `similarMovieId`), FOREIGN KEY(`movieId`) REFERENCES `MovieTable`(`movieId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`similarMovieId`) REFERENCES `MovieTable`(`movieId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "movieId",
+            "columnName": "movieId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "similarMovieId",
+            "columnName": "similarMovieId",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "movieId",
+            "similarMovieId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_SimilarMovieTable_similarMovieId",
+            "unique": false,
+            "columnNames": [
+              "similarMovieId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_SimilarMovieTable_similarMovieId` ON `${TABLE_NAME}` (`similarMovieId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "MovieTable",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "movieId"
+            ],
+            "referencedColumns": [
+              "movieId"
+            ]
+          },
+          {
+            "table": "MovieTable",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "similarMovieId"
+            ],
+            "referencedColumns": [
+              "movieId"
+            ]
+          }
+        ]
+      },
+      {
         "tableName": "VideoTable",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `key` TEXT NOT NULL, `itemId` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
@@ -300,7 +360,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '25f2ed9f72dc6066104a29e7d1dc69fb')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9013c1d65c910de2189878125b963daf')"
     ]
   }
 }

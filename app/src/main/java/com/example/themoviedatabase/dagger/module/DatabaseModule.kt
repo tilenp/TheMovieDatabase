@@ -54,6 +54,12 @@ class DatabaseModule {
 
     @Singleton
     @Provides
+    fun providesSimilarMoviesDao(database: MovieDatabase): SimilarMoviesDao {
+        return database.getSimilarMoviesDao()
+    }
+
+    @Singleton
+    @Provides
     fun providesVideoDao(database: MovieDatabase): VideoDao {
         return database.getVideoDao()
     }

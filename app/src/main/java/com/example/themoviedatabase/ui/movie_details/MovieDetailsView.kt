@@ -107,7 +107,7 @@ private fun MovieInfo(
     val spacingXL = dimensionResource(R.dimen.spacing_xl)
     Column(
         modifier = modifier
-            .padding(spacingXL),
+            .padding(start = spacingXL, top = spacingXL, end = spacingXL),
         verticalArrangement = Arrangement.spacedBy(spacingM)
     ) {
         MovieTitle(

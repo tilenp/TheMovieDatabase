@@ -2,8 +2,7 @@ package com.example.themoviedatabase.database.dao
 
 import androidx.paging.PagingSource
 import androidx.room.*
-import com.example.themoviedatabase.database.query.MovieDetailsQuery
-import com.example.themoviedatabase.database.query.MovieSummaryQuery
+import com.example.themoviedatabase.database.query.*
 import com.example.themoviedatabase.database.table.MovieTable
 import kotlinx.coroutines.flow.Flow
 
@@ -21,6 +20,20 @@ abstract class MovieDao {
         ORDER BY MovieTable.id ASC
     """)
     abstract fun getPopularMovies(): PagingSource<Int, MovieSummaryQuery>
+
+    @Query("""
+        SELECT
+            MovieTable.movieId,
+            MovieTable.title,
+            MovieTable.rating,
+            ImagePathTable.path as imagePath
+        FROM MovieTable
+        JOIN SimilarMovieTable ON MovieTable.movieId = SimilarMovieTable.similarMovieId
+        JOIN ImagePathTable ON MovieTable.movieId = ImagePathTable.itemId
+        WHERE SimilarMovieTable.movieId = :movieId
+        GROUP BY MovieTable.movieId
+    """)
+    abstract fun getSimilarMovies(movieId: Long): Flow<List<MovieSummaryQueryTest>>
 
     @Query("DELETE FROM MovieTable")
     abstract suspend fun deleteMovies()
@@ -64,6 +77,9 @@ abstract class MovieDao {
         movieId: Long
     )
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    abstract suspend fun insertMovie(movie: MovieTable): Long
+
     @Transaction
     @Query("""
         SELECT * 
@@ -71,4 +87,12 @@ abstract class MovieDao {
         WHERE MovieTable.movieId = :movieId
     """)
     abstract fun getMovieDetailsWithId(movieId: Long): Flow<MovieDetailsQuery>
+
+    suspend fun upsert(movies: List<MovieTable>) {
+        movies.forEach { movie ->
+            if (insertMovie(movie) == -1L) {
+                updateMovie(movie)
+            }
+        }
+    }
 }

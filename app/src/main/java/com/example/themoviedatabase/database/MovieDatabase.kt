@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.themoviedatabase.database.dao.*
+import com.example.themoviedatabase.database.query.MSummary
 import com.example.themoviedatabase.database.table.*
 
 @Database(
@@ -15,8 +16,13 @@ import com.example.themoviedatabase.database.table.*
         MovieGenreTable::class,
         MovieTable::class,
         MoviePagingKeysTable::class,
+        SimilarMovieTable::class,
         VideoTable::class,
-    ], version = 1
+    ],
+    views = [
+        MSummary::class
+    ],
+    version = 1
 )
 abstract class MovieDatabase : RoomDatabase() {
     abstract fun getBackdropImageDao(): BackdropImageDao
@@ -25,6 +31,7 @@ abstract class MovieDatabase : RoomDatabase() {
     abstract fun getMovieGenreDao(): MovieGenreDao
     abstract fun getMovieDao(): MovieDao
     abstract fun getMoviePagingKeysDao(): MoviePagingKeysDao
+    abstract fun getSimilarMoviesDao(): SimilarMoviesDao
     abstract fun getVideoDao(): VideoDao
 
     companion object {

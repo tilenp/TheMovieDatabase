@@ -5,8 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.themoviedatabase.cache.MovieCache
 import com.example.themoviedatabase.model.Resource
 import com.example.themoviedatabase.model.domain.MovieDetails
+import com.example.themoviedatabase.model.domain.MovieSummary
 import com.example.themoviedatabase.model.domain.Video
 import com.example.themoviedatabase.use_case.UpdateMovieDetailsUseCase
+import com.example.themoviedatabase.use_case.UpdateSimilarMoviesUseCase
 import com.example.themoviedatabase.use_case.UpdateVideosUseCase
 import com.example.themoviedatabase.utils.DispatcherProvider
 import com.example.themoviedatabase.utils.THROTTLE_INTERVAL
@@ -20,6 +22,7 @@ class MovieDetailsViewModel @Inject constructor(
     private val movieCache: MovieCache,
     private val updateMovieDetailsUseCase: UpdateMovieDetailsUseCase,
     private val updateVideosUseCase: UpdateVideosUseCase,
+    private val updateSimilarMoviesUseCase: UpdateSimilarMoviesUseCase,
     private val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
 
@@ -46,6 +49,9 @@ class MovieDetailsViewModel @Inject constructor(
                                 ActionType.LOAD_VIDEOS -> updateVideosUseCase.invoke(movieId)
                                     .map { updateVideos(it) }
                                     .onStart { emit(setLoadVideosState()) }
+                                ActionType.LOAD_SIMILAR_MOVIES -> updateSimilarMoviesUseCase.invoke(movieId)
+                                    .map { updateSimilarMovies(it) }
+                                    .onStart { emit(setLoadSimilarMoviesState()) }
                             }
                         }
                     }
@@ -70,6 +76,13 @@ class MovieDetailsViewModel @Inject constructor(
             .build()
     }
 
+    private suspend fun setLoadSimilarMoviesState(): MovieDetailsState {
+        return MovieDetailsState.Builder(_uiState.first())
+            .similarMovies(null)
+            .resetError()
+            .build()
+    }
+
     private suspend fun updateMovieDetails(resource: Resource<MovieDetails>): MovieDetailsState {
         return MovieDetailsState.Builder(_uiState.first())
             .movieDetails(resource.data)
@@ -84,6 +97,14 @@ class MovieDetailsViewModel @Inject constructor(
             .build()
     }
 
+    private suspend fun updateSimilarMovies(resource: Resource<List<MovieSummary>>): MovieDetailsState {
+        return MovieDetailsState.Builder(_uiState.first())
+            .similarMovies(resource.data)
+            .similarMoviesError(resource.error)
+            .build()
+    }
+
+
     fun newEvent(event: Event) {
         viewModelScope.launch(dispatcherProvider.main) { _eventDispatcher.emit(event) }
     }
@@ -92,6 +113,7 @@ class MovieDetailsViewModel @Inject constructor(
         val initialEvent = Event.Load.Builder()
             .add(ActionType.LOAD_MOVIE_DETAILS)
             .add(ActionType.LOAD_VIDEOS)
+            .add(ActionType.LOAD_SIMILAR_MOVIES)
             .build()
     }
 }
