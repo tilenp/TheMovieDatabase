@@ -3,13 +3,11 @@ package com.example.themoviedatabase.repository.impl
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.room.withTransaction
-import com.example.themoviedatabase.R
 import com.example.themoviedatabase.database.MovieDatabase
 import com.example.themoviedatabase.database.query.MovieDetailsQuery
 import com.example.themoviedatabase.database.query.MovieSummaryQuery
 import com.example.themoviedatabase.database.table.*
 import com.example.themoviedatabase.mapper.Mapper
-import com.example.themoviedatabase.model.domain.ImagePath
 import com.example.themoviedatabase.model.domain.MovieDetails
 import com.example.themoviedatabase.model.domain.MovieSummary
 import com.example.themoviedatabase.model.dto.MovieDTO
@@ -18,7 +16,6 @@ import com.example.themoviedatabase.repository.MovieRepository
 import com.example.themoviedatabase.service.MovieDetailsService
 import com.example.themoviedatabase.service.MovieService
 import com.example.themoviedatabase.service.SimilarMoviesService
-import com.example.themoviedatabase.utils.UIText
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
@@ -90,17 +87,6 @@ class MovieRepositoryImpl @Inject constructor(
     override fun getSimilarMoviesForId(movieId: Long): Flow<List<MovieSummary>> {
         return movieDao.getSimilarMovies(movieId)
             .filterNotNull()
-            .map { similarMovies -> similarMovies.map {
-                MovieSummary(
-                    movieId = it.movieId,
-                    title = UIText(string = it.title),
-                    posterPath = ImagePath(
-                        url = it.imagePath.orEmpty(),
-                        placeholder = R.drawable.ic_photo,
-                        backup = R.drawable.ic_broken_image
-                    ),
-                    rating = it.rating
-                )
-            } }
+            .map { similarMovies -> similarMovies.map { movieSummaryMapper.map(it) } }
     }
 }

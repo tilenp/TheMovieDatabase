@@ -1,7 +1,6 @@
 package com.example.themoviedatabase.mapper.domain
 
 import com.example.themoviedatabase.database.query.MovieSummaryQuery
-import com.example.themoviedatabase.database.table.ImagePathTable
 import com.example.themoviedatabase.mapper.Mapper
 import com.example.themoviedatabase.model.domain.ImagePath
 import com.example.themoviedatabase.model.domain.MovieSummary
@@ -15,7 +14,7 @@ class MovieSummaryMapper @Inject constructor(
 ) : Mapper<MovieSummaryQuery, MovieSummary> {
 
     override fun map(objectToMap: MovieSummaryQuery): MovieSummary {
-        val url = objectToMap.imagePaths?.firstOrNull().orEmpty()
+        val url = objectToMap.imagePath.orEmpty()
         return MovieSummary(
             movieId = objectToMap.movieId,
             title = UIText(string = objectToMap.title),

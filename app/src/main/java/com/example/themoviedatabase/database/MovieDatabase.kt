@@ -5,7 +5,6 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.themoviedatabase.database.dao.*
-import com.example.themoviedatabase.database.query.MSummary
 import com.example.themoviedatabase.database.table.*
 
 @Database(
@@ -18,9 +17,6 @@ import com.example.themoviedatabase.database.table.*
         MoviePagingKeysTable::class,
         SimilarMovieTable::class,
         VideoTable::class,
-    ],
-    views = [
-        MSummary::class
     ],
     version = 1
 )

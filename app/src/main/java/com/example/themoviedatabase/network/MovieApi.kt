@@ -43,7 +43,7 @@ interface MovieApi {
             authorizationInterceptor: MovieAuthorizationInterceptor,
             converterFactory: GsonConverterFactory
         ): MovieApi {
-            logger.level = HttpLoggingInterceptor.Level.BODY
+            logger.level = HttpLoggingInterceptor.Level.BASIC
 
             val client = OkHttpClient.Builder()
                 .addInterceptor(logger)

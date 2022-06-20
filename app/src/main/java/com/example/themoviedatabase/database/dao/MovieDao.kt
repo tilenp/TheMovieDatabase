@@ -12,11 +12,14 @@ abstract class MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insertMovies(movies: List<MovieTable>)
 
-    @Transaction
-    @RewriteQueriesToDropUnusedColumns
     @Query("""
-        SELECT * 
-        FROM MovieTable 
+        SELECT
+            MovieTable.movieId,
+            MovieTable.title,
+            MovieTable.rating,
+            ImagePathTable.path as imagePath
+        FROM MovieTable
+        JOIN ImagePathTable ON MovieTable.movieId = ImagePathTable.itemId
         ORDER BY MovieTable.id ASC
     """)
     abstract fun getPopularMovies(): PagingSource<Int, MovieSummaryQuery>
@@ -33,7 +36,7 @@ abstract class MovieDao {
         WHERE SimilarMovieTable.movieId = :movieId
         GROUP BY MovieTable.movieId
     """)
-    abstract fun getSimilarMovies(movieId: Long): Flow<List<MovieSummaryQueryTest>>
+    abstract fun getSimilarMovies(movieId: Long): Flow<List<MovieSummaryQuery>>
 
     @Query("DELETE FROM MovieTable")
     abstract suspend fun deleteMovies()
