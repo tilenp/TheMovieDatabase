@@ -81,7 +81,7 @@ abstract class MovieDao {
     )
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract suspend fun insertMovie(movie: MovieTable): Long
+    protected abstract suspend fun insertMovie(movie: MovieTable): Long
 
     @Transaction
     @Query("""

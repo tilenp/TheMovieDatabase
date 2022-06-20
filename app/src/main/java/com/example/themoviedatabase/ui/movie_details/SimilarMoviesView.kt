@@ -19,7 +19,7 @@ fun SimilarMoviesView(
 ) {
     val spacingS = dimensionResource(R.dimen.spacing_s)
     val spacingXL = dimensionResource(R.dimen.spacing_xl)
-    val imageSize = dimensionResource(R.dimen.carousel_image_size)
+    val imageSize = dimensionResource(R.dimen.image_size)
     CarouselView(
         modifier = modifier
             .padding(top = spacingXL),
@@ -31,12 +31,13 @@ fun SimilarMoviesView(
             System.out.println("TTT " + movie.posterPath.medium)
             MovieItemView(
                 modifier = Modifier
-                    .size(imageSize)
+                    .height(imageSize)
+                    .aspectRatio(ratio = 9f.div(16))
                     .testTag("MovieItem"),
                 movieId = movie.movieId,
                 title = movie.title,
                 posterPath = movie.posterPath,
-                rating = movie.rating,
+                rating = movie.rating.formattedValue,
                 onMovieClick = onMovieClick
             )
         }

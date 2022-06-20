@@ -1,9 +1,3 @@
-clean up MovieSummaryQueryTest
-remove database views
-write sql queries instead of using relational objects
-use upsert instead of insert(ignore)
-fix carousel image size
-load similar movies
 fix movie details loading (looks weird)
 split movie repository
 remove idle in tests

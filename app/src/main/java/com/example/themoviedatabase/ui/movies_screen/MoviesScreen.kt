@@ -39,7 +39,7 @@ fun MovieListContent(
                 movieId = movie.movieId,
                 title = movie.title,
                 posterPath = movie.posterPath,
-                rating = movie.rating,
+                rating = movie.rating.formattedValue,
                 onMovieClick = onMovieClick
             )
         },

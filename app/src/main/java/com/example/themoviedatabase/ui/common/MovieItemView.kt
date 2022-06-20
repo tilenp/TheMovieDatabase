@@ -28,7 +28,7 @@ fun MovieItemView(
     movieId: Long = 0,
     title: UIText = UIText(),
     posterPath: ImagePath = ImagePath(),
-    rating: Float = 0f,
+    rating: String = "",
     onMovieClick: (Long) -> Unit = {}
 ) {
     val spacingS = dimensionResource(R.dimen.spacing_s)
@@ -51,7 +51,7 @@ fun MovieItemView(
                     .align(Alignment.TopEnd)
                     .padding(top = spacingM, end = spacingM)
                     .testTag("RatingView${movieId}"),
-                rating = rating.toString(),
+                rating = rating,
                 style = MaterialTheme.typography.caption,
                 padding = spacingS
             )

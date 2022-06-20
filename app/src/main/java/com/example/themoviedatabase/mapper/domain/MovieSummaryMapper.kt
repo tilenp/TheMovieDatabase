@@ -4,6 +4,7 @@ import com.example.themoviedatabase.database.query.MovieSummaryQuery
 import com.example.themoviedatabase.mapper.Mapper
 import com.example.themoviedatabase.model.domain.ImagePath
 import com.example.themoviedatabase.model.domain.MovieSummary
+import com.example.themoviedatabase.utils.UIValue
 import com.example.themoviedatabase.utils.UIText
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -19,7 +20,10 @@ class MovieSummaryMapper @Inject constructor(
             movieId = objectToMap.movieId,
             title = UIText(string = objectToMap.title),
             posterPath = imagePathMapper.map(url),
-            rating = objectToMap.rating
+            rating = UIValue(
+                value = objectToMap.rating,
+                formattedValue = ((objectToMap.rating * 10f).toInt() / 10f).toString()
+            )
         )
     }
 }

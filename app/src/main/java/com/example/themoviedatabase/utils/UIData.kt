@@ -74,6 +74,11 @@ class UIPlural(
     }
 }
 
+class UIValue<T>(
+    val value: T,
+    val formattedValue: String = "",
+)
+
 class UISnackbar<T>(
     @StringRes val message: Int,
     @StringRes val actionLabel: Int,

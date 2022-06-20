@@ -17,6 +17,7 @@ import com.example.themoviedatabase.R
 import com.example.themoviedatabase.model.domain.ImagePath
 import com.example.themoviedatabase.model.domain.MovieSummary
 import com.example.themoviedatabase.ui.theme.TheMovieDatabaseTheme
+import com.example.themoviedatabase.utils.UIValue
 import com.example.themoviedatabase.utils.UIText
 
 @Composable
@@ -107,7 +108,7 @@ fun PreviewCarouselViewLoading() {
                         movieId = movie.movieId,
                         title = movie.title,
                         posterPath = movie.posterPath,
-                        rating = movie.rating,
+                        rating = movie.rating.formattedValue,
                         onMovieClick = {}
                     )
                 }
@@ -144,7 +145,7 @@ fun PreviewComposableCarousel() {
                         movieId = movie.movieId,
                         title = movie.title,
                         posterPath = movie.posterPath,
-                        rating = movie.rating,
+                        rating = movie.rating.formattedValue,
                         onMovieClick = {}
                     )
                 }
@@ -163,7 +164,10 @@ private fun previewMovieSummaries(): List<MovieSummary> {
                 placeholder = R.drawable.ic_photo,
                 backup = R.drawable.ic_broken_image
             ),
-            rating = 6.7f
+            rating = UIValue(
+                value = 6.7f,
+                formattedValue = "6.7f"
+            )
         ),
         MovieSummary(
             movieId = 675353,
@@ -173,7 +177,10 @@ private fun previewMovieSummaries(): List<MovieSummary> {
                 placeholder = R.drawable.ic_photo,
                 backup = R.drawable.ic_broken_image
             ),
-            rating = 7.7f
+            rating = UIValue(
+                value = 7.7f,
+                formattedValue = "7.7f"
+            )
         ),
         MovieSummary(
             movieId = 752623,
@@ -183,7 +190,10 @@ private fun previewMovieSummaries(): List<MovieSummary> {
                 placeholder = R.drawable.ic_photo,
                 backup = R.drawable.ic_broken_image
             ),
-            rating = 7.2f
+            rating = UIValue(
+                value = 7.2f,
+                formattedValue = "7.2f"
+            )
         )
     )
 }

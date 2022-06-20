@@ -114,7 +114,7 @@ private fun MovieInfo(
             title = movie.title.asString(context)
         )
         MovieRatingView(
-            rating = movie.rating.toString(),
+            rating = movie.rating.formattedValue,
             ratingCount = movie.ratingCount.asString(context)
         )
         MovieGenres(
