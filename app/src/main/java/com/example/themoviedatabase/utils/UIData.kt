@@ -3,6 +3,7 @@ package com.example.themoviedatabase.utils
 import android.content.Context
 import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
+import androidx.annotation.VisibleForTesting
 
 class UIText(
     private val string: String = "",
@@ -42,9 +43,9 @@ class UIText(
 }
 
 class UIPlural(
-    @PluralsRes private val pluralId: Int? = null,
-    val formatArgs: String = "",
-    private val count: Long = 0L,
+    @get:VisibleForTesting @PluralsRes val pluralId: Int? = null,
+    @get:VisibleForTesting val formatArgs: String = "",
+    @get:VisibleForTesting val count: Long = 0L,
 ) {
     fun asString(context: Context): String {
         return when (pluralId) {

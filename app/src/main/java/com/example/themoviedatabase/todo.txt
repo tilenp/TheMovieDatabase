@@ -1,3 +1,6 @@
+use errorBuilder for MovieDetails state
+rename backup field int ImagePath into resourceId
+make fields in UI data visible for testing, remove equals implementation
 fix movie details loading (looks weird)
 split movie repository
 remove idle in tests

@@ -54,4 +54,21 @@ class MovieSummaryMapperTest {
         // assert
         assertEquals(imagePath, result.posterPath)
     }
+
+    @Test
+    fun map_rating_test() {
+        // arrange
+        val rating = 10.01f
+        val formattedRating = "10.0"
+        val query = MovieSummaryQuery(rating = rating)
+        val mapper = MovieSummaryMapper(ImagePathMovieMapper())
+
+        // act
+        val result = mapper.map(query)
+
+        // assert
+        assertEquals(rating, result.rating.value)
+        assertEquals(formattedRating, result.rating.formattedValue)
+    }
+
 }

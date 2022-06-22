@@ -154,4 +154,58 @@ class MovieTableMapperTest {
         // assert
         assertEquals(0f, result.popularity)
     }
+
+    @Test
+    fun map_release_date_test() {
+        // arrange
+        val releaseDate = "releaseDate"
+        val movieDto = MovieDTO(releaseDate = releaseDate)
+        val mapper = MovieTableMapper()
+
+        // act
+        val result = mapper.map(movieDto)
+
+        // assert
+        assertEquals(releaseDate, result.releaseDate)
+    }
+
+    @Test
+    fun map_null_release_date_test() {
+        // arrange
+        val movieDto = MovieDTO(releaseDate = null)
+        val mapper = MovieTableMapper()
+
+        // act
+        val result = mapper.map(movieDto)
+
+        // assert
+        assertEquals("", result.releaseDate)
+    }
+
+    @Test
+    fun map_runtime_test() {
+        // arrange
+        val runtime = 82
+        val movieDto = MovieDTO(runtime = runtime)
+        val mapper = MovieTableMapper()
+
+        // act
+        val result = mapper.map(movieDto)
+
+        // assert
+        assertEquals(runtime, result.runtime)
+    }
+
+    @Test
+    fun map_null_runtime_test() {
+        // arrange
+        val movieDto = MovieDTO(runtime = null)
+        val mapper = MovieTableMapper()
+
+        // act
+        val result = mapper.map(movieDto)
+
+        // assert
+        assertEquals(0, result.runtime)
+    }
 }

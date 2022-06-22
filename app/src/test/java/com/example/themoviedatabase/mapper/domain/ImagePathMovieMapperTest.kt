@@ -1,8 +1,8 @@
 package com.example.themoviedatabase.mapper.domain
 
-import com.example.themoviedatabase.BuildConfig.TMDB_IMAGE_SIZE_500
 import com.example.themoviedatabase.BuildConfig.TMDB_IMAGE_URL
 import com.example.themoviedatabase.R
+import com.example.themoviedatabase.model.domain.ImagePath.Companion.SIZE_500
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -18,7 +18,7 @@ class ImagePathMovieMapperTest {
         val result = mapper.map(path)
 
         // assert
-        val mediumImageSize ="${TMDB_IMAGE_URL}${TMDB_IMAGE_SIZE_500}$path"
+        val mediumImageSize ="${TMDB_IMAGE_URL}${SIZE_500}$path"
         assertEquals(mediumImageSize, result.medium)
     }
 

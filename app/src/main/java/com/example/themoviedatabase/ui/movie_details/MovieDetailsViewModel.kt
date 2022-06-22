@@ -41,69 +41,71 @@ class MovieDetailsViewModel @Inject constructor(
                     .throttleFirst(viewModelScope.plus(dispatcherProvider.main), THROTTLE_INTERVAL)
                     .onStart { emit(initialEvent) }
                     .map { action ->
+                        val stateBuilder = MovieDetailsState.Builder(_uiState.first())
+                            .resetError()
                         action.actions.map { type ->
                             when (type) {
                                 ActionType.LOAD_MOVIE_DETAILS -> updateMovieDetailsUseCase.invoke(movieId)
-                                    .map { updateMovieDetails(it) }
-                                    .onStart { emit(setLoadMovieDetailsState()) }
+                                    .map { updateMovieDetails(stateBuilder, it) }
+                                    .onStart { emit(setLoadMovieDetailsState(stateBuilder)) }
                                 ActionType.LOAD_VIDEOS -> updateVideosUseCase.invoke(movieId)
-                                    .map { updateVideos(it) }
-                                    .onStart { emit(setLoadVideosState()) }
+                                    .map { updateVideos(stateBuilder, it) }
+                                    .onStart { emit(setLoadVideosState(stateBuilder)) }
                                 ActionType.LOAD_SIMILAR_MOVIES -> updateSimilarMoviesUseCase.invoke(movieId)
-                                    .map { updateSimilarMovies(it) }
-                                    .onStart { emit(setLoadSimilarMoviesState()) }
+                                    .map { updateSimilarMovies(stateBuilder, it) }
+                                    .onStart { emit(setLoadSimilarMoviesState(stateBuilder)) }
                             }
                         }
                     }
                     .flatMapLatest { flows -> merge(flows.merge()) }
+                    .map { stateBuilder -> stateBuilder.build() }
                     .onStart { emit(MovieDetailsState.Builder().build()) }
             }
             .onEach { _uiState.emit(it) }
             .launchIn(viewModelScope.plus(dispatcherProvider.main))
     }
 
-    private suspend fun setLoadMovieDetailsState(): MovieDetailsState {
-        return MovieDetailsState.Builder(_uiState.first())
+    private fun setLoadMovieDetailsState(stateBuilder: MovieDetailsState.Builder): MovieDetailsState.Builder {
+        return stateBuilder
             .movieDetails(null)
-            .resetError()
-            .build()
     }
 
-    private suspend fun setLoadVideosState(): MovieDetailsState {
-        return MovieDetailsState.Builder(_uiState.first())
+    private fun setLoadVideosState(stateBuilder: MovieDetailsState.Builder): MovieDetailsState.Builder {
+        return stateBuilder
             .videos(null)
-            .resetError()
-            .build()
     }
 
-    private suspend fun setLoadSimilarMoviesState(): MovieDetailsState {
-        return MovieDetailsState.Builder(_uiState.first())
+    private fun setLoadSimilarMoviesState(stateBuilder: MovieDetailsState.Builder): MovieDetailsState.Builder {
+        return stateBuilder
             .similarMovies(null)
-            .resetError()
-            .build()
     }
 
-    private suspend fun updateMovieDetails(resource: Resource<MovieDetails>): MovieDetailsState {
-        return MovieDetailsState.Builder(_uiState.first())
+    private fun updateMovieDetails(
+        stateBuilder: MovieDetailsState.Builder,
+        resource: Resource<MovieDetails>
+    ): MovieDetailsState.Builder {
+        return stateBuilder
             .movieDetails(resource.data)
             .movieDetailsError(resource.error)
-            .build()
     }
 
-    private suspend fun updateVideos(resource: Resource<List<Video>>): MovieDetailsState {
-        return MovieDetailsState.Builder(_uiState.first())
+    private fun updateVideos(
+        stateBuilder: MovieDetailsState.Builder,
+        resource: Resource<List<Video>>
+    ): MovieDetailsState.Builder {
+        return stateBuilder
             .videos(resource.data)
             .videosError(resource.error)
-            .build()
     }
 
-    private suspend fun updateSimilarMovies(resource: Resource<List<MovieSummary>>): MovieDetailsState {
-        return MovieDetailsState.Builder(_uiState.first())
+    private fun updateSimilarMovies(
+        stateBuilder: MovieDetailsState.Builder,
+        resource: Resource<List<MovieSummary>>
+    ): MovieDetailsState.Builder {
+        return stateBuilder
             .similarMovies(resource.data)
             .similarMoviesError(resource.error)
-            .build()
     }
-
 
     fun newEvent(event: Event) {
         viewModelScope.launch(dispatcherProvider.main) { _eventDispatcher.emit(event) }

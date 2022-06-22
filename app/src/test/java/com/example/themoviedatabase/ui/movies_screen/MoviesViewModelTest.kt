@@ -4,6 +4,7 @@ import androidx.paging.AsyncPagingDataDiffer
 import androidx.paging.PagingData
 import app.cash.turbine.test
 import com.example.themoviedatabase.R
+import com.example.themoviedatabase.cache.MovieCache
 import com.example.themoviedatabase.model.domain.MovieSummary
 import com.example.themoviedatabase.repository.MovieRepository
 import com.example.themoviedatabase.utils.*
@@ -41,13 +42,15 @@ class MoviesViewModelTest {
     fun movies_test() = runTest {
         // arrange
         val movies = listOf(MovieSummary(movieId = 1), MovieSummary(movieId = 2))
+        val movieCache: MovieCache = mockk()
         val movieRepository: MovieRepository = mockk()
         val errorMessageHandler: ErrorMessageHandler = mockk()
 
+        coEvery { movieCache.setSelectedMovieId(any()) } returns Unit
         coEvery { movieRepository.getMovieSummaries(any(), any()) } returns flowOf(PagingData.from(movies))
-        coEvery { movieRepository.setSelectedMovieId(any()) } returns Unit
 
         val viewModel = MoviesViewModel(
+            movieCache = movieCache,
             movieRepository = movieRepository,
             errorMessageHandler = errorMessageHandler,
             dispatcherProvider = dispatcher
@@ -71,6 +74,7 @@ class MoviesViewModelTest {
         // arrange
         val throwable = Throwable()
         val messageId = R.string.Unknown_error
+        val movieCache: MovieCache = mockk()
         val movieRepository: MovieRepository = mockk()
         val errorMessageHandler: ErrorMessageHandler = mockk()
 
@@ -78,6 +82,7 @@ class MoviesViewModelTest {
         coEvery { errorMessageHandler.getExceptionMessage(any()) } returns messageId
 
         val viewModel = MoviesViewModel(
+            movieCache = movieCache,
             movieRepository = movieRepository,
             errorMessageHandler = errorMessageHandler,
             dispatcherProvider = dispatcher
@@ -93,13 +98,15 @@ class MoviesViewModelTest {
     fun action_select_movie_is_throttled() = runTest {
         // arrange
         val movieId = 1L
+        val movieCache: MovieCache = mockk()
         val movieRepository: MovieRepository = mockk()
         val errorMessageHandler: ErrorMessageHandler = mockk()
 
         coEvery { movieRepository.getMovieSummaries(any(), any()) } returns emptyFlow()
-        coEvery { movieRepository.setSelectedMovieId(any()) } returns Unit
+        coEvery { movieCache.setSelectedMovieId(any()) } returns Unit
 
         val viewModel = MoviesViewModel(
+            movieCache = movieCache,
             movieRepository = movieRepository,
             errorMessageHandler = errorMessageHandler,
             dispatcherProvider = dispatcher
@@ -114,6 +121,6 @@ class MoviesViewModelTest {
         viewModel.newAction(MoviesViewModel.Action.SelectMovie(movieId))
 
         // assert
-        coVerify(exactly = 2) { movieRepository.setSelectedMovieId(movieId) }
+        coVerify(exactly = 2) { movieCache.setSelectedMovieId(movieId) }
     }
 }
