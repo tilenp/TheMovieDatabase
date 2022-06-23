@@ -41,7 +41,7 @@ class MovieDetailsMapperTest {
         val result = mapper.map(query)
 
         // assert
-        assertEquals(UIText(string = title), result.title)
+        assertEquals(title, result.title.string)
     }
 
     @Test
@@ -120,7 +120,7 @@ class MovieDetailsMapperTest {
         val result = mapper.map(query)
 
         // assert
-        assertEquals(UIText(string = overview), result.overview)
+        assertEquals(overview, result.overview.string)
     }
 
     @Test

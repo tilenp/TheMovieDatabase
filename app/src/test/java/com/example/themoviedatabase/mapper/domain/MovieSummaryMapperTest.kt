@@ -2,7 +2,6 @@ package com.example.themoviedatabase.mapper.domain
 
 import com.example.themoviedatabase.database.query.MovieSummaryQuery
 import com.example.themoviedatabase.model.domain.ImagePath
-import com.example.themoviedatabase.utils.UIText
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert.assertEquals
@@ -35,7 +34,7 @@ class MovieSummaryMapperTest {
         val result = mapper.map(query)
 
         // assert
-        assertEquals(UIText(string = title), result.title)
+        assertEquals(title, result.title.string)
     }
 
     @Test
@@ -70,5 +69,4 @@ class MovieSummaryMapperTest {
         assertEquals(rating, result.rating.value)
         assertEquals(formattedRating, result.rating.formattedValue)
     }
-
 }

@@ -1,9 +1,6 @@
-rename backup field int ImagePath into resourceId
-make fields in UI data visible for testing, remove equals implementation
 fix movie details loading (looks weird)
 split movie repository
 remove idle in tests
 check class names
-try to emit MovieDetailsState.builder instead the stete itself
 set snackbar theme
 maybe remove cache and use SavedStateHandel (convert livedata into flow)

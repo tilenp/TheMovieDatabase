@@ -6,9 +6,9 @@ import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 
 class UIText(
-    private val string: String = "",
-    @StringRes private val stringId: Int? = null,
-    private vararg val args: UIText = emptyArray()
+    @get:VisibleForTesting val string: String = "",
+    @get:VisibleForTesting @StringRes val stringId: Int? = null,
+    @get:VisibleForTesting vararg val args: UIText = emptyArray()
 ) {
     fun asString(context: Context): String {
         return when {
@@ -19,26 +19,6 @@ class UIText(
             )
             else -> ""
         }
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as UIText
-
-        if (string != other.string) return false
-        if (stringId != other.stringId) return false
-        if (!args.contentEquals(other.args)) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = string.hashCode()
-        result = 31 * result + (stringId ?: 0)
-        result = 31 * result + args.contentHashCode()
-        return result
     }
 }
 
@@ -52,26 +32,6 @@ class UIPlural(
             null -> ""
             else -> context.resources.getQuantityString(pluralId, count.toInt(), formatArgs)
         }
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as UIPlural
-
-        if (pluralId != other.pluralId) return false
-        if (formatArgs != other.formatArgs) return false
-        if (count != other.count) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = pluralId ?: 0
-        result = 31 * result + formatArgs.hashCode()
-        result = 31 * result + count.hashCode()
-        return result
     }
 }
 
