@@ -55,12 +55,13 @@ fun MovieItemView(
                 style = MaterialTheme.typography.caption,
                 padding = spacingS
             )
-            MovieInfo(
+            MovieTitle(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color(0x97000000))
                     .align(Alignment.BottomCenter)
-                    .padding(spacingM),
+                    .background(Color(0x97000000))
+                    .padding(spacingM)
+                    .testTag("MovieTitle${movieId}"),
                 title = title
             )
         }
@@ -87,35 +88,17 @@ private fun MovieImage(
 }
 
 @Composable
-private fun MovieInfo(
-    modifier: Modifier,
-    movieId: Long = 0,
-    title: UIText = UIText(),
-) {
-    val context = LocalContext.current
-    val spacingS = dimensionResource(R.dimen.spacing_s)
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(spacingS),
-    ) {
-        MovieTitle(
-            modifier = Modifier
-                .fillMaxWidth()
-                .testTag("MovieTitle${movieId}"),
-            title = title.asString(context)
-        )
-    }
-}
-
-@Composable
 private fun MovieTitle(
     modifier: Modifier,
-    title: String
-) = Text(
-    modifier = modifier,
-    text = title,
-    color = Color.White,
-    style = MaterialTheme.typography.caption,
-    maxLines = 1,
-    overflow = TextOverflow.Ellipsis
-)
+    title: UIText = UIText()
+) {
+    val context = LocalContext.current
+    Text(
+        modifier = modifier,
+        text = title.asString(context),
+        color = Color.White,
+        style = MaterialTheme.typography.caption,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis
+    )
+}

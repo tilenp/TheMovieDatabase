@@ -29,6 +29,10 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class)
 class SelectMovieTest {
 
+    /**
+     * api key needs to be set, otherwise network requests will fail!!!
+     * **/
+
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -60,7 +64,7 @@ class SelectMovieTest {
         val json = FileReader.readFile(context, fileName)
         val bodyType: Type = object : TypeToken<PagingDTO<MovieDTO>>() {}.type
         val body: PagingDTO<MovieDTO> = gson.fromJson(json, bodyType)
-        fakeMovieApi.enqueue(FakeResponse(code, body, testLoading))
+        fakeMovieApi.enqueueMovieSummaries(FakeResponse(code, body, testLoading))
     }
 
     @After

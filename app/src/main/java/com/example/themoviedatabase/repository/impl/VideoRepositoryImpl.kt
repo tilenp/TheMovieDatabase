@@ -23,7 +23,6 @@ class VideoRepositoryImpl @Inject constructor(
 ) : VideoRepository {
 
     override suspend fun updateVideosWithMovieId(movieId: Long) {
-        delay(500)
         val responseVideos = movieVideosService.getMovieVideos(movieId)
         videoDao.insertVideos(videoTableMapper.map(responseVideos))
     }

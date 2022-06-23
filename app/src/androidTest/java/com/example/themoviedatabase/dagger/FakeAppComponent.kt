@@ -22,6 +22,7 @@ import javax.inject.Singleton
         FakeMapperModule::class,
         FakeRepositoryModule::class,
         FakeServiceModule::class,
+        FakeUseCaseModule::class,
         FakeViewModelModule::class
     ]
 )

@@ -16,7 +16,6 @@ import com.example.themoviedatabase.repository.MovieRepository
 import com.example.themoviedatabase.service.MovieDetailsService
 import com.example.themoviedatabase.service.MovieService
 import com.example.themoviedatabase.service.SimilarMoviesService
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
@@ -56,9 +55,7 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateMovieDetailsWithId(movieId: Long) {
-        delay(1000)
         val movieDetailsDto = movieDetailsService.getMovieDetails(movieId)
-//        throw Throwable("IO exception")
         database.withTransaction {
             backdropImageDao.insertBackdropImages(listOf(backdropImageTableMapper.map(movieDetailsDto)))
             imagePathDao.insertImagePaths(listOf(imagePathTableMapper.map(movieDetailsDto)))

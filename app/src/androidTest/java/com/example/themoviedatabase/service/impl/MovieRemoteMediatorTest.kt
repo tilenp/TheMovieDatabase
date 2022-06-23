@@ -26,6 +26,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.io.IOException
 import java.lang.reflect.Type
 import javax.inject.Inject
 
@@ -76,8 +77,8 @@ class MovieRemoteMediatorTest {
         val json = FileReader.readFile(context, "movies_popular_desc_page_1_200")
         val bodyType: Type = object : TypeToken<PagingDTO<MovieDTO>>() {}.type
         val body: PagingDTO<MovieDTO> = gson.fromJson(json, bodyType)
-        val fakeResponse = FakeResponse(200, body)
-        fakeMovieApi.enqueue(fakeResponse)
+        val fakeResponse = FakeResponse(code = 200, body = body)
+        fakeMovieApi.enqueueMovieSummaries(fakeResponse)
 
         val result = remoteMediator.load(LoadType.REFRESH, pagingState)
         assertTrue(result is RemoteMediator.MediatorResult.Success)
@@ -89,8 +90,8 @@ class MovieRemoteMediatorTest {
         val json = FileReader.readFile(context, "movies_popular_desc_end_reached_200")
         val bodyType: Type = object : TypeToken<PagingDTO<MovieDTO>>() {}.type
         val body: PagingDTO<MovieDTO> = gson.fromJson(json, bodyType)
-        val fakeResponse = FakeResponse(200, body)
-        fakeMovieApi.enqueue(fakeResponse)
+        val fakeResponse = FakeResponse(code = 200, body = body)
+        fakeMovieApi.enqueueMovieSummaries(fakeResponse)
 
         val result = remoteMediator.load(LoadType.REFRESH, pagingState)
         assertTrue(result is RemoteMediator.MediatorResult.Success)
@@ -99,8 +100,10 @@ class MovieRemoteMediatorTest {
 
     @Test
     fun refresh_load_error() = runTest {
-        val testResponse = FakeResponse<PagingDTO<MovieDTO>>(400)
-        fakeMovieApi.enqueue(testResponse)
+        val errorMessage = "network not available"
+        val ioException = IOException(errorMessage)
+        val testResponse = FakeResponse<PagingDTO<MovieDTO>>(code = 400, throwable = ioException)
+        fakeMovieApi.enqueueMovieSummaries(testResponse)
 
         val result = remoteMediator.load(LoadType.REFRESH, pagingState)
         assertTrue(result is RemoteMediator.MediatorResult.Error)

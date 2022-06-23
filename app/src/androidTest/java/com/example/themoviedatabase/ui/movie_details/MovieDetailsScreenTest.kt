@@ -3,6 +3,7 @@ package com.example.themoviedatabase.ui.movie_details
 import android.content.Context
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -19,8 +20,10 @@ import com.example.themoviedatabase.database.table.BackdropImageTable
 import com.example.themoviedatabase.database.table.MovieTable
 import com.example.themoviedatabase.mapper.Mapper
 import com.example.themoviedatabase.model.dto.MovieDTO
-import com.example.themoviedatabase.repository.MovieRepository
 import com.example.themoviedatabase.ui.theme.TheMovieDatabaseTheme
+import com.example.themoviedatabase.use_case.UpdateMovieDetailsUseCase
+import com.example.themoviedatabase.use_case.UpdateSimilarMoviesUseCase
+import com.example.themoviedatabase.use_case.UpdateVideosUseCase
 import com.example.themoviedatabase.utils.DispatcherProvider
 import com.example.themoviedatabase.utils.FakeDispatcherProvider
 import com.example.themoviedatabase.utils.FileReader
@@ -29,8 +32,11 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
-import org.junit.*
+import org.junit.After
 import org.junit.Assert.assertTrue
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import java.lang.reflect.Type
 import javax.inject.Inject
 
@@ -56,7 +62,13 @@ class MovieDetailsScreenTest {
     lateinit var movieCache: MovieCache
 
     @Inject
-    lateinit var movieRepository: MovieRepository
+    lateinit var updateMovieDetailsUseCase: UpdateMovieDetailsUseCase
+
+    @Inject
+    lateinit var updateVideosUseCase: UpdateVideosUseCase
+
+    @Inject
+    lateinit var updateSimilarMoviesUseCase: UpdateSimilarMoviesUseCase
 
     @Inject
     lateinit var dispatcherProvider: DispatcherProvider
@@ -86,7 +98,10 @@ class MovieDetailsScreenTest {
 
     private fun setUpViewModel() {
         viewModel = MovieDetailsViewModel(
-            movieRepository = movieRepository,
+            movieCache = movieCache,
+            updateMovieDetailsUseCase = updateMovieDetailsUseCase,
+            updateVideosUseCase = updateVideosUseCase,
+            updateSimilarMoviesUseCase  = updateSimilarMoviesUseCase,
             dispatcherProvider = fakeDispatcherProvider
         )
     }
@@ -98,16 +113,20 @@ class MovieDetailsScreenTest {
 
     @Test
     fun show_instructions_test() = runTest {
-        movieCache.setSelectedMovieId(-1)
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
-                val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Instructions)
-                Scaffold { padding ->
+                val scaffoldState = rememberScaffoldState()
+                Scaffold(
+                    scaffoldState = scaffoldState
+                ) { padding ->
                     MovieDetailsScreen(
                         widthSizeClass = WindowWidthSizeClass.Compact,
+                        scaffoldState = scaffoldState,
                         modifier = Modifier.padding(padding),
-                        uiState = uiState,
-                        onBackButtonClicked = {}
+                        uiState = MovieDetailsState.Instructions,
+                        onBackButtonClicked = {},
+                        onVideoClick = {},
+                        onSnackbarActionPerformed = {}
                     )
                 }
             }
@@ -121,13 +140,19 @@ class MovieDetailsScreenTest {
         movieCache.setSelectedMovieId(752623)
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
+                val scaffoldState = rememberScaffoldState()
                 val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Instructions)
-                Scaffold { padding ->
+                Scaffold(
+                    scaffoldState = scaffoldState
+                ) { padding ->
                     MovieDetailsScreen(
                         widthSizeClass = WindowWidthSizeClass.Compact,
+                        scaffoldState = scaffoldState,
                         modifier = Modifier.padding(padding),
                         uiState = uiState,
-                        onBackButtonClicked = {}
+                        onBackButtonClicked = {},
+                        onVideoClick = {},
+                        onSnackbarActionPerformed = {}
                     )
                 }
             }
@@ -141,13 +166,19 @@ class MovieDetailsScreenTest {
         movieCache.setSelectedMovieId(752623)
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
+                val scaffoldState = rememberScaffoldState()
                 val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Instructions)
-                Scaffold { padding ->
+                Scaffold(
+                    scaffoldState = scaffoldState
+                ) { padding ->
                     MovieDetailsScreen(
                         widthSizeClass = WindowWidthSizeClass.Compact,
+                        scaffoldState = scaffoldState,
                         modifier = Modifier.padding(padding),
                         uiState = uiState,
-                        onBackButtonClicked = {}
+                        onBackButtonClicked = {},
+                        onVideoClick = {},
+                        onSnackbarActionPerformed = {}
                     )
                 }
             }
@@ -162,13 +193,19 @@ class MovieDetailsScreenTest {
         var clicked = false
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
+                val scaffoldState = rememberScaffoldState()
                 val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Instructions)
-                Scaffold { padding ->
+                Scaffold(
+                    scaffoldState = scaffoldState
+                ) { padding ->
                     MovieDetailsScreen(
                         widthSizeClass = WindowWidthSizeClass.Compact,
+                        scaffoldState = scaffoldState,
                         modifier = Modifier.padding(padding),
                         uiState = uiState,
-                        onBackButtonClicked = { clicked = true }
+                        onBackButtonClicked = { clicked = true },
+                        onVideoClick = {},
+                        onSnackbarActionPerformed = {}
                     )
                 }
             }
@@ -183,13 +220,19 @@ class MovieDetailsScreenTest {
         movieCache.setSelectedMovieId(752623)
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
+                val scaffoldState = rememberScaffoldState()
                 val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Instructions)
-                Scaffold { padding ->
+                Scaffold(
+                    scaffoldState = scaffoldState
+                ) { padding ->
                     MovieDetailsScreen(
                         widthSizeClass = WindowWidthSizeClass.Compact,
+                        scaffoldState = scaffoldState,
                         modifier = Modifier.padding(padding),
                         uiState = uiState,
-                        onBackButtonClicked = {}
+                        onBackButtonClicked = {},
+                        onVideoClick = {},
+                        onSnackbarActionPerformed = {}
                     )
                 }
             }
@@ -203,13 +246,19 @@ class MovieDetailsScreenTest {
         movieCache.setSelectedMovieId(752623)
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
+                val scaffoldState = rememberScaffoldState()
                 val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Instructions)
-                Scaffold { padding ->
+                Scaffold(
+                    scaffoldState = scaffoldState
+                ) { padding ->
                     MovieDetailsScreen(
                         widthSizeClass = WindowWidthSizeClass.Compact,
+                        scaffoldState = scaffoldState,
                         modifier = Modifier.padding(padding),
                         uiState = uiState,
-                        onBackButtonClicked = {}
+                        onBackButtonClicked = {},
+                        onVideoClick = {},
+                        onSnackbarActionPerformed = {}
                     )
                 }
             }
@@ -223,13 +272,19 @@ class MovieDetailsScreenTest {
         movieCache.setSelectedMovieId(752623)
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
+                val scaffoldState = rememberScaffoldState()
                 val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Instructions)
-                Scaffold { padding ->
+                Scaffold(
+                    scaffoldState = scaffoldState
+                ) { padding ->
                     MovieDetailsScreen(
                         widthSizeClass = WindowWidthSizeClass.Compact,
+                        scaffoldState = scaffoldState,
                         modifier = Modifier.padding(padding),
                         uiState = uiState,
-                        onBackButtonClicked = {}
+                        onBackButtonClicked = {},
+                        onVideoClick = {},
+                        onSnackbarActionPerformed = {}
                     )
                 }
             }
@@ -243,13 +298,19 @@ class MovieDetailsScreenTest {
         movieCache.setSelectedMovieId(752623)
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
+                val scaffoldState = rememberScaffoldState()
                 val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Instructions)
-                Scaffold { padding ->
+                Scaffold(
+                    scaffoldState = scaffoldState
+                ) { padding ->
                     MovieDetailsScreen(
                         widthSizeClass = WindowWidthSizeClass.Compact,
+                        scaffoldState = scaffoldState,
                         modifier = Modifier.padding(padding),
                         uiState = uiState,
-                        onBackButtonClicked = {}
+                        onBackButtonClicked = {},
+                        onVideoClick = {},
+                        onSnackbarActionPerformed = {}
                     )
                 }
             }
@@ -263,13 +324,19 @@ class MovieDetailsScreenTest {
         movieCache.setSelectedMovieId(752623)
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
+                val scaffoldState = rememberScaffoldState()
                 val uiState by viewModel.uiState.collectAsState(initial = MovieDetailsState.Instructions)
-                Scaffold { padding ->
+                Scaffold(
+                    scaffoldState = scaffoldState
+                ) { padding ->
                     MovieDetailsScreen(
                         widthSizeClass = WindowWidthSizeClass.Compact,
+                        scaffoldState = scaffoldState,
                         modifier = Modifier.padding(padding),
                         uiState = uiState,
-                        onBackButtonClicked = {}
+                        onBackButtonClicked = {},
+                        onVideoClick = {},
+                        onSnackbarActionPerformed = {}
                     )
                 }
             }

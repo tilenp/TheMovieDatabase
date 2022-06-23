@@ -11,7 +11,7 @@ class UIDataTest {
     private val context: Context = ApplicationProvider.getApplicationContext()
 
     @Test
-    fun string_test() {
+    fun ui_text_string_test() {
         // arrange
         val string = "string"
         val uiText = UIText(string = string)
@@ -24,7 +24,7 @@ class UIDataTest {
     }
 
     @Test
-    fun string_id_test() {
+    fun ui_text_string_id_test() {
         // arrange
         val stringId = R.string.app_name
         val uiText = UIText(stringId = stringId)
@@ -34,5 +34,45 @@ class UIDataTest {
 
         // assert
         assertEquals(context.getString(stringId), result)
+    }
+
+    @Test
+    fun ui_plural_one_test() {
+        // arrange
+        val pluralId = R.plurals.rating_count_format
+        val formatArgs = "1"
+        val count = 1L
+        val uiPlural = UIPlural(
+            pluralId = pluralId,
+            formatArgs = formatArgs,
+            count = count
+        )
+
+        // act
+        val result = uiPlural.asString(context)
+
+        // assert
+        val text = context.resources.getQuantityString(pluralId, count.toInt(), formatArgs)
+        assertEquals(text, result)
+    }
+
+    @Test
+    fun ui_plural_two_test() {
+        // arrange
+        val pluralId = R.plurals.rating_count_format
+        val formatArgs = "2"
+        val count = 2L
+        val uiPlural = UIPlural(
+            pluralId = pluralId,
+            formatArgs = formatArgs,
+            count = count
+        )
+
+        // act
+        val result = uiPlural.asString(context)
+
+        // assert
+        val text = context.resources.getQuantityString(pluralId, count.toInt(), formatArgs)
+        assertEquals(text, result)
     }
 }

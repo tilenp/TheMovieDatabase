@@ -9,6 +9,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.test.core.app.ApplicationProvider
 import com.example.themoviedatabase.R
+import com.example.themoviedatabase.cache.MovieCache
 import com.example.themoviedatabase.dagger.FakeApplication
 import com.example.themoviedatabase.database.MovieDatabase
 import com.example.themoviedatabase.model.dto.MovieDTO
@@ -46,6 +47,9 @@ class MoviesScreenTest {
     lateinit var gson: Gson
 
     @Inject
+    lateinit var movieCache: MovieCache
+
+    @Inject
     lateinit var movieRepository: MovieRepository
 
     @Inject
@@ -63,6 +67,7 @@ class MoviesScreenTest {
         (context as FakeApplication).provideAppComponent().inject(this)
         fakeDispatcherProvider = dispatcherProvider as FakeDispatcherProvider
         viewModel = MoviesViewModel(
+            movieCache = movieCache,
             movieRepository = movieRepository,
             errorMessageHandler = errorMessageHandler,
             dispatcherProvider = fakeDispatcherProvider
@@ -78,13 +83,13 @@ class MoviesScreenTest {
         val json = FileReader.readFile(context, fileName)
         val bodyType: Type = object : TypeToken<PagingDTO<MovieDTO>>() {}.type
         val body: PagingDTO<MovieDTO> = gson.fromJson(json, bodyType)
-        fakeMovieApi.enqueue(FakeResponse(code, body, testLoading))
+        fakeMovieApi.enqueueMovieSummaries(FakeResponse(code, body, testLoading))
     }
 
     @Test
     fun refresh_loading_test() {
         val testResponse = FakeResponse<PagingDTO<MovieDTO>>(code = 200, testLoading = true)
-        fakeMovieApi.enqueue(testResponse)
+        fakeMovieApi.enqueueMovieSummaries(testResponse)
 
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
@@ -108,8 +113,8 @@ class MoviesScreenTest {
     fun refresh_error_message_test() {
         val errorMessage = "network not available"
         val ioException = IOException(errorMessage)
-        val testResponse = FakeResponse<PagingDTO<MovieDTO>>(code = 400, ioException = ioException)
-        fakeMovieApi.enqueue(testResponse)
+        val testResponse = FakeResponse<PagingDTO<MovieDTO>>(code = 400, throwable = ioException)
+        fakeMovieApi.enqueueMovieSummaries(testResponse)
 
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
@@ -132,8 +137,11 @@ class MoviesScreenTest {
 
     @Test
     fun refresh_error_retry_button_test() {
-        val testResponse = FakeResponse<PagingDTO<MovieDTO>>(code = 400)
-        fakeMovieApi.enqueue(testResponse)
+        val testResponse = FakeResponse<PagingDTO<MovieDTO>>(
+            code = 400,
+            throwable = IOException("Network not available")
+        )
+        fakeMovieApi.enqueueMovieSummaries(testResponse)
 
         composeTestRule.setContent {
             TheMovieDatabaseTheme {
@@ -267,7 +275,7 @@ class MoviesScreenTest {
 
         composeTestRule
             .onNode(
-                hasTestTag("MovieTitle752623") and
+                hasTestTag("MovieImage752623") and
                     hasParent(
                         hasTestTag("MovieItem")
                     ),
