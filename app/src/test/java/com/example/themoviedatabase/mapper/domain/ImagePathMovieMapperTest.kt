@@ -43,6 +43,6 @@ class ImagePathMovieMapperTest {
         val result = mapper.map("")
 
         // assert
-        assertEquals(R.drawable.ic_broken_image, result.backup)
+        assertEquals(R.drawable.ic_broken_image, result.resourceId)
     }
 }

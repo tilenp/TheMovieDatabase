@@ -148,7 +148,7 @@ class MovieDetailsMapperTest {
         val result = mapper.map(query)
 
         // assert
-        assertEquals(runtimeIcon, result.runtimeIcon.backup)
+        assertEquals(runtimeIcon, result.runtimeIcon.resourceId)
     }
 
     @Test

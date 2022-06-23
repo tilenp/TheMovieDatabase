@@ -76,7 +76,7 @@ private fun MovieImage(
         rememberImagePainter(data = posterPath.medium) {
             crossfade(durationMillis = 200)
             placeholder(posterPath.placeholder)
-            error(posterPath.backup)
+            error(posterPath.resourceId)
         }
     Image(
         modifier = modifier,

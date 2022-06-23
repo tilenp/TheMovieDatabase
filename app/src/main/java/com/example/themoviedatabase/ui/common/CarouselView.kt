@@ -162,7 +162,7 @@ private fun previewMovieSummaries(): List<MovieSummary> {
             posterPath = ImagePath(
                 url = "/neMZH82Stu91d3iqvLdNQfqPPyl.jpg",
                 placeholder = R.drawable.ic_photo,
-                backup = R.drawable.ic_broken_image
+                resourceId = R.drawable.ic_broken_image
             ),
             rating = UIValue(
                 value = 6.7f,
@@ -175,7 +175,7 @@ private fun previewMovieSummaries(): List<MovieSummary> {
             posterPath = ImagePath(
                 url = "/6DrHO1jr3qVrViUO6s6kFiAGM7.jpg",
                 placeholder = R.drawable.ic_photo,
-                backup = R.drawable.ic_broken_image
+                resourceId = R.drawable.ic_broken_image
             ),
             rating = UIValue(
                 value = 7.7f,
@@ -188,7 +188,7 @@ private fun previewMovieSummaries(): List<MovieSummary> {
             posterPath = ImagePath(
                 url = "/tlZpSxYuBRoVJBOpUrPdQe9FmFq.jpg",
                 placeholder = R.drawable.ic_photo,
-                backup = R.drawable.ic_broken_image
+                resourceId = R.drawable.ic_broken_image
             ),
             rating = UIValue(
                 value = 7.2f,

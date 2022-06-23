@@ -7,7 +7,7 @@ import com.example.themoviedatabase.BuildConfig.TMDB_IMAGE_URL
 data class ImagePath(
     private val url: String = "",
     @DrawableRes val placeholder: Int = 0,
-    @DrawableRes val backup: Int = 0
+    @DrawableRes val resourceId: Int = 0
 ) {
     val medium = "$TMDB_IMAGE_URL$SIZE_500$url"
 

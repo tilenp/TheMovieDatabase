@@ -33,7 +33,7 @@ class MovieDetailsMapper @Inject constructor(
             genres = objectToMap.genres?.joinToString(separator = ", ") { it.name }.orEmpty(),
             overview = UIText(string = objectToMap.movieTable.overview),
             releaseDate = objectToMap.movieTable.releaseDate,
-            runtimeIcon = ImagePath(backup = R.drawable.clock),
+            runtimeIcon = ImagePath(resourceId = R.drawable.clock),
             runtime = objectToMap.movieTable.runtime.takeIf { it > 0 }?.toHourMinutes() ?: PLACEHOLDER
         )
     }

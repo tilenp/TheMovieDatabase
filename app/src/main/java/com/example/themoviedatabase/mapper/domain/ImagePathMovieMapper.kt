@@ -1,7 +1,6 @@
 package com.example.themoviedatabase.mapper.domain
 
 import com.example.themoviedatabase.R
-import com.example.themoviedatabase.database.table.ImagePathTable
 import com.example.themoviedatabase.mapper.Mapper
 import com.example.themoviedatabase.model.domain.ImagePath
 import javax.inject.Inject
@@ -14,7 +13,7 @@ class ImagePathMovieMapper @Inject constructor() : Mapper<String, ImagePath> {
         return ImagePath(
             url = objectToMap,
             placeholder = R.drawable.ic_photo,
-            backup = R.drawable.ic_broken_image
+            resourceId = R.drawable.ic_broken_image
         )
     }
 }

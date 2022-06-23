@@ -63,7 +63,7 @@ private fun Backdrop(
     val painter = rememberImagePainter(data = imagePath.medium) {
         crossfade(durationMillis = 200)
         placeholder(imagePath.placeholder)
-        error(imagePath.backup)
+        error(imagePath.resourceId)
     }
     Box(
         modifier
@@ -224,7 +224,7 @@ private fun MovieRuntime(
     runtime: String
 ) {
     if (runtime.isNotBlank()) {
-        val painter = rememberImagePainter(data = runtimeIcon.backup)
+        val painter = rememberImagePainter(data = runtimeIcon.resourceId)
         val spacingM = dimensionResource(R.dimen.spacing_m)
         val spacingL = dimensionResource(R.dimen.spacing_l)
         val spacingXL = dimensionResource(R.dimen.spacing_xl)
