@@ -36,7 +36,7 @@ fun <T : Any> CarouselView(
         Text(
             modifier = Modifier
                 .padding(start = spacingXL)
-                .testTag("ComposableCarousel$title"),
+                .testTag("CarouselView$title"),
             text = title,
             color = MaterialTheme.colors.onBackground,
             style = MaterialTheme.typography.h6,
@@ -44,7 +44,8 @@ fun <T : Any> CarouselView(
             overflow = TextOverflow.Ellipsis
         )
         LazyRow(
-            modifier = Modifier.padding(top = spacingXL),
+            modifier = Modifier
+                .padding(top = spacingXL),
             contentPadding = paddingValues,
             horizontalArrangement = horizontalArrangement,
         ) {

@@ -24,6 +24,7 @@ fun SimilarMoviesView(
     if (movies == null) {
         LoadingView(
             modifier = modifier
+                .testTag("LoadingView")
         )
     } else if (movies.isNotEmpty()) {
         CarouselView(
@@ -34,7 +35,6 @@ fun SimilarMoviesView(
             horizontalArrangement = Arrangement.spacedBy(spacingS),
             list = movies,
             itemView = { movie ->
-                System.out.println("TTT " + movie.posterPath.medium)
                 MovieItemView(
                     modifier = Modifier
                         .height(imageSize)

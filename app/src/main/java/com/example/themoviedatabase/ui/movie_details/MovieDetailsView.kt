@@ -36,6 +36,7 @@ fun MovieDetailsView(
     if (movieDetails == null) {
         LoadingView(
             modifier = modifier
+                .testTag("LoadingView")
         )
     } else {
         val imageSize = dimensionResource(R.dimen.image_size)
@@ -193,7 +194,7 @@ private fun MovieGenres(
     if (genres.isNotBlank()) {
         Text(
             modifier = modifier
-                .testTag("MovieGenres"),
+                .testTag("MovieGenres${genres}"),
             text = genres,
             color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
             style = MaterialTheme.typography.caption
@@ -209,7 +210,7 @@ private fun MovieReleaseDate(
     if (releaseDate.isNotBlank()) {
         Text(
             modifier = modifier
-                .testTag("ReleaseDate"),
+                .testTag("ReleaseDate${releaseDate}"),
             text = releaseDate,
             color = MaterialTheme.colors.onSurface.copy(alpha = 0.6f),
             style = MaterialTheme.typography.caption
@@ -226,7 +227,6 @@ private fun MovieRuntime(
     if (runtime.isNotBlank()) {
         val painter = rememberImagePainter(data = runtimeIcon.resourceId)
         val spacingM = dimensionResource(R.dimen.spacing_m)
-        val spacingL = dimensionResource(R.dimen.spacing_l)
         val spacingXL = dimensionResource(R.dimen.spacing_xl)
         Row(
             modifier = modifier
@@ -275,7 +275,7 @@ private fun MovieOverviewBody(
 ) {
     Text(
         modifier = modifier
-            .testTag("MovieOverviewBody"),
+            .testTag("MovieOverview${overview}"),
         text = overview,
         color = MaterialTheme.colors.onBackground,
         style = MaterialTheme.typography.body2,

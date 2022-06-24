@@ -3,6 +3,7 @@ package com.example.themoviedatabase.ui.movie_details
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import com.example.themoviedatabase.R
@@ -23,6 +24,7 @@ fun MovieTrailersView(
     if (videos == null) {
         LoadingView(
             modifier = modifier
+                .testTag("LoadingView")
         )
     } else if (videos.isNotEmpty()) {
         CarouselView(

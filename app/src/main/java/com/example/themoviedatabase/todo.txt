@@ -1,7 +1,12 @@
-similar movies should not intercept paged movies (create a separate table for paging)
-disconnect network and click movie details, movie details endpoint is not called
-fix movie details loading (looks weird)
 remove idle in tests
+end to end tests
+    check movie details
+    reload similar movies because of failed response
+common composable tests
+add composable previews
+database tests
+check if daos need any clean up
 check class names
+similar movies should not intercept paged movies (create a separate table for paging)
 set snackbar theme
 maybe remove cache and use SavedStateHandel (convert livedata into flow)

@@ -37,8 +37,10 @@ interface FakeAppComponent : AppComponent {
     @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
     fun inject(movieRemoteMediatorTest: MovieRemoteMediatorTest)
 
-    // screen
+    // movies_screen
     fun inject(moviesScreenTest: MoviesScreenTest)
+
+    // movie_details
     fun inject(movieDetailsScreenTest: MovieDetailsScreenTest)
 
     // end to end

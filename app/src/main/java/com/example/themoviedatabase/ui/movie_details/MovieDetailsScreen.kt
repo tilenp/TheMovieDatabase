@@ -28,13 +28,15 @@ fun MovieDetailsScreen(
 ) {
     if (uiState.instructionMessage != null) {
         ShowInstructions(
-            modifier = modifier,
+            modifier = modifier
+                .fillMaxSize(),
             messageId = uiState.instructionMessage
         )
     } else {
         ShowContent(
             widthSizeClass = widthSizeClass,
-            modifier = modifier,
+            modifier = modifier
+                .fillMaxSize(),
             uiState = uiState,
             onBackButtonClicked = onBackButtonClicked,
             onVideoClick = onVideoClick
@@ -64,20 +66,23 @@ private fun ShowContent(
         MovieDetailsView(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f),
+                .weight(1f)
+                .testTag("MovieDetailsView"),
             widthSizeClass = widthSizeClass,
             movieDetails = uiState.movieDetails,
             onBackButtonClicked = onBackButtonClicked
         )
         MovieTrailersView(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .testTag("MovieTrailersView"),
             videos = uiState.videos,
             onVideoClick = onVideoClick
         )
         SimilarMoviesView(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .testTag("SimilarMoviesView"),
             movies = uiState.similarMovies,
             onMovieClick = {}
         )
@@ -90,7 +95,7 @@ private fun ShowInstructions(
     @StringRes messageId: Int
 ) {
     Box(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
         Text(
