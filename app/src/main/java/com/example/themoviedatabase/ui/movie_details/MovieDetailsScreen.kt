@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import com.example.themoviedatabase.ui.common.LoadingView
 import com.example.themoviedatabase.ui.common.MySnackbar
 
 @Composable
@@ -32,17 +31,13 @@ fun MovieDetailsScreen(
             modifier = modifier,
             messageId = uiState.instructionMessage
         )
-    } else if (uiState.movieDetails != null || uiState.videos != null || uiState.similarMovies != null) {
+    } else {
         ShowContent(
             widthSizeClass = widthSizeClass,
             modifier = modifier,
             uiState = uiState,
             onBackButtonClicked = onBackButtonClicked,
             onVideoClick = onVideoClick
-        )
-    } else {
-        LoadingView(
-            modifier = modifier.fillMaxSize()
         )
     }
     if (uiState.error != null) {
@@ -68,7 +63,8 @@ private fun ShowContent(
     ) {
         MovieDetailsView(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .weight(1f),
             widthSizeClass = widthSizeClass,
             movieDetails = uiState.movieDetails,
             onBackButtonClicked = onBackButtonClicked

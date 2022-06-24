@@ -1,5 +1,6 @@
+similar movies should not intercept paged movies (create a separate table for paging)
+disconnect network and click movie details, movie details endpoint is not called
 fix movie details loading (looks weird)
-split movie repository
 remove idle in tests
 check class names
 set snackbar theme

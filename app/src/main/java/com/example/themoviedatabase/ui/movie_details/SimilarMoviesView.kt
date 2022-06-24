@@ -9,6 +9,7 @@ import androidx.compose.ui.res.stringResource
 import com.example.themoviedatabase.R
 import com.example.themoviedatabase.model.domain.MovieSummary
 import com.example.themoviedatabase.ui.common.CarouselView
+import com.example.themoviedatabase.ui.common.LoadingView
 import com.example.themoviedatabase.ui.common.MovieItemView
 
 @Composable
@@ -20,26 +21,32 @@ fun SimilarMoviesView(
     val spacingS = dimensionResource(R.dimen.spacing_s)
     val spacingXL = dimensionResource(R.dimen.spacing_xl)
     val imageSize = dimensionResource(R.dimen.image_size)
-    CarouselView(
-        modifier = modifier
-            .padding(top = spacingXL),
-        title = stringResource(R.string.Similar_movies),
-        paddingValues = PaddingValues(start = spacingS, end = spacingS),
-        horizontalArrangement = Arrangement.spacedBy(spacingS),
-        list = movies,
-        itemView = { movie ->
-            System.out.println("TTT " + movie.posterPath.medium)
-            MovieItemView(
-                modifier = Modifier
-                    .height(imageSize)
-                    .aspectRatio(ratio = 9f.div(16))
-                    .testTag("MovieItem"),
-                movieId = movie.movieId,
-                title = movie.title,
-                posterPath = movie.posterPath,
-                rating = movie.rating.formattedValue,
-                onMovieClick = onMovieClick
-            )
-        }
-    )
+    if (movies == null) {
+        LoadingView(
+            modifier = modifier
+        )
+    } else if (movies.isNotEmpty()) {
+        CarouselView(
+            modifier = modifier
+                .padding(top = spacingXL),
+            title = stringResource(R.string.Similar_movies),
+            paddingValues = PaddingValues(start = spacingS, end = spacingS),
+            horizontalArrangement = Arrangement.spacedBy(spacingS),
+            list = movies,
+            itemView = { movie ->
+                System.out.println("TTT " + movie.posterPath.medium)
+                MovieItemView(
+                    modifier = Modifier
+                        .height(imageSize)
+                        .aspectRatio(ratio = 9f.div(16))
+                        .testTag("MovieItem"),
+                    movieId = movie.movieId,
+                    title = movie.title,
+                    posterPath = movie.posterPath,
+                    rating = movie.rating.formattedValue,
+                    onMovieClick = onMovieClick
+                )
+            }
+        )
+    }
 }

@@ -53,9 +53,9 @@ class MovieDetailsViewModelTest {
         val updateSimilarMoviesUseCase: UpdateSimilarMoviesUseCase = mockk()
 
         every { movieCache.getSelectedMovieId() } returns flowOf(movieId)
-        every { updateMovieDetailsUseCase.invoke(any()) } returns flowOf(Resource(data = movieDetails))
-        every { updateVideosUseCase.invoke(any()) } returns emptyFlow()
-        every { updateSimilarMoviesUseCase.invoke(any()) } returns emptyFlow()
+        every { updateMovieDetailsUseCase.invoke(any(), any()) } returns flowOf(Resource(data = movieDetails))
+        every { updateVideosUseCase.invoke(any(), any()) } returns emptyFlow()
+        every { updateSimilarMoviesUseCase.invoke(any(), any()) } returns emptyFlow()
 
         val viewModel = MovieDetailsViewModel(
             movieCache = movieCache,
@@ -81,9 +81,9 @@ class MovieDetailsViewModelTest {
         val updateSimilarMoviesUseCase: UpdateSimilarMoviesUseCase = mockk()
 
         every { movieCache.getSelectedMovieId() } returns flowOf(movieId)
-        every { updateMovieDetailsUseCase.invoke(any()) } returns flowOf(Resource(error = Throwable()))
-        every { updateVideosUseCase.invoke(any()) } returns emptyFlow()
-        every { updateSimilarMoviesUseCase.invoke(any()) } returns emptyFlow()
+        every { updateMovieDetailsUseCase.invoke(any(), any()) } returns flowOf(Resource(error = Throwable()))
+        every { updateVideosUseCase.invoke(any(), any()) } returns emptyFlow()
+        every { updateSimilarMoviesUseCase.invoke(any(), any()) } returns emptyFlow()
 
         val viewModel = MovieDetailsViewModel(
             movieCache = movieCache,
@@ -110,9 +110,9 @@ class MovieDetailsViewModelTest {
         val updateSimilarMoviesUseCase: UpdateSimilarMoviesUseCase = mockk()
 
         every { movieCache.getSelectedMovieId() } returns flowOf(movieId)
-        every { updateMovieDetailsUseCase.invoke(any()) } returns emptyFlow()
-        every { updateVideosUseCase.invoke(any()) } returns flowOf(Resource(data = videos))
-        every { updateSimilarMoviesUseCase.invoke(any()) } returns emptyFlow()
+        every { updateMovieDetailsUseCase.invoke(any(), any()) } returns emptyFlow()
+        every { updateVideosUseCase.invoke(any(), any()) } returns flowOf(Resource(data = videos))
+        every { updateSimilarMoviesUseCase.invoke(any(), any()) } returns emptyFlow()
 
         val viewModel = MovieDetailsViewModel(
             movieCache = movieCache,
@@ -138,9 +138,9 @@ class MovieDetailsViewModelTest {
         val updateSimilarMoviesUseCase: UpdateSimilarMoviesUseCase = mockk()
 
         every { movieCache.getSelectedMovieId() } returns flowOf(movieId)
-        every { updateMovieDetailsUseCase.invoke(any()) } returns emptyFlow()
-        every { updateVideosUseCase.invoke(any()) } returns flowOf(Resource(error = Throwable()))
-        every { updateSimilarMoviesUseCase.invoke(any()) } returns emptyFlow()
+        every { updateMovieDetailsUseCase.invoke(any(), any()) } returns emptyFlow()
+        every { updateVideosUseCase.invoke(any(), any()) } returns flowOf(Resource(error = Throwable()))
+        every { updateSimilarMoviesUseCase.invoke(any(), any()) } returns emptyFlow()
 
         val viewModel = MovieDetailsViewModel(
             movieCache = movieCache,
@@ -167,9 +167,9 @@ class MovieDetailsViewModelTest {
         val updateSimilarMoviesUseCase: UpdateSimilarMoviesUseCase = mockk()
 
         every { movieCache.getSelectedMovieId() } returns flowOf(movieId)
-        every { updateMovieDetailsUseCase.invoke(any()) } returns emptyFlow()
-        every { updateVideosUseCase.invoke(any()) } returns emptyFlow()
-        every { updateSimilarMoviesUseCase.invoke(any()) } returns flowOf(Resource(data = similarMovies))
+        every { updateMovieDetailsUseCase.invoke(any(), any()) } returns emptyFlow()
+        every { updateVideosUseCase.invoke(any(), any()) } returns emptyFlow()
+        every { updateSimilarMoviesUseCase.invoke(any(), any()) } returns flowOf(Resource(data = similarMovies))
 
         val viewModel = MovieDetailsViewModel(
             movieCache = movieCache,
@@ -195,9 +195,9 @@ class MovieDetailsViewModelTest {
         val updateSimilarMoviesUseCase: UpdateSimilarMoviesUseCase = mockk()
 
         every { movieCache.getSelectedMovieId() } returns flowOf(movieId)
-        every { updateMovieDetailsUseCase.invoke(any()) } returns emptyFlow()
-        every { updateVideosUseCase.invoke(any()) } returns emptyFlow()
-        every { updateSimilarMoviesUseCase.invoke(any()) } returns flowOf(Resource(error = Throwable()))
+        every { updateMovieDetailsUseCase.invoke(any(), any()) } returns emptyFlow()
+        every { updateVideosUseCase.invoke(any(), any()) } returns emptyFlow()
+        every { updateSimilarMoviesUseCase.invoke(any(), any()) } returns flowOf(Resource(error = Throwable()))
 
         val viewModel = MovieDetailsViewModel(
             movieCache = movieCache,
@@ -225,9 +225,9 @@ class MovieDetailsViewModelTest {
         val updateSimilarMoviesUseCase: UpdateSimilarMoviesUseCase = mockk()
 
         every { movieCache.getSelectedMovieId() } returns flowOf(movieId)
-        every { updateMovieDetailsUseCase.invoke(any()) } returns flowOf(Resource(data = movieDetails))
-        every { updateVideosUseCase.invoke(any()) } returns flowOf(Resource(data = videos))
-        every { updateSimilarMoviesUseCase.invoke(any()) } returns emptyFlow()
+        every { updateMovieDetailsUseCase.invoke(any(), any()) } returns flowOf(Resource(data = movieDetails))
+        every { updateVideosUseCase.invoke(any(), any()) } returns flowOf(Resource(data = videos))
+        every { updateSimilarMoviesUseCase.invoke(any(), any()) } returns emptyFlow()
 
         val viewModel = MovieDetailsViewModel(
             movieCache = movieCache,
@@ -255,9 +255,9 @@ class MovieDetailsViewModelTest {
         val updateSimilarMoviesUseCase: UpdateSimilarMoviesUseCase = mockk()
 
         every { movieCache.getSelectedMovieId() } returns flowOf(movieId)
-        every { updateMovieDetailsUseCase.invoke(any()) } returns emptyFlow()
-        every { updateVideosUseCase.invoke(any()) } returns emptyFlow()
-        every { updateSimilarMoviesUseCase.invoke(any()) } returns emptyFlow()
+        every { updateMovieDetailsUseCase.invoke(any(), any()) } returns emptyFlow()
+        every { updateVideosUseCase.invoke(any(), any()) } returns emptyFlow()
+        every { updateSimilarMoviesUseCase.invoke(any(), any()) } returns emptyFlow()
 
         val viewModel = MovieDetailsViewModel(
             movieCache = movieCache,
@@ -274,8 +274,9 @@ class MovieDetailsViewModelTest {
         viewModel.newEvent(event)
 
         // assert
-        verify(exactly = 2) { updateMovieDetailsUseCase.invoke(any()) }
-        verify(exactly = 2) { updateVideosUseCase.invoke(any()) }
-        verify(exactly = 1) { updateSimilarMoviesUseCase.invoke(any()) }
+        verify(exactly = 2) { updateMovieDetailsUseCase.invoke(movieId, true) }
+        verify(exactly = 2) { updateVideosUseCase.invoke(movieId, true) }
+        verify(exactly = 1) { updateSimilarMoviesUseCase.invoke(movieId, true) }
+        verify(exactly = 1) { updateSimilarMoviesUseCase.invoke(movieId, false) }
     }
 }

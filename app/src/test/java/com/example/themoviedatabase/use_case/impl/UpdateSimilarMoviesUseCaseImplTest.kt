@@ -35,6 +35,30 @@ class UpdateSimilarMoviesUseCaseImplTest {
     }
 
     @Test
+    fun get_similar_movies_test() = runTest {
+        // arrange
+        val movieId = 1L
+        val page = 1
+        val movieSummaries = listOf(MovieSummary(movieId = 1), MovieSummary(movieId = 2))
+        val movieRepository: MovieRepository = mockk()
+
+        coEvery { movieRepository.getSimilarMoviesForId(any()) } returns flowOf(movieSummaries)
+        coEvery { movieRepository.updateSimilarMoviesForId(any(), any()) } returns Unit
+
+        val useCase = UpdateSimilarMoviesUseCaseImpl(
+            movieRepository = movieRepository
+        )
+
+        // assert
+        useCase.invoke(movieId, false, page).test {
+            assertEquals(movieSummaries, awaitItem().data)
+            cancelAndIgnoreRemainingEvents()
+        }
+        coVerify(exactly = 1) { movieRepository.getSimilarMoviesForId(movieId) }
+        coVerify(exactly = 0) { movieRepository.updateSimilarMoviesForId(movieId, page) }
+    }
+
+    @Test
     fun update_similar_movies_test() = runTest {
         // arrange
         val movieId = 1L
@@ -45,12 +69,12 @@ class UpdateSimilarMoviesUseCaseImplTest {
         coEvery { movieRepository.getSimilarMoviesForId(any()) } returns flowOf(movieSummaries)
         coEvery { movieRepository.updateSimilarMoviesForId(any(), any()) } returns Unit
 
-        val service = UpdateSimilarMoviesUseCaseImpl(
+        val useCase = UpdateSimilarMoviesUseCaseImpl(
             movieRepository = movieRepository
         )
 
         // assert
-        service.invoke(movieId, page).test {
+        useCase.invoke(movieId, true, page).test {
             assertEquals(movieSummaries, awaitItem().data)
             cancelAndIgnoreRemainingEvents()
         }
@@ -69,12 +93,12 @@ class UpdateSimilarMoviesUseCaseImplTest {
         coEvery { movieRepository.getSimilarMoviesForId(any()) } returns emptyFlow()
         coEvery { movieRepository.updateSimilarMoviesForId(any(), any()) } throws throwable
 
-        val service = UpdateSimilarMoviesUseCaseImpl(
+        val useCase = UpdateSimilarMoviesUseCaseImpl(
             movieRepository = movieRepository
         )
 
         // assert
-        service.invoke(movieId, page).test {
+        useCase.invoke(movieId, true, page).test {
             assertEquals(throwable, awaitItem().error)
             cancelAndIgnoreRemainingEvents()
         }

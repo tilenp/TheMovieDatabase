@@ -5,5 +5,5 @@ import com.example.themoviedatabase.model.domain.MovieSummary
 import kotlinx.coroutines.flow.Flow
 
 interface UpdateSimilarMoviesUseCase {
-    fun invoke(movieId: Long, page: Int? = null): Flow<Resource<List<MovieSummary>>>
+    fun invoke(movieId: Long, update: Boolean, page: Int? = null): Flow<Resource<List<MovieSummary>>>
 }

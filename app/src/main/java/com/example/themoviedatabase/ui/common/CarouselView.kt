@@ -26,31 +26,6 @@ fun <T : Any> CarouselView(
     title: String,
     paddingValues: PaddingValues,
     horizontalArrangement: Arrangement.Horizontal,
-    list: List<T>?,
-    itemView: @Composable (T) -> Unit
-) {
-    if (list == null) {
-        LoadingView(
-            modifier = modifier
-        )
-    } else {
-        ComposableCarousel(
-            modifier = modifier,
-            title = title,
-            paddingValues = paddingValues,
-            horizontalArrangement = horizontalArrangement,
-            list = list,
-            itemView = itemView
-        )
-    }
-}
-
-@Composable
-private fun <T : Any> ComposableCarousel(
-    modifier: Modifier = Modifier,
-    title: String,
-    paddingValues: PaddingValues,
-    horizontalArrangement: Arrangement.Horizontal,
     list: List<T>,
     itemView: @Composable (T) -> Unit
 ) {
@@ -101,7 +76,7 @@ fun PreviewCarouselViewLoading() {
                 title = "Popular",
                 paddingValues = paddingValues,
                 horizontalArrangement = horizontalArrangement,
-                list = null,
+                list = emptyList(),
                 itemView = { movie ->
                     MovieItemView(
                         modifier = Modifier.size(imageSize),

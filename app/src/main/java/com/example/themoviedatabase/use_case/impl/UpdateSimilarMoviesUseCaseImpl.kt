@@ -15,14 +15,16 @@ class UpdateSimilarMoviesUseCaseImpl @Inject constructor(
     private val movieRepository: MovieRepository
 ) : UpdateSimilarMoviesUseCase {
 
-    override fun invoke(movieId: Long, page: Int?): Flow<Resource<List<MovieSummary>>> {
+    override fun invoke(movieId: Long, update: Boolean, page: Int?): Flow<Resource<List<MovieSummary>>> {
         return movieRepository.getSimilarMoviesForId(movieId)
             .map { Resource(data = it) }
             .onStart {
-                try {
-                    movieRepository.updateSimilarMoviesForId(movieId, page)
-                } catch (throwable: Throwable) {
-                    emit(Resource(error = throwable))
+                if (update) {
+                    try {
+                        movieRepository.updateSimilarMoviesForId(movieId, page)
+                    } catch (throwable: Throwable) {
+                        emit(Resource(error = throwable))
+                    }
                 }
             }
     }

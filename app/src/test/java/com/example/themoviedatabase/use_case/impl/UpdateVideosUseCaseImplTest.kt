@@ -35,6 +35,29 @@ class UpdateVideosUseCaseImplTest {
     }
 
     @Test
+    fun get_videos_test() = runTest {
+        // arrange
+        val movieId = 1L
+        val videos = listOf(Video(id = "id1"), Video(id = "id2"))
+        val videoRepository: VideoRepository = mockk()
+
+        coEvery { videoRepository.getVideosWithMovieId(any()) } returns flowOf(videos)
+        coEvery { videoRepository.updateVideosWithMovieId(any()) } returns Unit
+
+        val useCase = UpdateVideosUseCaseImpl(
+            videoRepository = videoRepository
+        )
+
+        // assert
+        useCase.invoke(movieId, false).test {
+            assertEquals(videos, awaitItem().data)
+            cancelAndIgnoreRemainingEvents()
+        }
+        coVerify(exactly = 1) { videoRepository.getVideosWithMovieId(movieId) }
+        coVerify(exactly = 0) { videoRepository.updateVideosWithMovieId(movieId) }
+    }
+
+    @Test
     fun update_videos_test() = runTest {
         // arrange
         val movieId = 1L
@@ -44,12 +67,12 @@ class UpdateVideosUseCaseImplTest {
         coEvery { videoRepository.getVideosWithMovieId(any()) } returns flowOf(videos)
         coEvery { videoRepository.updateVideosWithMovieId(any()) } returns Unit
 
-        val service = UpdateVideosUseCaseImpl(
+        val useCase = UpdateVideosUseCaseImpl(
             videoRepository = videoRepository
         )
 
         // assert
-        service.invoke(movieId).test {
+        useCase.invoke(movieId, true).test {
             assertEquals(videos, awaitItem().data)
             cancelAndIgnoreRemainingEvents()
         }
@@ -72,7 +95,7 @@ class UpdateVideosUseCaseImplTest {
         )
 
         // assert
-        service.invoke(movieId).test {
+        service.invoke(movieId, true).test {
             assertEquals(throwable, awaitItem().error)
             cancelAndIgnoreRemainingEvents()
         }

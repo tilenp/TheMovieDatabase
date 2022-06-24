@@ -13,14 +13,16 @@ class UpdateMovieDetailsUseCaseImpl @Inject constructor(
     private val movieRepository: MovieRepository
 ) : UpdateMovieDetailsUseCase {
 
-    override fun invoke(movieId: Long): Flow<Resource<MovieDetails>> {
+    override fun invoke(movieId: Long, update: Boolean): Flow<Resource<MovieDetails>> {
         return movieRepository.getMovieDetailsWithId(movieId)
             .map { Resource(data = it) }
             .onStart {
-                try {
-                    movieRepository.updateMovieDetailsWithId(movieId)
-                } catch (throwable: Throwable) {
-                    emit(Resource(error = throwable))
+                if (update) {
+                    try {
+                        movieRepository.updateMovieDetailsWithId(movieId)
+                    } catch (throwable: Throwable) {
+                        emit(Resource(error = throwable))
+                    }
                 }
             }
     }

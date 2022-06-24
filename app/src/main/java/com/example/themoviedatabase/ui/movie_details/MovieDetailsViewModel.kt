@@ -40,44 +40,36 @@ class MovieDetailsViewModel @Inject constructor(
                 _eventDispatcher.filterIsInstance<Event.Load>()
                     .throttleFirst(viewModelScope.plus(dispatcherProvider.main), THROTTLE_INTERVAL)
                     .onStart { emit(initialEvent) }
-                    .map { action ->
-                        val stateBuilder = MovieDetailsState.Builder(_uiState.first())
-                            .resetError()
-                        action.actions.map { type ->
-                            when (type) {
-                                ActionType.LOAD_MOVIE_DETAILS -> updateMovieDetailsUseCase.invoke(movieId)
-                                    .map { updateMovieDetails(stateBuilder, it) }
-                                    .onStart { emit(setLoadMovieDetailsState(stateBuilder)) }
-                                ActionType.LOAD_VIDEOS -> updateVideosUseCase.invoke(movieId)
-                                    .map { updateVideos(stateBuilder, it) }
-                                    .onStart { emit(setLoadVideosState(stateBuilder)) }
-                                ActionType.LOAD_SIMILAR_MOVIES -> updateSimilarMoviesUseCase.invoke(movieId)
-                                    .map { updateSimilarMovies(stateBuilder, it) }
-                                    .onStart { emit(setLoadSimilarMoviesState(stateBuilder)) }
-                            }
-                        }
+                    .flatMapLatest { event ->
+                        val stateBuilder = getLoadingState(event.actions)
+                        merge(
+                            flowOf(stateBuilder),
+                            updateMovieDetailsUseCase.invoke(movieId, event.actions.contains(ActionType.LOAD_MOVIE_DETAILS))
+                                .map { updateMovieDetails(stateBuilder, it) },
+                            updateVideosUseCase.invoke(movieId, event.actions.contains(ActionType.LOAD_VIDEOS))
+                                .map { updateVideos(stateBuilder, it) },
+                            updateSimilarMoviesUseCase.invoke(movieId, event.actions.contains(ActionType.LOAD_SIMILAR_MOVIES))
+                                .map { updateSimilarMovies(stateBuilder, it) }
+                        )
                     }
-                    .flatMapLatest { flows -> merge(flows.merge()) }
                     .map { stateBuilder -> stateBuilder.build() }
-                    .onStart { emit(MovieDetailsState.Builder().build()) }
             }
             .onEach { _uiState.emit(it) }
             .launchIn(viewModelScope.plus(dispatcherProvider.main))
     }
 
-    private fun setLoadMovieDetailsState(stateBuilder: MovieDetailsState.Builder): MovieDetailsState.Builder {
+    private suspend fun getLoadingState(actions: Set<ActionType>):MovieDetailsState.Builder {
+        val stateBuilder = MovieDetailsState.Builder(_uiState.first())
+            .instructionMessage(null)
+            .resetError()
+        actions.forEach { type ->
+            when (type) {
+                ActionType.LOAD_MOVIE_DETAILS -> stateBuilder.movieDetails(null)
+                ActionType.LOAD_VIDEOS -> stateBuilder.videos(null)
+                ActionType.LOAD_SIMILAR_MOVIES -> stateBuilder.similarMovies(null)
+            }
+        }
         return stateBuilder
-            .movieDetails(null)
-    }
-
-    private fun setLoadVideosState(stateBuilder: MovieDetailsState.Builder): MovieDetailsState.Builder {
-        return stateBuilder
-            .videos(null)
-    }
-
-    private fun setLoadSimilarMoviesState(stateBuilder: MovieDetailsState.Builder): MovieDetailsState.Builder {
-        return stateBuilder
-            .similarMovies(null)
     }
 
     private fun updateMovieDetails(
