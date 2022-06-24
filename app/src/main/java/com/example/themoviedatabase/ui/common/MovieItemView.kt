@@ -31,6 +31,7 @@ fun MovieItemView(
     rating: String = "",
     onMovieClick: (Long) -> Unit = {}
 ) {
+    val context = LocalContext.current
     val spacingS = dimensionResource(R.dimen.spacing_s)
     val spacingM = dimensionResource(R.dimen.spacing_m)
     Surface(
@@ -50,7 +51,7 @@ fun MovieItemView(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
                     .padding(top = spacingM, end = spacingM)
-                    .testTag("RatingView${movieId}"),
+                    .testTag("RatingView${rating}"),
                 rating = rating,
                 style = MaterialTheme.typography.caption,
                 padding = spacingS
@@ -61,8 +62,8 @@ fun MovieItemView(
                     .align(Alignment.BottomCenter)
                     .background(Color(0x97000000))
                     .padding(spacingM)
-                    .testTag("MovieTitle${movieId}"),
-                title = title
+                    .testTag("MovieTitle${title.asString(context)}"),
+                title = title.asString(context)
             )
         }
     }
@@ -90,12 +91,11 @@ private fun MovieImage(
 @Composable
 private fun MovieTitle(
     modifier: Modifier,
-    title: UIText = UIText()
+    title: String
 ) {
-    val context = LocalContext.current
     Text(
         modifier = modifier,
-        text = title.asString(context),
+        text = title,
         color = Color.White,
         style = MaterialTheme.typography.caption,
         maxLines = 1,
