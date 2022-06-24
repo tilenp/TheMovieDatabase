@@ -1,0 +1,50 @@
+{
+  "page": 1,
+  "results": [
+    {
+      "adult": false,
+      "backdrop_path": "/A3bsT0m1um6tvcmlIGxBwx9eAxn.jpg",
+      "genre_ids": [
+        28,
+        12,
+        35,
+        10749
+      ],
+      "id": 752623,
+      "original_language": "en",
+      "original_title": "The Lost City",
+      "overview": "A reclusive romance novelist who was sure nothing could be worse than getting stuck on a book tour with her cover model, until a kidnapping attempt sweeps them both into a cutthroat jungle adventure, proving life can be so much stranger, and more romantic, than any of her paperback fictions.",
+      "popularity": 8128.119,
+      "poster_path": "/neMZH82Stu91d3iqvLdNQfqPPyl.jpg",
+      "release_date": "2022-03-24",
+      "title": "The Lost City",
+      "video": false,
+      "vote_average": 6.7,
+      "vote_count": 618
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/egoyMDLqCxzjnSrWOz50uLlJWmD.jpg",
+      "genre_ids": [
+        28,
+        878,
+        35,
+        10751,
+        12
+      ],
+      "id": 675353,
+      "original_language": "en",
+      "original_title": "Sonic the Hedgehog 2",
+      "overview": "After settling in Green Hills, Sonic is eager to prove he has what it takes to be a true hero. His test comes when Dr. Robotnik returns, this time with a new partner, Knuckles, in search for an emerald that has the power to destroy civilizations. Sonic teams up with his own sidekick, Tails, and together they embark on a globe-trotting journey to find the emerald before it falls into the wrong hands.",
+      "popularity": 6241.618,
+      "poster_path": "/6DrHO1jr3qVrViUO6s6kFiAGM7.jpg",
+      "release_date": "2022-03-30",
+      "title": "Sonic the Hedgehog 2",
+      "video": false,
+      "vote_average": 7.7,
+      "vote_count": 1469
+    }
+  ],
+  "total_pages": 2,
+  "total_results": 4
+}

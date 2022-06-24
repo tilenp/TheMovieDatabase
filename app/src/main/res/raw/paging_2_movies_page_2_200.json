@@ -1,0 +1,47 @@
+{
+  "page": 2,
+  "results": [
+    {
+      "adult": false,
+      "backdrop_path": "/aEGiJJP91HsKVTEPy1HhmN0wRLm.jpg",
+      "genre_ids": [
+        28,
+        12
+      ],
+      "id": 335787,
+      "original_language": "en",
+      "original_title": "Uncharted",
+      "overview": "A young street-smart, Nathan Drake and his wisecracking partner Victor “Sully” Sullivan embark on a dangerous pursuit of “the greatest treasure never found” while also tracking clues that may lead to Nathan’s long-lost brother.",
+      "popularity": 3357.741,
+      "poster_path": "/tlZpSxYuBRoVJBOpUrPdQe9FmFq.jpg",
+      "release_date": "2022-02-10",
+      "title": "Uncharted",
+      "video": false,
+      "vote_average": 7.2,
+      "vote_count": 2002
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/cqnVuxXe6vA7wfNWubak3x36DKJ.jpg",
+      "genre_ids": [
+        28,
+        12,
+        14,
+        53
+      ],
+      "id": 639933,
+      "original_language": "en",
+      "original_title": "The Northman",
+      "overview": "Prince Amleth is on the verge of becoming a man when his father is brutally murdered by his uncle, who kidnaps the boy's mother. Two decades later, Amleth is now a Viking who's on a mission to save his mother, kill his uncle and avenge his father.",
+      "popularity": 4832.321,
+      "poster_path": "/zhLKlUaF1SEpO58ppHIAyENkwgw.jpg",
+      "release_date": "2022-04-07",
+      "title": "The Northman",
+      "video": false,
+      "vote_average": 7.6,
+      "vote_count": 942
+    }
+  ],
+  "total_pages": 2,
+  "total_results": 4
+}

@@ -47,7 +47,7 @@ fun MovieListContent(
             ErrorView(
                 modifier = modifier
                     .padding(spacingL)
-                    .testTag("MoviesScreenErrorView"),
+                    .testTag("MoviesScreenErrorView${stringResource(getErrorMessageId(throwable))}"),
                 message = stringResource(getErrorMessageId(throwable)),
                 buttonsContent = {
                     MyButton(

@@ -3,10 +3,9 @@ package com.example.themoviedatabase.dagger
 import android.content.Context
 import androidx.paging.ExperimentalPagingApi
 import com.example.themoviedatabase.dagger.module.*
+import com.example.themoviedatabase.end_to_end.MoviesScreenPagingTest
 import com.example.themoviedatabase.end_to_end.SelectMovieTest
 import com.example.themoviedatabase.service.impl.MovieRemoteMediatorTest
-import com.example.themoviedatabase.ui.movie_details.MovieDetailsScreenTest
-import com.example.themoviedatabase.ui.movies_screen.MoviesScreenTest
 import dagger.BindsInstance
 import dagger.Component
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -37,12 +36,7 @@ interface FakeAppComponent : AppComponent {
     @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
     fun inject(movieRemoteMediatorTest: MovieRemoteMediatorTest)
 
-    // movies_screen
-    fun inject(moviesScreenTest: MoviesScreenTest)
-
-    // movie_details
-    fun inject(movieDetailsScreenTest: MovieDetailsScreenTest)
-
     // end to end
+    fun inject(moviesScreenPagingTest: MoviesScreenPagingTest)
     fun inject(selectMovieTest: SelectMovieTest)
 }
