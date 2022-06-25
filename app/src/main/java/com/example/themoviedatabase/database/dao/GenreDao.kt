@@ -1,16 +1,19 @@
 package com.example.themoviedatabase.database.dao
 
+import androidx.annotation.VisibleForTesting
 import androidx.room.*
 import com.example.themoviedatabase.database.table.GenreTable
 
 @Dao
 abstract class GenreDao {
 
+    @VisibleForTesting
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    protected abstract suspend fun insertGenre(genre: GenreTable): Long
+    abstract suspend fun insertGenre(genre: GenreTable): Long
 
+    @VisibleForTesting
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    protected abstract suspend fun updateGenres(genre: GenreTable)
+    abstract suspend fun updateGenres(genre: GenreTable)
 
     @Transaction
     open suspend fun upsert(genres: List<GenreTable>) {

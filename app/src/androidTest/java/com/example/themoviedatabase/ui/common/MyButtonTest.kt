@@ -33,9 +33,6 @@ class MyButtonTest {
             }
         }
 
-        // just so you can see it on the phone
-        Thread.sleep(1000)
-
         // assert
         composeTestRule.onNodeWithText(buttonText).assertIsDisplayed()
     }
@@ -56,9 +53,6 @@ class MyButtonTest {
                 }
             }
         }
-
-        // just so you can see it on the phone
-        Thread.sleep(1000)
 
         // act
         composeTestRule.onNodeWithText(buttonText).performClick()

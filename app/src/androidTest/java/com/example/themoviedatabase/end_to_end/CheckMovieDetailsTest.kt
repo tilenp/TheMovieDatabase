@@ -5,6 +5,8 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.espresso.IdlingRegistry
+import androidx.test.espresso.idling.net.UriIdlingResource
 import com.example.themoviedatabase.MainActivity
 import com.example.themoviedatabase.R
 import com.example.themoviedatabase.dagger.FakeApplication
@@ -20,6 +22,7 @@ import com.example.themoviedatabase.utils.FileReader
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -43,12 +46,17 @@ class CheckMovieDetailsTest {
     lateinit var dispatcherProvider: DispatcherProvider
     lateinit var fakeDispatcherProvider: FakeDispatcherProvider
 
+    @Inject
+    lateinit var uriIdlingResource: UriIdlingResource
+
     private val context: Context = ApplicationProvider.getApplicationContext()
 
     @Before
     fun setUp() {
         (context as FakeApplication).provideAppComponent().inject(this)
         fakeDispatcherProvider = dispatcherProvider as FakeDispatcherProvider
+        IdlingRegistry.getInstance().register(uriIdlingResource)
+
         // movies screen
         enqueueMovieSummaries(code = 200, fileName = "paging_2_movies_page_1_200", false)
         enqueueMovieSummaries(code = 200, fileName = "paging_2_movies_page_2_200", false)
@@ -63,6 +71,11 @@ class CheckMovieDetailsTest {
 
         // similar movies retry response
         enqueueSimilarMovies(code = 200, fileName = "similar_movies_200", false)
+    }
+
+    @After
+    fun cleanUp() {
+        IdlingRegistry.getInstance().unregister(uriIdlingResource)
     }
 
     private fun enqueueMovieSummaries(code: Int, fileName: String, testLoading: Boolean) {
@@ -113,11 +126,14 @@ class CheckMovieDetailsTest {
         /** MovieDetailsScreen - trailers are displayed **/
         composeTestRule.onNodeWithTag("CarouselViewTrailers").assertIsDisplayed()
 
-        /** MovieDetailsScreen - similar movies response 400, similar movies are not displayed **/
+        /** MovieDetailsScreen - similar movies response 400, similar movies don't exist **/
         composeTestRule.onNodeWithTag("CarouselViewSimilar movies").assertDoesNotExist()
 
         /** MovieDetailsScreen - reload similar movies **/
         composeTestRule.onNodeWithText(context.getString(R.string.Retry)).performClick()
+
+        /** MovieDetailsScreen - similar movies response 200, similar movies exist **/
+        composeTestRule.onNodeWithTag("CarouselViewSimilar movies").assertExists()
 
         /** MovieDetailsScreen - back button click **/
         composeTestRule.onNodeWithTag("BackdropIconButton").performClick()

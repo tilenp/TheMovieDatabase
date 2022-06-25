@@ -57,7 +57,7 @@ class FakeMovieApi @Inject constructor(): MovieApi {
     override suspend fun getSimilarMovies(movieId: Long, page: Int?): PagingDTO<MovieDTO> {
         return when {
             similarMoviesQueue.isEmpty() -> throw IllegalStateException("response queue is empty")
-            else -> handleResponse(movieSummariesQueue.pollLast())
+            else -> handleResponse(similarMoviesQueue.pollLast())
         }
     }
 

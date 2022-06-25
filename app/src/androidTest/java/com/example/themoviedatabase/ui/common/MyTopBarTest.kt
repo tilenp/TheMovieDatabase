@@ -28,9 +28,6 @@ class MyTopBarTest {
             }
         }
 
-        // just so you can see it on the phone
-        Thread.sleep(1000)
-
         // assert
         composeTestRule.onNodeWithText(title).assertIsDisplayed()
     }

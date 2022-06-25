@@ -34,8 +34,11 @@ class FakeDatabaseModule {
 
     @Singleton
     @Provides
-    fun providesGenreDao(database: MovieDatabase): GenreDao {
-        return database.getGenreDao()
+    fun providesGenreDao(
+        database: MovieDatabase,
+        uriIdlingResource: UriIdlingResource
+    ): GenreDao {
+        return FakeGenreDao(database.getGenreDao(), uriIdlingResource)
     }
 
     @Singleton
@@ -49,14 +52,20 @@ class FakeDatabaseModule {
 
     @Singleton
     @Provides
-    fun providesMovieDao(database: MovieDatabase): MovieDao {
-        return database.getMovieDao()
+    fun providesMovieDao(
+        database: MovieDatabase,
+        uriIdlingResource: UriIdlingResource
+    ): MovieDao {
+        return FakeMovieDao(database.getMovieDao(), uriIdlingResource)
     }
 
     @Singleton
     @Provides
-    fun providesMovieGenreDao(database: MovieDatabase): MovieGenreDao {
-        return database.getMovieGenreDao()
+    fun providesMovieGenreDao(
+        database: MovieDatabase,
+        uriIdlingResource: UriIdlingResource
+    ): MovieGenreDao {
+        return FakeMovieGenreDao(database.getMovieGenreDao(), uriIdlingResource)
     }
 
     @Singleton
@@ -70,13 +79,19 @@ class FakeDatabaseModule {
 
     @Singleton
     @Provides
-    fun providesSimilarMoviesDao(database: MovieDatabase): SimilarMoviesDao {
-        return database.getSimilarMoviesDao()
+    fun providesSimilarMoviesDao(
+        database: MovieDatabase,
+        uriIdlingResource: UriIdlingResource
+    ): SimilarMoviesDao {
+        return FakeSimilarMoviesDao(database.getSimilarMoviesDao(), uriIdlingResource)
     }
 
     @Singleton
     @Provides
-    fun providesVideoDao(database: MovieDatabase): VideoDao {
-        return database.getVideoDao()
+    fun providesVideoDao(
+        database: MovieDatabase,
+        uriIdlingResource: UriIdlingResource
+    ): VideoDao {
+        return FakeVideoDao(database.getVideoDao(), uriIdlingResource)
     }
 }

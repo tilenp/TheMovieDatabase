@@ -1,5 +1,6 @@
 package com.example.themoviedatabase.database.dao
 
+import androidx.annotation.VisibleForTesting
 import androidx.paging.PagingSource
 import androidx.room.*
 import com.example.themoviedatabase.database.query.*
@@ -58,6 +59,7 @@ abstract class MovieDao {
         )
     }
 
+    @VisibleForTesting
     @Query("""
         UPDATE MovieTable
         SET title = :title,
@@ -69,7 +71,7 @@ abstract class MovieDao {
             runtime = :runtime
         WHERE movieId = :movieId
     """)
-    protected abstract suspend fun updateMovie(
+    abstract suspend fun updateMovie(
         title: String,
         popularity: Float,
         overview: String,
@@ -80,8 +82,9 @@ abstract class MovieDao {
         movieId: Long
     )
 
+    @VisibleForTesting
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    protected abstract suspend fun insertMovie(movie: MovieTable): Long
+    abstract suspend fun insertMovie(movie: MovieTable): Long
 
     @Transaction
     @Query("""
