@@ -20,10 +20,10 @@ class FakeGenreDao @Inject constructor(
         }
     }
 
-    override suspend fun updateGenres(genre: GenreTable) {
+    override suspend fun updateGenre(genre: GenreTable) {
         return try {
             uriIdlingResource.beginLoad("updateGenres")
-            genreDao.updateGenres(genre)
+            genreDao.updateGenre(genre)
         } finally {
             uriIdlingResource.endLoad("updateGenres")
         }

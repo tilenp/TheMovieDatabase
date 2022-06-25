@@ -35,7 +35,6 @@ abstract class MovieDao {
         JOIN SimilarMovieTable ON MovieTable.movieId = SimilarMovieTable.similarMovieId
         JOIN ImagePathTable ON MovieTable.movieId = ImagePathTable.itemId
         WHERE SimilarMovieTable.movieId = :movieId
-        GROUP BY MovieTable.movieId
     """)
     abstract fun getSimilarMovies(movieId: Long): Flow<List<MovieSummaryQuery>>
 

@@ -13,13 +13,13 @@ abstract class GenreDao {
 
     @VisibleForTesting
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun updateGenres(genre: GenreTable)
+    abstract suspend fun updateGenre(genre: GenreTable)
 
     @Transaction
     open suspend fun upsert(genres: List<GenreTable>) {
         genres.forEach { genre ->
             if (insertGenre(genre) == -1L) {
-                updateGenres(genre)
+                updateGenre(genre)
             }
         }
     }
