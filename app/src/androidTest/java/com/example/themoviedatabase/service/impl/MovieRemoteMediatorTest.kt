@@ -74,7 +74,7 @@ class MovieRemoteMediatorTest {
 
     @Test
     fun refresh_load_success() = runTest {
-        val json = FileReader.readFile(context, "movies_popular_desc_page_1_200")
+        val json = FileReader.readFile(context, "paging_2_movies_page_1_200")
         val bodyType: Type = object : TypeToken<PagingDTO<MovieDTO>>() {}.type
         val body: PagingDTO<MovieDTO> = gson.fromJson(json, bodyType)
         val fakeResponse = FakeResponse(code = 200, body = body)
@@ -87,7 +87,7 @@ class MovieRemoteMediatorTest {
 
     @Test
     fun refresh_load_success_end_reached() = runTest {
-        val json = FileReader.readFile(context, "movies_popular_desc_end_reached_200")
+        val json = FileReader.readFile(context, "paging_2_movies_page_2_200")
         val bodyType: Type = object : TypeToken<PagingDTO<MovieDTO>>() {}.type
         val body: PagingDTO<MovieDTO> = gson.fromJson(json, bodyType)
         val fakeResponse = FakeResponse(code = 200, body = body)
