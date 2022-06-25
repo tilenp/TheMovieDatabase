@@ -1,6 +1,6 @@
 # The Movie Database
 
-A simple app written using Kotlin and MVVM design pattern. The app shows infinite list of popular movies and their details retrieved from TMDb API.
+A playground project written using Kotlin and MVVM design pattern. The app shows infinite list of popular movies and their details retrieved from TMDb API.
 
 ## API Key
 Add your api key in the [gradle][1] file:
