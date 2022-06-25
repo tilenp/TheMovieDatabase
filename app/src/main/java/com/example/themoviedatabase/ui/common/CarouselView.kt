@@ -57,43 +57,6 @@ fun <T : Any> CarouselView(
 }
 
 @Preview(
-    name = "Loading Light Mode",
-    showBackground = true,
-)
-@Preview(
-    name = "Loading Dark Mode",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true,
-)
-@Composable
-fun PreviewCarouselViewLoading() {
-    val spacingS = dimensionResource(R.dimen.spacing_s)
-    val paddingValues = PaddingValues(start = spacingS, end = spacingS)
-    val horizontalArrangement = Arrangement.spacedBy(spacingS)
-    val imageSize = dimensionResource(R.dimen.carousel_image_size)
-    TheMovieDatabaseTheme {
-        Surface {
-            CarouselView<MovieSummary>(
-                title = "Popular",
-                paddingValues = paddingValues,
-                horizontalArrangement = horizontalArrangement,
-                list = emptyList(),
-                itemView = { movie ->
-                    MovieItemView(
-                        modifier = Modifier.size(imageSize),
-                        movieId = movie.movieId,
-                        title = movie.title,
-                        posterPath = movie.posterPath,
-                        rating = movie.rating.formattedValue,
-                        onMovieClick = {}
-                    )
-                }
-            )
-        }
-    }
-}
-
-@Preview(
     name = "Light Mode",
     showBackground = true,
 )

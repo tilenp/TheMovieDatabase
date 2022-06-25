@@ -1,16 +1,20 @@
 package com.example.themoviedatabase.ui.movie_details
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.themoviedatabase.R
 import com.example.themoviedatabase.model.domain.Video
 import com.example.themoviedatabase.ui.common.CarouselView
 import com.example.themoviedatabase.ui.common.LoadingView
 import com.example.themoviedatabase.ui.common.VideoItemView
+import com.example.themoviedatabase.ui.theme.TheMovieDatabaseTheme
 
 @Composable
 fun MovieTrailersView(
@@ -44,5 +48,28 @@ fun MovieTrailersView(
                 )
             }
         )
+    }
+}
+
+@Preview(
+    name = "Light Mode",
+    showBackground = true,
+)
+@Preview(
+    name = "Dark Mode",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true,
+)
+@Composable
+private fun PreviewTrailersView() {
+    TheMovieDatabaseTheme {
+        TheMovieDatabaseTheme {
+            Surface {
+                MovieTrailersView(
+                    videos = listOf(Video(), Video(), Video(), Video()),
+                    onVideoClick = {}
+                )
+            }
+        }
     }
 }
