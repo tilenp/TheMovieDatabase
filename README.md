@@ -34,7 +34,7 @@ Just run `./gradlew test` or `./gradlew connectedAndroidTest`
 
 ## Screenshots
 
-<img width="30%" src="screenshots/phone_portrait_movies.png" /> <img width="30%" src="screenshots/phone_portrait_movie_details.png" />
+<img width="30%" src="screenshots/phone_portrait_movies.png" /> <img width="30%" src="screenshots/phone_portrait_movie_details_1.png" /> <img width="30%" src="screenshots/phone_portrait_movie_details_2.png" />
 
 
 <img width="60%" src="screenshots/phone_landscape_movies.png" />
