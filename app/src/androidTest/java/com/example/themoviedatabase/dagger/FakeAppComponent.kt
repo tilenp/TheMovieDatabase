@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.paging.ExperimentalPagingApi
 import com.example.themoviedatabase.dagger.module.*
 import com.example.themoviedatabase.end_to_end.MoviesScreenPagingTest
-import com.example.themoviedatabase.end_to_end.SelectMovieTest
+import com.example.themoviedatabase.end_to_end.CheckMovieDetailsTest
 import com.example.themoviedatabase.service.impl.MovieRemoteMediatorTest
 import dagger.BindsInstance
 import dagger.Component
@@ -38,5 +38,5 @@ interface FakeAppComponent : AppComponent {
 
     // end to end
     fun inject(moviesScreenPagingTest: MoviesScreenPagingTest)
-    fun inject(selectMovieTest: SelectMovieTest)
+    fun inject(checkMovieDetailsTest: CheckMovieDetailsTest)
 }

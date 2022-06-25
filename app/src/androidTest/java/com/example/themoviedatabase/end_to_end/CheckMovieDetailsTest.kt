@@ -28,7 +28,7 @@ import java.lang.reflect.Type
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class SelectMovieTest {
+class CheckMovieDetailsTest {
 
     @get:Rule
     val composeTestRule = createComposeRule()
