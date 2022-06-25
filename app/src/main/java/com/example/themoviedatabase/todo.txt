@@ -1,14 +1,4 @@
 remove idle in tests
-end to end tests
-    test movies screen, handle errors
-        refresh loading
-        refresh error message
-        refresh error button
-        append loading
-        append error message
-        append error button
-    check movie details
-    reload similar movies because of failed response
 common composable tests
 add composable previews
 database tests

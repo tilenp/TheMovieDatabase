@@ -1,0 +1,46 @@
+{
+  "page": 1,
+  "results": [
+    {
+      "adult": false,
+      "backdrop_path": "/bvpI11RJbE6lHSWCrhvNC1S1MtO.jpg",
+      "genre_ids": [
+        16,
+        10751
+      ],
+      "id": 12,
+      "title": "Finding Nemo",
+      "original_language": "en",
+      "original_title": "Finding Nemo",
+      "overview": "Nemo, an adventurous young clownfish, is unexpectedly taken from his Great Barrier Reef home to a dentist's office aquarium. It's up to his worrisome father Marlin and a friendly but forgetful fish Dory to bring Nemo home -- meeting vegetarian sharks, surfer dude turtles, hypnotic jellyfish, hungry seagulls, and more along the way.",
+      "popularity": 133.821,
+      "poster_path": "/eHuGQ10FUzK1mdOY69wF5pGgEf5.jpg",
+      "release_date": "2003-05-30",
+      "video": false,
+      "vote_average": 7.8,
+      "vote_count": 16490
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/8ln5VUVk7gnNGIb2VNgw8nICDVt.jpg",
+      "genre_ids": [
+        16,
+        35,
+        10751
+      ],
+      "id": 35,
+      "title": "The Simpsons Movie",
+      "original_language": "en",
+      "original_title": "The Simpsons Movie",
+      "overview": "After Homer accidentally pollutes the town's water supply, Springfield is encased in a gigantic dome by the EPA and the Simpsons are declared fugitives.",
+      "popularity": 126.862,
+      "poster_path": "/gzb6P78zeFTnv9eoFYnaJ2YrZ5q.jpg",
+      "release_date": "2007-07-25",
+      "video": false,
+      "vote_average": 7.0,
+      "vote_count": 6801
+    }
+  ],
+  "total_pages": 500,
+  "total_results": 10000
+}

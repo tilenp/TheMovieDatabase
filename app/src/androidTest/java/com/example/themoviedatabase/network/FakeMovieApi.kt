@@ -15,6 +15,7 @@ class FakeMovieApi @Inject constructor(): MovieApi {
     private val movieSummariesQueue = LinkedList<FakeResponse<PagingDTO<MovieDTO>>>()
     private val movieDetailsQueue = LinkedList<FakeResponse<MovieDTO>>()
     private val videosQueue = LinkedList<FakeResponse<ResponseDTO<VideoDTO>>>()
+    private val similarMoviesQueue = LinkedList<FakeResponse<PagingDTO<MovieDTO>>>()
 
     fun enqueueMovieSummaries(fakeResponse: FakeResponse<PagingDTO<MovieDTO>>) {
         movieSummariesQueue.push(fakeResponse)
@@ -26,6 +27,10 @@ class FakeMovieApi @Inject constructor(): MovieApi {
 
     fun enqueueVideos(fakeResponse: FakeResponse<ResponseDTO<VideoDTO>>) {
         videosQueue.push(fakeResponse)
+    }
+
+    fun enqueueSimilarMovies(fakeResponse: FakeResponse<PagingDTO<MovieDTO>>) {
+        similarMoviesQueue.push(fakeResponse)
     }
 
     override suspend fun getMovies(sortBy: String?, page: Int?): PagingDTO<MovieDTO> {
@@ -51,7 +56,7 @@ class FakeMovieApi @Inject constructor(): MovieApi {
 
     override suspend fun getSimilarMovies(movieId: Long, page: Int?): PagingDTO<MovieDTO> {
         return when {
-            movieSummariesQueue.isEmpty() -> throw IllegalStateException("response queue is empty")
+            similarMoviesQueue.isEmpty() -> throw IllegalStateException("response queue is empty")
             else -> handleResponse(movieSummariesQueue.pollLast())
         }
     }

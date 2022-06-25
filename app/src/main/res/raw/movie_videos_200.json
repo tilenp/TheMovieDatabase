@@ -1,0 +1,29 @@
+{
+  "id": 752623,
+  "results": [
+    {
+      "iso_639_1": "en",
+      "iso_3166_1": "US",
+      "name": "Extended Preview",
+      "key": "lWcD2icgoGs",
+      "site": "YouTube",
+      "size": 1080,
+      "type": "Clip",
+      "official": true,
+      "published_at": "2022-05-10T18:59:48.000Z",
+      "id": "627aecee32cc2b006683e407"
+    },
+    {
+      "iso_639_1": "en",
+      "iso_3166_1": "US",
+      "name": "Official Trailer",
+      "key": "5f9VcZqxFO4",
+      "site": "YouTube",
+      "size": 1080,
+      "type": "Trailer",
+      "official": true,
+      "published_at": "2021-12-16T14:05:25.000Z",
+      "id": "61bb4afd6a300b001d91146f"
+    }
+  ]
+}
